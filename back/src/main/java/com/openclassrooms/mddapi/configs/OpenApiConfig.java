@@ -12,9 +12,9 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("API Rent Management")
+                .info(new Info().title("API Monde de Dév")
                         .version("1.0")
-                        .description("API for managing rentals"))
+                        .description("API de mise en relation"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("bearerAuth",
