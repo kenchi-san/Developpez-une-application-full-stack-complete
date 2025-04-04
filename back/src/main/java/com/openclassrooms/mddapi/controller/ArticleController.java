@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.ArticleDto;
 import com.openclassrooms.mddapi.dtos.CreateArticleDto;
+import com.openclassrooms.mddapi.dtos.UpdateArticleDto;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.services.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -159,7 +160,7 @@ public class ArticleController {
             )
     })
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleDto> getArticle(@PathVariable Integer id) {
+    public ResponseEntity<ArticleDto> getArticle(@PathVariable("id") Long id) {
         ArticleDto article = articleService.getArticleById(id);
 
         if (article == null) {
@@ -168,10 +169,11 @@ public class ArticleController {
 
         return ResponseEntity.ok(article);
     }
+
     @Operation(
             summary = "Créer un nouvel article",
             description = "Cette méthode permet de créer un article à partir des données fournies : titre, contenu, auteur et thème.",
-            tags = { "Article" }
+            tags = {"Article"}
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -182,22 +184,22 @@ public class ArticleController {
                                     name = "Article créé",
                                     summary = "Article retourné après création",
                                     value = """
-                        {
-                          "id": 10,
-                          "title": "Introduction à Spring Boot",
-                          "content": "Spring Boot simplifie le développement Java...",
-                          "created": "2025-04-04T17:08:54+02:00",
-                          "updated": "2025-04-04T17:08:54+02:00",
-                          "author": {
-                            "id": 1,
-                            "fullName": "Jean Dupont"
-                          },
-                          "theme": {
-                            "id": 2,
-                            "name": "Java"
-                          }
-                        }
-                        """
+                                            {
+                                              "id": 10,
+                                              "title": "Introduction à Spring Boot",
+                                              "content": "Spring Boot simplifie le développement Java...",
+                                              "created": "2025-04-04T17:08:54+02:00",
+                                              "updated": "2025-04-04T17:08:54+02:00",
+                                              "author": {
+                                                "id": 1,
+                                                "fullName": "Jean Dupont"
+                                              },
+                                              "theme": {
+                                                "id": 2,
+                                                "name": "Java"
+                                              }
+                                            }
+                                            """
                             )
                     })
             ),
@@ -209,14 +211,14 @@ public class ArticleController {
                                     name = "Erreur 400",
                                     summary = "Champs manquants ou invalides",
                                     value = """
-                        {
-                          "type": "about:blank",
-                          "title": "Bad Request",
-                          "status": 400,
-                          "detail": "Le champ 'title' est requis.",
-                          "instance": "/article/create"
-                        }
-                        """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "Bad Request",
+                                              "status": 400,
+                                              "detail": "Le champ 'title' est requis.",
+                                              "instance": "/article/create"
+                                            }
+                                            """
                             )
                     })
             ),
@@ -228,14 +230,14 @@ public class ArticleController {
                                     name = "Erreur 403",
                                     summary = "Utilisateur non autorisé",
                                     value = """
-                        {
-                          "type": "about:blank",
-                          "title": "Forbidden",
-                          "status": 403,
-                          "detail": "Vous n’avez pas les droits pour effectuer cette action.",
-                          "instance": "/article/create"
-                        }
-                        """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "Forbidden",
+                                              "status": 403,
+                                              "detail": "Vous n’avez pas les droits pour effectuer cette action.",
+                                              "instance": "/article/create"
+                                            }
+                                            """
                             )
                     })
             ),
@@ -247,14 +249,14 @@ public class ArticleController {
                                     name = "Erreur 404",
                                     summary = "Thème introuvable",
                                     value = """
-                        {
-                          "type": "about:blank",
-                          "title": "Not Found",
-                          "status": 404,
-                          "detail": "Le thème avec l’ID 99 est introuvable.",
-                          "instance": "/article/create"
-                        }
-                        """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "Not Found",
+                                              "status": 404,
+                                              "detail": "Le thème avec l’ID 99 est introuvable.",
+                                              "instance": "/article/create"
+                                            }
+                                            """
                             )
                     })
             ),
@@ -266,14 +268,14 @@ public class ArticleController {
                                     name = "Erreur 500",
                                     summary = "Erreur SQL",
                                     value = """
-                        {
-                          "type": "about:blank",
-                          "title": "Internal Server Error",
-                          "status": 500,
-                          "detail": "could not execute statement [Duplicate entry '1' for key 'article.PRIMARY']",
-                          "instance": "/article/create"
-                        }
-                        """
+                                            {
+                                              "type": "about:blank",
+                                              "title": "Internal Server Error",
+                                              "status": 500,
+                                              "detail": "could not execute statement [Duplicate entry '1' for key 'article.PRIMARY']",
+                                              "instance": "/article/create"
+                                            }
+                                            """
                             )
                     })
             )
@@ -288,4 +290,135 @@ public class ArticleController {
 
     }
 
+    @Operation(
+            summary = "Met à jour un article existant",
+            description = "Cette méthode permet de mettre à jour un article en fonction de l'ID spécifié. Si l'article n'existe pas ou si des données invalides sont envoyées, une erreur appropriée sera renvoyée.",
+            tags = {"Article"}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Article mis à jour avec succès",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Article mis à jour",
+                                            summary = "Article retourné après mise à jour",
+                                            value = """
+                            {
+                              "id": 10,
+                              "title": "Introduction à Spring Boot",
+                              "content": "Spring Boot simplifie le développement Java...",
+                              "created": "2025-04-04T17:08:54+02:00",
+                              "updated": "2025-04-04T17:09:08+02:00",
+                              "author": {
+                                "id": 1,
+                                "fullName": "Jean Dupont"
+                              },
+                              "theme": {
+                                "id": 2,
+                                "name": "Java"
+                              }
+                            }
+                            """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Données invalides dans la requête",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Erreur 400",
+                                            summary = "Champs manquants ou invalides",
+                                            value = """
+                            {
+                              "type": "about:blank",
+                              "title": "Bad Request",
+                              "status": 400,
+                              "detail": "Le champ 'title' est requis ou invalide.",
+                              "instance": "/article/update/{id}"
+                            }
+                            """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Article introuvable",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Erreur 404",
+                                            summary = "Article non trouvé",
+                                            value = """
+                            {
+                              "type": "about:blank",
+                              "title": "Not Found",
+                              "status": 404,
+                              "detail": "L'article avec l'ID spécifié est introuvable.",
+                              "instance": "/article/update/{id}"
+                            }
+                            """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Accès interdit",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Erreur 403",
+                                            summary = "Utilisateur non autorisé",
+                                            value = """
+                            {
+                              "type": "about:blank",
+                              "title": "Forbidden",
+                              "status": 403,
+                              "detail": "Vous n’avez pas les droits pour effectuer cette action.",
+                              "instance": "/article/update/{id}"
+                            }
+                            """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erreur interne du serveur",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Erreur 500",
+                                            summary = "Erreur serveur",
+                                            value = """
+                            {
+                              "type": "about:blank",
+                              "title": "Internal Server Error",
+                              "status": 500,
+                              "detail": "Erreur lors de la mise à jour de l'article en base de données.",
+                              "instance": "/article/update/{id}"
+                            }
+                            """
+                                    )
+                            }
+                    )
+            )
+    })
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ArticleDto> updateArticle(@PathVariable("id") Long id, @RequestBody UpdateArticleDto article) {
+        ArticleDto updatedArticle = articleService.updateArticle(id, article);
+        return ResponseEntity.ok(updatedArticle);
+
+    }
 }

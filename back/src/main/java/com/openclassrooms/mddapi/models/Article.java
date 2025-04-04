@@ -9,9 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "article")
@@ -35,7 +32,6 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "theme_id", nullable = false)
     private Theme theme;
-
 
     @Column(nullable = false)
     private String content;

@@ -1,9 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.dtos.AuthorDto;
-import com.openclassrooms.mddapi.dtos.ArticleDto;
-import com.openclassrooms.mddapi.dtos.CreateArticleDto;
-import com.openclassrooms.mddapi.dtos.ThemeDto;
+import com.openclassrooms.mddapi.dtos.*;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
@@ -102,22 +99,18 @@ public class ArticleService {
         if (infoUser.isPresent()) {
             User user = infoUser.get();
             article.setAuthor(user);
-            System.out.println(user.getFullName());
         } else {
-            System.out.println("Utilisateur introuvable !");
-//mettre la gestion d'erreur ici
+            throw new RuntimeException("Utilisateur introuvable !");
         }
 
         if (infoTheme.isPresent()) {
             Theme theme = infoTheme.get();
             article.setTheme(theme);
-            System.out.println(theme.getName());
         } else {
-            System.out.println("Thème introuvable !");
-//mettre la gestion d'erreur ici
+            throw new RuntimeException("Thème introuvable !");
         }
 
-        article = articleRepository.save(article); // important de réassigner pour avoir l'ID généré
+        article = articleRepository.save(article);
 
         // Créer le DTO à retourner
         ArticleDto dto = new ArticleDto();
@@ -146,7 +139,48 @@ public class ArticleService {
         return dto;
     }
 
+    public ArticleDto updateArticle(Long id, UpdateArticleDto input) {
+        Optional<Article> articleToUpdate = articleRepository.findById(id);
 
+        if (articleToUpdate.isPresent()) {
+
+            Article article = articleToUpdate.get();
+            if (!input.getTitle().equals(articleToUpdate.get().getTitle()) && !input.getTitle().trim().isEmpty()) {
+                article.setTitle(input.getTitle());
+            }
+            if (!input.getContent().equals(articleToUpdate.get().getContent()) && !input.getContent().trim().isEmpty()) {
+                article.setContent(input.getContent());
+            }
+            if (input.getTheme().getId() != article.getTheme().getId()) {
+                Theme theme = themeRepository.findById(input.getTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
+                article.setTheme(theme);
+            }
+             article = articleRepository.save(article);
+            ArticleDto dto = new ArticleDto();
+            dto.setId(article.getId());
+            dto.setTitle(article.getTitle());
+            dto.setContent(article.getContent());
+            dto.setCreated(article.getCreatedAt());
+            dto.setUpdated(article.getUpdatedAt());
+
+            if (article.getAuthor() != null) {
+                AuthorDto authorDto = new AuthorDto();
+                authorDto.setId(article.getAuthor().getId());
+                authorDto.setFullName(article.getAuthor().getFullName());
+                dto.setAuthor(authorDto);
+            }
+
+            if (article.getTheme() != null) {
+                ThemeDto themeDto = new ThemeDto();
+                themeDto.setId(article.getTheme().getId());
+                themeDto.setName(article.getTheme().getName());
+                dto.setTheme(themeDto);
+            }
+            return dto;
+        } else {
+            throw new RuntimeException("Article non trouvé");
+        }
+    }
 
 }
 
