@@ -422,6 +422,64 @@ public class ArticleController {
         return ResponseEntity.ok(updatedArticle);
 
     }
+
+
+    @Operation(
+            summary = "Supprimer un article",
+            description = "Cette méthode permet de supprimer un article de la base de données en fournissant son ID.",
+            tags = {"Article"}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Article supprimé avec succès",
+                    content = @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(
+                                    name = "Succès de suppression",
+                                    summary = "Article supprimé avec succès",
+                                    value = "\"Article supprimé avec succès\""
+                            )
+                    })
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Article non trouvé",
+                    content = @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(
+                                    name = "Erreur 404",
+                                    summary = "Article non trouvé",
+                                    value = """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Not Found",
+                                          "status": 404,
+                                          "detail": "Article non trouvé",
+                                          "instance": "/article/delete/1"
+                                        }
+                                        """
+                            )
+                    })
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erreur interne du serveur",
+                    content = @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(
+                                    name = "Erreur 500",
+                                    summary = "Erreur de suppression",
+                                    value = """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Internal Server Error",
+                                          "status": 500,
+                                          "detail": "Une erreur est survenue lors de la suppression de l'article.",
+                                          "instance": "/article/delete/1"
+                                        }
+                                        """
+                            )
+                    })
+            )
+    })
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable("id") Long id) {
         try {
