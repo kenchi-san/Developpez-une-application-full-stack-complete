@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.dtos.LoginUserDto;
-import com.openclassrooms.mddapi.dtos.RegisterUserDto;
+import com.openclassrooms.mddapi.dtos.user.LoginUserDto;
+import com.openclassrooms.mddapi.dtos.user.RegisterUserDto;
 import com.openclassrooms.mddapi.responses.LoginResponse;
 import com.openclassrooms.mddapi.services.AuthenticationService;
 import com.openclassrooms.mddapi.services.JwtService;

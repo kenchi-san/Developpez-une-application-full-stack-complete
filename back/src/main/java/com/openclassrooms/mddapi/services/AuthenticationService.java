@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.dtos.LoginUserDto;
-import com.openclassrooms.mddapi.dtos.RegisterUserDto;
+import com.openclassrooms.mddapi.dtos.user.LoginUserDto;
+import com.openclassrooms.mddapi.dtos.user.RegisterUserDto;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
