@@ -27,26 +27,38 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Obtenir les informations de l'utilisateur authentifié",
+            description = "Cette méthode permet de récupérer les informations de l'utilisateur actuellement authentifié.",
+            tags = {"User"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Utilisateur trouvé", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "Non autorisé", content = @Content)
+    })
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         User currentUser = (User) authentication.getPrincipal();
-
         return ResponseEntity.ok(currentUser);
     }
 
+    @Operation(summary = "Obtenir tous les utilisateurs",
+            description = "Cette méthode permet de récupérer la liste de tous les utilisateurs.",
+            tags = {"User"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des utilisateurs", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "Non autorisé", content = @Content)
+    })
     @GetMapping("/")
     public ResponseEntity<List<User>> allUsers() {
-        List <User> users = userService.allUsers();
-
+        List<User> users = userService.allUsers();
         return ResponseEntity.ok(users);
     }
 
-    @Operation(summary = "Modifier les informations du compte utilisateur")
+    @Operation(summary = "Modifier les informations du compte utilisateur",
+            description = "Cette méthode permet de modifier les informations de l'utilisateur. Les champs non renseignés ne seront pas modifiés.",
+            tags = {"User"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Utilisateur mis à jour avec succès",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "200", description = "Utilisateur mis à jour avec succès", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "401", description = "Non autorisé (JWT requis ou invalide)", content = @Content),
             @ApiResponse(responseCode = "400", description = "Requête invalide", content = @Content)
     })
