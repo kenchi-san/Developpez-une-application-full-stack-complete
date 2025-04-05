@@ -1,18 +1,13 @@
 package com.openclassrooms.mddapi.dtos.commentaire;
 
-import com.openclassrooms.mddapi.models.Article;
-import com.openclassrooms.mddapi.models.User;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.ZonedDateTime;
 
 @Data
 public class CommentaireDto {
-
+    @NotBlank(message = "Le sujet est requis")
     private String subject;
-
+    @NotBlank(message = "Un commentaire est requis")
     private String comment;
 
 }
