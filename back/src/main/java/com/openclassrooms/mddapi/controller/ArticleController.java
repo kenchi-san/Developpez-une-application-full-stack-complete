@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/article")
+@Tag(name = "Article", description = "Endpoints liés à la gestion des articles")
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -29,8 +31,7 @@ public class ArticleController {
 
     @Operation(
             summary = "Récupérer la liste de tous les articles",
-            description = "Cette méthode retourne une liste de tous les articles existants.",
-            tags = {"Article"}
+            description = "Cette méthode retourne une liste de tous les articles existants."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -99,8 +100,7 @@ public class ArticleController {
 
     @Operation(
             summary = "Récupérer un article par ID",
-            description = "Cette méthode retourne un article basé sur son ID.",
-            tags = {"Article"}
+            description = "Cette méthode retourne un article basé sur son ID."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -172,8 +172,7 @@ public class ArticleController {
 
     @Operation(
             summary = "Créer un nouvel article",
-            description = "Cette méthode permet de créer un article à partir des données fournies : titre, contenu, auteur et thème.",
-            tags = {"Article"}
+            description = "Cette méthode permet de créer un article à partir des données fournies : titre, contenu, auteur et thème."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -292,8 +291,7 @@ public class ArticleController {
 
     @Operation(
             summary = "Met à jour un article existant",
-            description = "Cette méthode permet de mettre à jour un article en fonction de l'ID spécifié. Si l'article n'existe pas ou si des données invalides sont envoyées, une erreur appropriée sera renvoyée.",
-            tags = {"Article"}
+            description = "Cette méthode permet de mettre à jour un article en fonction de l'ID spécifié. Si l'article n'existe pas ou si des données invalides sont envoyées, une erreur appropriée sera renvoyée."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -425,8 +423,7 @@ public class ArticleController {
 
     @Operation(
             summary = "Supprimer un article",
-            description = "Cette méthode permet de supprimer un article de la base de données en fournissant son ID.",
-            tags = {"Article"}
+            description = "Cette méthode permet de supprimer un article de la base de données en fournissant son ID."
     )
     @ApiResponses(value = {
             @ApiResponse(

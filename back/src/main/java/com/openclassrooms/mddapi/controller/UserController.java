@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +20,7 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "User", description = "Endpoints liés à la gestion des utilisateurs")
 @RequestMapping("/users")
 @RestController
 public class UserController {
@@ -31,8 +32,7 @@ public class UserController {
 
     @Operation(
             summary = "Obtenir les informations de l'utilisateur authentifié",
-            description = "Cette méthode permet de récupérer les informations (nom et email) de l'utilisateur actuellement connecté.",
-            tags = {"User"}
+            description = "Cette méthode permet de récupérer les informations (nom et email) de l'utilisateur actuellement connecté."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -77,8 +77,7 @@ public class UserController {
     }
 
     @Operation(summary = "Obtenir tous les utilisateurs",
-            description = "Cette méthode permet de récupérer la liste de tous les utilisateurs.",
-            tags = {"User"})
+            description = "Cette méthode permet de récupérer la liste de tous les utilisateurs.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des utilisateurs", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "401", description = "Non autorisé", content = @Content),@ApiResponse(responseCode = "403",
@@ -100,8 +99,7 @@ public class UserController {
     }
 
     @Operation(summary = "Modifier les informations du compte utilisateur",
-            description = "Cette méthode permet de modifier les informations de l'utilisateur. Les champs non renseignés ne seront pas modifiés.",
-            tags = {"User"})
+            description = "Cette méthode permet de modifier les informations de l'utilisateur. Les champs non renseignés ne seront pas modifiés.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Utilisateur mis à jour avec succès", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "401", description = "Non autorisé (JWT requis ou invalide)", content = @Content),
