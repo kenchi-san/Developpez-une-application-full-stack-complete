@@ -1,9 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.dtos.ArticleDto;
-import com.openclassrooms.mddapi.dtos.CreateArticleDto;
-import com.openclassrooms.mddapi.dtos.UpdateArticleDto;
-import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.dtos.article.ArticleDto;
+import com.openclassrooms.mddapi.dtos.article.CreateArticleDto;
+import com.openclassrooms.mddapi.dtos.article.UpdateArticleDto;
 import com.openclassrooms.mddapi.services.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

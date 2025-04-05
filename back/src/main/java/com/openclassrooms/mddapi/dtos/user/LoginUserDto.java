@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.dtos;
+package com.openclassrooms.mddapi.dtos.user;
 
 import lombok.Data;
 
