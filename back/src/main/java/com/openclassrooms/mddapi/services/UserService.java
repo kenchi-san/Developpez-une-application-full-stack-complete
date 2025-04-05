@@ -39,6 +39,9 @@ public class UserService {
         if (StringUtils.hasText(updateUserDto.getPassword())) {
             user.setPassword(passwordEncoder.encode(updateUserDto.getPassword()));
         }
+        if (StringUtils.hasText(updateUserDto.getEmail())) {
+            user.setEmail(updateUserDto.getEmail());
+        }
 
         return userRepository.save(user);
     }

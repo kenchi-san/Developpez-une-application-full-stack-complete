@@ -1,16 +1,15 @@
 package com.openclassrooms.mddapi.dtos.user;
 
-import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 @Data
-public class UpdateUserDto {
+public class MeDto {
     @Schema(description = "email de l'utilisateur", example = "test@exemple.com")
     private String email;
 
-    @Schema(description = "Nouveau mot de passe de l'utilisateur", example = "newSecurePassword123")
-    private String password;
-
     @Schema(description = "Nouveau nom complet de l'utilisateur", example = "Jean Dupont")
     private String fullName;
+
+//    TODO mettre les abonnements plus tard
 }
