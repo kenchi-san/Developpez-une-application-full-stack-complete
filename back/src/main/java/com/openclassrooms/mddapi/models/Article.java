@@ -1,28 +1,28 @@
 package com.openclassrooms.mddapi.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "article")
-@Accessors(chain = true)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Accessors(chain = true)
 public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
     private Long id;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,7 +33,10 @@ public class Article {
     @JoinColumn(name = "theme_id", nullable = false)
     private Theme theme;
 
-    @Column(nullable = false)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Commentaire> commentaires = new ArrayList<>();
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @CreationTimestamp
@@ -42,5 +45,5 @@ public class Article {
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private ZonedDateTime  updatedAt;
+    private ZonedDateTime updatedAt;
 }
