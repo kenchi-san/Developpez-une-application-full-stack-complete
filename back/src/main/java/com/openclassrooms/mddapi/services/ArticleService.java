@@ -182,5 +182,14 @@ public class ArticleService {
         }
     }
 
+    public void deleteArticle(long id) {
+        Optional<Article> articleToDelete = articleRepository.findById(id);
+
+        if (articleToDelete.isPresent()) {
+            articleRepository.deleteById(id);  // Utilise deleteById pour supprimer l'article
+        } else {
+            throw new RuntimeException("Article non trouvé");
+        }
+    }
 }
 
