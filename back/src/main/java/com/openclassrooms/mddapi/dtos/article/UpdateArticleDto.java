@@ -15,7 +15,7 @@ public class UpdateArticleDto {
     private String content;
 
     @Schema(description = "Thème auquel l'article appartient")
-    private ThemeDto theme;
+    private ThemeDto nomenclatureTheme;
 
     @Schema(description = "Date de mise à jour de l'article (avec fuseau horaire)", example = "2025-04-04T17:09:08+02:00")
     private ZonedDateTime updated;

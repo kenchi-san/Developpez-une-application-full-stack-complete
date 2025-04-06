@@ -50,7 +50,7 @@ public class ArticleController {
                                     "    },\n" +
                                     "    \"created\": \"2025-04-04T17:08:54+02:00\",\n" +
                                     "    \"updated\": \"2025-04-04T17:09:08+02:00\",\n" +
-                                    "    \"theme\": {\n" +
+                                    "    \"nomenclatureTheme\": {\n" +
                                     "      \"id\": 9007199254740991,\n" +
                                     "      \"name\": \"Spring Boot\"\n" +
                                     "    }\n" +
@@ -118,7 +118,7 @@ public class ArticleController {
                                     "  },\n" +
                                     "  \"created\": \"2025-04-04T17:08:54+02:00\",\n" +
                                     "  \"updated\": \"2025-04-04T17:09:08+02:00\",\n" +
-                                    "  \"theme\": {\n" +
+                                    "  \"nomenclatureTheme\": {\n" +
                                     "    \"id\": 9007199254740991,\n" +
                                     "    \"name\": \"Spring Boot\"\n" +
                                     "  }\n" +
@@ -193,7 +193,7 @@ public class ArticleController {
                                                 "id": 1,
                                                 "fullName": "Jean Dupont"
                                               },
-                                              "theme": {
+                                              "nomenclatureTheme": {
                                                 "id": 2,
                                                 "name": "Java"
                                               }
@@ -314,7 +314,7 @@ public class ArticleController {
                                 "id": 1,
                                 "fullName": "Jean Dupont"
                               },
-                              "theme": {
+                              "nomenclatureTheme": {
                                 "id": 2,
                                 "name": "Java"
                               }

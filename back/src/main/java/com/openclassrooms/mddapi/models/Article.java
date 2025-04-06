@@ -30,8 +30,8 @@ public class Article {
     private User author;
 
     @ManyToOne
-    @JoinColumn(name = "theme_id", nullable = false)
-    private Theme theme;
+    @JoinColumn(name = "nomenclature_theme_id", nullable = false)
+    private NomenclatureTheme nomenclatureTheme;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Commentaire> commentaires = new ArrayList<>();

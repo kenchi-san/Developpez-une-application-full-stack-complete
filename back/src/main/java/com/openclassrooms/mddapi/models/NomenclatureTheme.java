@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "theme")
-public class Theme {
+@Table(name = "nomenclature_theme")
+public class NomenclatureTheme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,7 +21,7 @@ public class Theme {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "nomenclatureTheme", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles = new ArrayList<>();
 
 }

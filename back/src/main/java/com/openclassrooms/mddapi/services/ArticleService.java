@@ -2,10 +2,10 @@ package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dtos.article.*;
 import com.openclassrooms.mddapi.models.Article;
-import com.openclassrooms.mddapi.models.Theme;
+import com.openclassrooms.mddapi.models.NomenclatureTheme;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
-import com.openclassrooms.mddapi.repository.ThemeRepository;
+import com.openclassrooms.mddapi.repository.NomenclatureThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,12 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final ThemeRepository themeRepository;
+    private final NomenclatureThemeRepository nomenclatureThemeRepository;
     private final UserRepository userRepository;
 
-    public ArticleService(ArticleRepository articleRepository, ThemeRepository themeRepository, UserRepository userRepository) {
+    public ArticleService(ArticleRepository articleRepository, NomenclatureThemeRepository nomenclatureThemeRepository, UserRepository userRepository) {
         this.articleRepository = articleRepository;
-        this.themeRepository = themeRepository;
+        this.nomenclatureThemeRepository = nomenclatureThemeRepository;
         this.userRepository = userRepository;
     }
 
@@ -44,9 +44,9 @@ public class ArticleService {
             dto.setAuthor(authorDto);
 
             ThemeDto themeDto = new ThemeDto();
-            themeDto.setId(article.getTheme().getId());
-            themeDto.setName(article.getTheme().getName());
-            dto.setTheme(themeDto);
+            themeDto.setId(article.getNomenclatureTheme().getId());
+            themeDto.setName(article.getNomenclatureTheme().getName());
+            dto.setNomenclatureTheme(themeDto);
 
             result.add(dto);
         });
@@ -80,9 +80,9 @@ public class ArticleService {
         dto.setAuthor(authorDto);
 
         ThemeDto themeDto = new ThemeDto();
-        themeDto.setId(article.getTheme().getId());
-        themeDto.setName(article.getTheme().getName());
-        dto.setTheme(themeDto);
+        themeDto.setId(article.getNomenclatureTheme().getId());
+        themeDto.setName(article.getNomenclatureTheme().getName());
+        dto.setNomenclatureTheme(themeDto);
 
         return dto;
     }
@@ -94,7 +94,7 @@ public class ArticleService {
         article.setContent(input.getContent());
 
         Optional<User> infoUser = userRepository.findById(input.getAuthor().getId());
-        Optional<Theme> infoTheme = themeRepository.findById(input.getTheme().getId());
+        Optional<NomenclatureTheme> infoTheme = nomenclatureThemeRepository.findById(input.getNomenclatureTheme().getId());
 
         if (infoUser.isPresent()) {
             User user = infoUser.get();
@@ -104,8 +104,8 @@ public class ArticleService {
         }
 
         if (infoTheme.isPresent()) {
-            Theme theme = infoTheme.get();
-            article.setTheme(theme);
+            NomenclatureTheme nomenclatureTheme = infoTheme.get();
+            article.setNomenclatureTheme(nomenclatureTheme);
         } else {
             throw new RuntimeException("Thème introuvable !");
         }
@@ -129,11 +129,11 @@ public class ArticleService {
         }
 
         // Convertir le thème en DTO
-        if (article.getTheme() != null) {
+        if (article.getNomenclatureTheme() != null) {
             ThemeDto themeDto = new ThemeDto();
-            themeDto.setId(article.getTheme().getId());
-            themeDto.setName(article.getTheme().getName());
-            dto.setTheme(themeDto);
+            themeDto.setId(article.getNomenclatureTheme().getId());
+            themeDto.setName(article.getNomenclatureTheme().getName());
+            dto.setNomenclatureTheme(themeDto);
         }
 
         return dto;
@@ -151,9 +151,9 @@ public class ArticleService {
             if (!input.getContent().equals(articleToUpdate.get().getContent()) && !input.getContent().trim().isEmpty()) {
                 article.setContent(input.getContent());
             }
-            if (input.getTheme().getId() != article.getTheme().getId()) {
-                Theme theme = themeRepository.findById(input.getTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
-                article.setTheme(theme);
+            if (input.getNomenclatureTheme().getId() != article.getNomenclatureTheme().getId()) {
+                NomenclatureTheme nomenclatureTheme = nomenclatureThemeRepository.findById(input.getNomenclatureTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
+                article.setNomenclatureTheme(nomenclatureTheme);
             }
              article = articleRepository.save(article);
             ArticleDto dto = new ArticleDto();
@@ -170,11 +170,11 @@ public class ArticleService {
                 dto.setAuthor(authorDto);
             }
 
-            if (article.getTheme() != null) {
+            if (article.getNomenclatureTheme() != null) {
                 ThemeDto themeDto = new ThemeDto();
-                themeDto.setId(article.getTheme().getId());
-                themeDto.setName(article.getTheme().getName());
-                dto.setTheme(themeDto);
+                themeDto.setId(article.getNomenclatureTheme().getId());
+                themeDto.setName(article.getNomenclatureTheme().getName());
+                dto.setNomenclatureTheme(themeDto);
             }
             return dto;
         } else {

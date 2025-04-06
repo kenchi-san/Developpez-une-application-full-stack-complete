@@ -16,7 +16,7 @@ public class CreateArticleDto {
 
     private AuthorDto author;
 
-    private ThemeDto theme;
+    private ThemeDto nomenclatureTheme;
 
     @Schema(description = "Date de création de l'article (avec fuseau horaire)", example = "2025-04-04T17:08:54+02:00")
     private ZonedDateTime created;

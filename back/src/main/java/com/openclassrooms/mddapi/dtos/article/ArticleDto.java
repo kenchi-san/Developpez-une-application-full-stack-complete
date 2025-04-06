@@ -28,6 +28,6 @@ public class ArticleDto {
     private ZonedDateTime updated;
 
     @Schema(description = "Thème auquel l'article appartient")
-    private ThemeDto theme;
+    private ThemeDto nomenclatureTheme;
 
 }
