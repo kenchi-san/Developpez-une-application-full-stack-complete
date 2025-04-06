@@ -172,7 +172,30 @@ public class ArticleController {
 
     @Operation(
             summary = "Créer un nouvel article",
-            description = "Cette méthode permet de créer un article à partir des données fournies : titre, contenu, auteur et thème."
+            description = "Cette méthode permet de créer un article à partir des données fournies : titre, contenu, auteur et thème.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Données de l'article à créer",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(
+                                    name = "Exemple de création",
+                                    summary = "Payload pour créer un article",
+                                    value = """
+                                        {
+                                          "title": "Découverte de Spring Boot toto",
+                                          "content": "Spring Boot permet de démarrer un projet Java rapidement.",
+                                          "author": {
+                                            "id": int
+                                          },
+                                          "theme": {
+                                            "id": int
+                                          }
+                                        }
+                                        """
+                            )
+                    )
+            )
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -183,22 +206,22 @@ public class ArticleController {
                                     name = "Article créé",
                                     summary = "Article retourné après création",
                                     value = """
-                                            {
-                                              "id": 10,
-                                              "title": "Introduction à Spring Boot",
-                                              "content": "Spring Boot simplifie le développement Java...",
-                                              "created": "2025-04-04T17:08:54+02:00",
-                                              "updated": "2025-04-04T17:08:54+02:00",
-                                              "author": {
-                                                "id": 1,
-                                                "fullName": "Jean Dupont"
-                                              },
-                                              "nomenclatureTheme": {
-                                                "id": 2,
-                                                "name": "Java"
-                                              }
-                                            }
-                                            """
+                                        {
+                                          "id": 10,
+                                          "title": "Introduction à Spring Boot",
+                                          "content": "Spring Boot simplifie le développement Java...",
+                                          "created": "2025-04-04T17:08:54+02:00",
+                                          "updated": "2025-04-04T17:08:54+02:00",
+                                          "author": {
+                                            "id": 1,
+                                            "fullName": "Jean Dupont"
+                                          },
+                                          "nomenclatureTheme": {
+                                            "id": 2,
+                                            "name": "Java"
+                                          }
+                                        }
+                                        """
                             )
                     })
             ),
@@ -210,14 +233,14 @@ public class ArticleController {
                                     name = "Erreur 400",
                                     summary = "Champs manquants ou invalides",
                                     value = """
-                                            {
-                                              "type": "about:blank",
-                                              "title": "Bad Request",
-                                              "status": 400,
-                                              "detail": "Le champ 'title' est requis.",
-                                              "instance": "/article/create"
-                                            }
-                                            """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Bad Request",
+                                          "status": 400,
+                                          "detail": "Le champ 'title' est requis.",
+                                          "instance": "/article/create"
+                                        }
+                                        """
                             )
                     })
             ),
@@ -229,14 +252,14 @@ public class ArticleController {
                                     name = "Erreur 403",
                                     summary = "Utilisateur non autorisé",
                                     value = """
-                                            {
-                                              "type": "about:blank",
-                                              "title": "Forbidden",
-                                              "status": 403,
-                                              "detail": "Vous n’avez pas les droits pour effectuer cette action.",
-                                              "instance": "/article/create"
-                                            }
-                                            """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Forbidden",
+                                          "status": 403,
+                                          "detail": "Vous n’avez pas les droits pour effectuer cette action.",
+                                          "instance": "/article/create"
+                                        }
+                                        """
                             )
                     })
             ),
@@ -248,14 +271,14 @@ public class ArticleController {
                                     name = "Erreur 404",
                                     summary = "Thème introuvable",
                                     value = """
-                                            {
-                                              "type": "about:blank",
-                                              "title": "Not Found",
-                                              "status": 404,
-                                              "detail": "Le thème avec l’ID 99 est introuvable.",
-                                              "instance": "/article/create"
-                                            }
-                                            """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Not Found",
+                                          "status": 404,
+                                          "detail": "Le thème avec l’ID 99 est introuvable.",
+                                          "instance": "/article/create"
+                                        }
+                                        """
                             )
                     })
             ),
@@ -267,31 +290,32 @@ public class ArticleController {
                                     name = "Erreur 500",
                                     summary = "Erreur SQL",
                                     value = """
-                                            {
-                                              "type": "about:blank",
-                                              "title": "Internal Server Error",
-                                              "status": 500,
-                                              "detail": "could not execute statement [Duplicate entry '1' for key 'article.PRIMARY']",
-                                              "instance": "/article/create"
-                                            }
-                                            """
+                                        {
+                                          "type": "about:blank",
+                                          "title": "Internal Server Error",
+                                          "status": 500,
+                                          "detail": "could not execute statement [Duplicate entry '1' for key 'article.PRIMARY']",
+                                          "instance": "/article/create"
+                                        }
+                                        """
                             )
                     })
             )
     })
     @PostMapping("/create")
-    public ResponseEntity<ArticleDto> addNewArticle(@RequestBody CreateArticleDto article) {
+    public ResponseEntity<ArticleDto> addNewArticle(@org.springframework.web.bind.annotation.RequestBody CreateArticleDto article) {
         ArticleDto newArticle = articleService.newArticle(article);
         if (newArticle == null) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.status(201).body(newArticle);
-
     }
+
 
     @Operation(
             summary = "Met à jour un article existant",
-            description = "Cette méthode permet de mettre à jour un article en fonction de l'ID spécifié. Si l'article n'existe pas ou si des données invalides sont envoyées, une erreur appropriée sera renvoyée."
+            description = "Cette méthode permet de mettre à jour un article en fonction de l'ID spécifié. "
+                    + "Si l'article n'existe pas ou si des données invalides sont envoyées, une erreur appropriée sera renvoyée."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -304,22 +328,22 @@ public class ArticleController {
                                             name = "Article mis à jour",
                                             summary = "Article retourné après mise à jour",
                                             value = """
-                            {
-                              "id": 10,
-                              "title": "Introduction à Spring Boot",
-                              "content": "Spring Boot simplifie le développement Java...",
-                              "created": "2025-04-04T17:08:54+02:00",
-                              "updated": "2025-04-04T17:09:08+02:00",
-                              "author": {
-                                "id": 1,
-                                "fullName": "Jean Dupont"
-                              },
-                              "nomenclatureTheme": {
-                                "id": 2,
-                                "name": "Java"
-                              }
-                            }
-                            """
+                                                {
+                                                  "id": 10,
+                                                  "title": "Introduction à Spring Boot",
+                                                  "content": "Spring Boot simplifie le développement Java...",
+                                                  "created": "2025-04-04T17:08:54+02:00",
+                                                  "updated": "2025-04-04T17:09:08+02:00",
+                                                  "author": {
+                                                    "id": 1,
+                                                    "fullName": "Jean Dupont"
+                                                  },
+                                                  "nomenclatureTheme": {
+                                                    "id": 2,
+                                                    "name": "Java"
+                                                  }
+                                                }
+                                                """
                                     )
                             }
                     )
@@ -334,14 +358,14 @@ public class ArticleController {
                                             name = "Erreur 400",
                                             summary = "Champs manquants ou invalides",
                                             value = """
-                            {
-                              "type": "about:blank",
-                              "title": "Bad Request",
-                              "status": 400,
-                              "detail": "Le champ 'title' est requis ou invalide.",
-                              "instance": "/article/update/{id}"
-                            }
-                            """
+                                                {
+                                                  "type": "about:blank",
+                                                  "title": "Bad Request",
+                                                  "status": 400,
+                                                  "detail": "Le champ 'title' est requis ou invalide.",
+                                                  "instance": "/article/update/{id}"
+                                                }
+                                                """
                                     )
                             }
                     )
@@ -356,14 +380,14 @@ public class ArticleController {
                                             name = "Erreur 404",
                                             summary = "Article non trouvé",
                                             value = """
-                            {
-                              "type": "about:blank",
-                              "title": "Not Found",
-                              "status": 404,
-                              "detail": "L'article avec l'ID spécifié est introuvable.",
-                              "instance": "/article/update/{id}"
-                            }
-                            """
+                                                {
+                                                  "type": "about:blank",
+                                                  "title": "Not Found",
+                                                  "status": 404,
+                                                  "detail": "L'article avec l'ID spécifié est introuvable.",
+                                                  "instance": "/article/update/{id}"
+                                                }
+                                                """
                                     )
                             }
                     )
@@ -378,14 +402,14 @@ public class ArticleController {
                                             name = "Erreur 403",
                                             summary = "Utilisateur non autorisé",
                                             value = """
-                            {
-                              "type": "about:blank",
-                              "title": "Forbidden",
-                              "status": 403,
-                              "detail": "Vous n’avez pas les droits pour effectuer cette action.",
-                              "instance": "/article/update/{id}"
-                            }
-                            """
+                                                {
+                                                  "type": "about:blank",
+                                                  "title": "Forbidden",
+                                                  "status": 403,
+                                                  "detail": "Vous n’avez pas les droits pour effectuer cette action.",
+                                                  "instance": "/article/update/{id}"
+                                                }
+                                                """
                                     )
                             }
                     )
@@ -400,25 +424,51 @@ public class ArticleController {
                                             name = "Erreur 500",
                                             summary = "Erreur serveur",
                                             value = """
-                            {
-                              "type": "about:blank",
-                              "title": "Internal Server Error",
-                              "status": 500,
-                              "detail": "Erreur lors de la mise à jour de l'article en base de données.",
-                              "instance": "/article/update/{id}"
-                            }
-                            """
+                                                {
+                                                  "type": "about:blank",
+                                                  "title": "Internal Server Error",
+                                                  "status": 500,
+                                                  "detail": "Erreur lors de la mise à jour de l'article en base de données.",
+                                                  "instance": "/article/update/{id}"
+                                                }
+                                                """
                                     )
                             }
                     )
             )
     })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Données de l'article à mettre à jour",
+            required = true,
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(
+                            name = "Corps de requête - mise à jour d'article",
+                            summary = "Exemple de payload pour mise à jour",
+                            value = """
+                                {
+                                  "title": "Découverte de Spring Boot toto",
+                                  "content": "Spring Boot permet de démarrer un projet Java rapidement.",
+                                  "author": {
+                                    "id": int
+                                  },
+                                  "theme": {
+                                    "id": int
+                                  }
+                                }
+                                """
+                    )
+            )
+    )
     @PutMapping("/update/{id}")
-    public ResponseEntity<ArticleDto> updateArticle(@PathVariable("id") Long id, @RequestBody UpdateArticleDto article) {
+    public ResponseEntity<ArticleDto> updateArticle(
+            @PathVariable("id") Long id,
+            @org.springframework.web.bind.annotation.RequestBody UpdateArticleDto article) {
+
         ArticleDto updatedArticle = articleService.updateArticle(id, article);
         return ResponseEntity.ok(updatedArticle);
-
     }
+
 
 
     @Operation(

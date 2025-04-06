@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import com.openclassrooms.mddapi.dtos.user.MeDto;
 import com.openclassrooms.mddapi.dtos.user.UpdateUserDto;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -21,12 +23,18 @@ public class UserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public List<User> allUsers() {
+    public List<MeDto> allUsers() {
+        Iterable<User> usersIterable = userRepository.findAll();
+
         List<User> users = new ArrayList<>();
+        usersIterable.forEach(users::add);
 
-        userRepository.findAll().forEach(users::add);
-
-        return users;
+        return users.stream().map(user -> {
+            MeDto dto = new MeDto();
+            dto.setEmail(user.getEmail());
+            dto.setFullName(user.getFullName());
+            return dto;
+        }).collect(Collectors.toList());
     }
     public User updateUser(String email, UpdateUserDto updateUserDto) {
         User user = userRepository.findByEmail(email)
