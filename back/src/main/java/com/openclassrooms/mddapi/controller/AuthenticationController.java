@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.dtos.LoginUserDto;
-import com.openclassrooms.mddapi.dtos.RegisterUserDto;
+import com.openclassrooms.mddapi.dtos.user.LoginUserDto;
+import com.openclassrooms.mddapi.dtos.user.RegisterUserDto;
 import com.openclassrooms.mddapi.responses.LoginResponse;
 import com.openclassrooms.mddapi.services.AuthenticationService;
 import com.openclassrooms.mddapi.services.JwtService;
@@ -45,7 +45,7 @@ public class AuthenticationController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = RegisterUserDto.class),
-                            examples = @ExampleObject(value = "{ \"email\": \"test@example.com\", \"password\": \"password123\", \"fullName\": \"Jane Doe\" }")
+                            examples = @ExampleObject(value = "{ \"email\": \"test@example.com\", \"password\": \"Password123!\", \"fullName\": \"Jane Doe\" }")
                     )
             )
             @RequestBody RegisterUserDto registerUserDto) {
@@ -68,7 +68,7 @@ public class AuthenticationController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = LoginUserDto.class),
-                            examples = @ExampleObject(value = "{ \"email\": \"test@example.com\", \"password\": \"password123\" }")
+                            examples = @ExampleObject(value = "{ \"email\": \"test@example.com\", \"password\": \"Password123!\" }")
                     )
             )
             @RequestBody LoginUserDto loginUserDto) {

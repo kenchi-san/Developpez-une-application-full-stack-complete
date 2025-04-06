@@ -1,0 +1,195 @@
+package com.openclassrooms.mddapi.services;
+
+import com.openclassrooms.mddapi.dtos.article.*;
+import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.models.NomenclatureTheme;
+import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.repository.ArticleRepository;
+import com.openclassrooms.mddapi.repository.NomenclatureThemeRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ArticleService {
+
+    private final ArticleRepository articleRepository;
+    private final NomenclatureThemeRepository nomenclatureThemeRepository;
+    private final UserRepository userRepository;
+
+    public ArticleService(ArticleRepository articleRepository, NomenclatureThemeRepository nomenclatureThemeRepository, UserRepository userRepository) {
+        this.articleRepository = articleRepository;
+        this.nomenclatureThemeRepository = nomenclatureThemeRepository;
+        this.userRepository = userRepository;
+    }
+
+    public List<ArticleDto> allArticle() {
+        List<ArticleDto> result = new ArrayList<>();
+
+        articleRepository.findAll().forEach(article -> {
+            ArticleDto dto = new ArticleDto();
+
+            dto.setId(article.getId());
+            dto.setTitle(article.getTitle());
+            dto.setContent(article.getContent());
+            dto.setCreated(article.getCreatedAt());
+            dto.setUpdated(article.getUpdatedAt());
+
+            AuthorDto authorDto = new AuthorDto();
+            authorDto.setId(article.getAuthor().getId());
+            authorDto.setFullName(article.getAuthor().getFullName());
+            dto.setAuthor(authorDto);
+
+            ThemeDto themeDto = new ThemeDto();
+            themeDto.setId(article.getNomenclatureTheme().getId());
+            themeDto.setName(article.getNomenclatureTheme().getName());
+            dto.setNomenclatureTheme(themeDto);
+
+            result.add(dto);
+        });
+
+        return result;
+    }
+
+    public ArticleDto getArticleById(long id) {
+        // Vérifier si l'article existe
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+
+        // Si l'article n'existe pas, retourner null ou une exception
+        if (optionalArticle.isEmpty()) {
+            return null; // Ou tu peux lancer une exception personnalisée pour gérer l'erreur
+        }
+
+        Article article = optionalArticle.get();
+
+        // Créer le DTO
+        ArticleDto dto = new ArticleDto();
+        dto.setId(article.getId());
+        dto.setTitle(article.getTitle());
+        dto.setContent(article.getContent());
+        dto.setCreated(article.getCreatedAt());
+        dto.setUpdated(article.getUpdatedAt());
+
+        // Convertir l'auteur en DTO (si tu veux utiliser un DTO pour l'auteur)
+        AuthorDto authorDto = new AuthorDto();
+        authorDto.setId(article.getAuthor().getId());
+        authorDto.setFullName(article.getAuthor().getFullName());
+        dto.setAuthor(authorDto);
+
+        ThemeDto themeDto = new ThemeDto();
+        themeDto.setId(article.getNomenclatureTheme().getId());
+        themeDto.setName(article.getNomenclatureTheme().getName());
+        dto.setNomenclatureTheme(themeDto);
+
+        return dto;
+    }
+
+    public ArticleDto newArticle(CreateArticleDto input) {
+
+        Article article = new Article();
+        article.setTitle(input.getTitle());
+        article.setContent(input.getContent());
+
+        Optional<User> infoUser = userRepository.findById(input.getAuthor().getId());
+        Optional<NomenclatureTheme> infoTheme = nomenclatureThemeRepository.findById(input.getNomenclatureTheme().getId());
+
+        if (infoUser.isPresent()) {
+            User user = infoUser.get();
+            article.setAuthor(user);
+        } else {
+            throw new RuntimeException("Utilisateur introuvable !");
+        }
+
+        if (infoTheme.isPresent()) {
+            NomenclatureTheme nomenclatureTheme = infoTheme.get();
+            article.setNomenclatureTheme(nomenclatureTheme);
+        } else {
+            throw new RuntimeException("Thème introuvable !");
+        }
+
+        article = articleRepository.save(article);
+
+        // Créer le DTO à retourner
+        ArticleDto dto = new ArticleDto();
+        dto.setId(article.getId());
+        dto.setTitle(article.getTitle());
+        dto.setContent(article.getContent());
+        dto.setCreated(article.getCreatedAt());
+        dto.setUpdated(article.getUpdatedAt());
+
+        // Convertir l'auteur en DTO
+        if (article.getAuthor() != null) {
+            AuthorDto authorDto = new AuthorDto();
+            authorDto.setId(article.getAuthor().getId());
+            authorDto.setFullName(article.getAuthor().getFullName());
+            dto.setAuthor(authorDto);
+        }
+
+        // Convertir le thème en DTO
+        if (article.getNomenclatureTheme() != null) {
+            ThemeDto themeDto = new ThemeDto();
+            themeDto.setId(article.getNomenclatureTheme().getId());
+            themeDto.setName(article.getNomenclatureTheme().getName());
+            dto.setNomenclatureTheme(themeDto);
+        }
+
+        return dto;
+    }
+
+    public ArticleDto updateArticle(Long id, UpdateArticleDto input) {
+        Optional<Article> articleToUpdate = articleRepository.findById(id);
+
+        if (articleToUpdate.isPresent()) {
+
+            Article article = articleToUpdate.get();
+            if (!input.getTitle().equals(articleToUpdate.get().getTitle()) && !input.getTitle().trim().isEmpty()) {
+                article.setTitle(input.getTitle());
+            }
+            if (!input.getContent().equals(articleToUpdate.get().getContent()) && !input.getContent().trim().isEmpty()) {
+                article.setContent(input.getContent());
+            }
+            if (input.getNomenclatureTheme().getId() != article.getNomenclatureTheme().getId()) {
+                NomenclatureTheme nomenclatureTheme = nomenclatureThemeRepository.findById(input.getNomenclatureTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
+                article.setNomenclatureTheme(nomenclatureTheme);
+            }
+             article = articleRepository.save(article);
+            ArticleDto dto = new ArticleDto();
+            dto.setId(article.getId());
+            dto.setTitle(article.getTitle());
+            dto.setContent(article.getContent());
+            dto.setCreated(article.getCreatedAt());
+            dto.setUpdated(article.getUpdatedAt());
+
+            if (article.getAuthor() != null) {
+                AuthorDto authorDto = new AuthorDto();
+                authorDto.setId(article.getAuthor().getId());
+                authorDto.setFullName(article.getAuthor().getFullName());
+                dto.setAuthor(authorDto);
+            }
+
+            if (article.getNomenclatureTheme() != null) {
+                ThemeDto themeDto = new ThemeDto();
+                themeDto.setId(article.getNomenclatureTheme().getId());
+                themeDto.setName(article.getNomenclatureTheme().getName());
+                dto.setNomenclatureTheme(themeDto);
+            }
+            return dto;
+        } else {
+            throw new RuntimeException("Article non trouvé");
+        }
+    }
+
+    public void deleteArticle(long id) {
+        Optional<Article> articleToDelete = articleRepository.findById(id);
+
+        if (articleToDelete.isPresent()) {
+            articleRepository.deleteById(id);  // Utilise deleteById pour supprimer l'article
+        } else {
+            throw new RuntimeException("Article non trouvé");
+        }
+    }
+}
+
