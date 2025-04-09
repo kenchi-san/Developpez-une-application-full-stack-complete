@@ -9,13 +9,13 @@ import { environment } from "../../environments/environment";
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'JWT_Token';  // Clé pour stocker le token dans le cookie
-  private readonly apiUrl = `${environment.apiUrl}/auth/login`;  // L'URL de l'API de login
+  private readonly apiUrl = `${environment.apiUrl}/auth`;  // URL de l'API (vous pouvez adapter selon votre API)
 
   constructor(private http: HttpClient) {}
 
   // Méthode de connexion
   login(userDetails: { username: string; password: string }): Observable<boolean> {
-    return this.http.post<{ token: string }>(this.apiUrl, userDetails).pipe(
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, userDetails).pipe(
       map(response => {
         if (response && response.token) {
           // Si le token est présent dans la réponse, on le stocke dans un cookie sécurisé
@@ -34,9 +34,28 @@ export class AuthService {
     );
   }
 
+  // Méthode d'enregistrement
+  register(userData: { fullName: string; email: string; password: string }): Observable<boolean> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/register`, userData).pipe(
+      map(response => {
+        if (response && response.message) {
+          console.log('Inscription réussie:', response.message);
+          return true;  // Inscription réussie
+        } else {
+          console.error('Réponse du serveur sans message', response);  // Débogage
+          return false;  // Pas de message de confirmation
+        }
+      }),
+      catchError(error => {
+        // Gérer les erreurs d'inscription
+        console.error('Erreur lors de l\'inscription:', error);  // Afficher l'erreur pour déboguer
+        return of(false);  // Retourner false en cas d'échec
+      })
+    );
+  }
+
   // Méthode pour stocker le token dans un cookie sécurisé
   private setTokenInCookie(token: string): void {
-    // Crée un cookie avec les options Secure, HttpOnly, et SameSite=Strict pour plus de sécurité
     const expires = new Date();
     expires.setHours(expires.getHours() + 1); // Token valide pendant 1 heure
     document.cookie = `JWT_Token=${token}; Secure; HttpOnly; SameSite=Strict; path=/; expires=${expires.toUTCString()}`;
@@ -44,7 +63,6 @@ export class AuthService {
 
   // Méthode de déconnexion
   logout(): void {
-    // Supprime le cookie lors de la déconnexion
     document.cookie = 'JWT_Token=; Secure; HttpOnly; SameSite=Strict; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
 
@@ -54,14 +72,13 @@ export class AuthService {
     const decodedCookies = decodeURIComponent(document.cookie);
     const cookieArr = decodedCookies.split(';');
 
-    // Chercher le cookie avec le nom correspondant et le retourner
     for (let i = 0; i < cookieArr.length; i++) {
-      let c = cookieArr[i].trim();  // Supprimer les espaces en début de chaîne
+      let c = cookieArr[i].trim();
       if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);  // Retourner le token
+        return c.substring(name.length, c.length);
       }
     }
-    return null;  // Aucun token trouvé
+    return null;
   }
 
   // Vérifier si l'utilisateur est authentifié

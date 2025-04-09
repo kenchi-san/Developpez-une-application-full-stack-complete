@@ -1,25 +1,40 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {JwtInterceptor} from "./guard/JwtInterceptor";
-import {LoginComponent} from "./pages/login/login.component";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './guard/JwtInterceptor';
 
+// Importation des composants standalone
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component'; // Importer ici, pas dans declarations
 
 @NgModule({
-  declarations: [AppComponent,HomeComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatInputModule,
     AppRoutingModule,
-    LoginComponent,MatSnackBarModule
+
+    // Importer les composants standalone ici
+    LoginComponent,  // Importer LoginComponent ici
+    RegisterComponent  // Importer RegisterComponent ici (pas dans declarations)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
