@@ -34,36 +34,38 @@ export class RegisterComponent {
   isLoading = false;
   errorMessage: string | null = null;
 
+  // Définition du formulaire réactif pour l'inscription
   registerForm: FormGroup = this.fb.group({
-    fullName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    fullName: ['', [Validators.required]],  // Nom complet
+    email: ['', [Validators.required, Validators.email]],  // Email valide
+    password: ['', [Validators.required, Validators.minLength(6)]],  // Mot de passe valide
   });
 
   onSubmit() {
     if (this.registerForm.valid) {
       this.isLoading = true;
-      this.errorMessage = null;
+      this.errorMessage = null; // Réinitialisation de l'erreur
 
-      // Appeler le service d'inscription
       this.authService.register(this.registerForm.value).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response) {
-            this.router.navigate(['/login']); // Redirige vers la page de connexion après une inscription réussie
+            this.router.navigate(['/login']);
           } else {
             this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer plus tard.';
-            this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });
+            this.snackBar.open(this.errorMessage || '', 'Fermer', { duration: 5000 });  // Corrigé ici
           }
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer plus tard.';
-          this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });
+          this.errorMessage = err?.error?.detail || 'Erreur lors de l\'inscription. Veuillez réessayer plus tard.';
+          this.snackBar.open(this.errorMessage || '', 'Fermer', { duration: 5000 });  // Corrigé ici
         }
       });
     }
   }
+
+
 
   // Méthode pour revenir à la page précédente
   goBack(): void {

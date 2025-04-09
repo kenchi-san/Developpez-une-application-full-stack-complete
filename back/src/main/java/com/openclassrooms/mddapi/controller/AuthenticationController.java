@@ -48,6 +48,7 @@ public class AuthenticationController {
             )
             @RequestBody RegisterUserDto registerUserDto) {
 
+
         User registeredUser = authenticationService.signup(registerUserDto);
         return ResponseEntity.ok(registeredUser);
     }
@@ -73,7 +74,6 @@ public class AuthenticationController {
 
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
         String jwtToken = jwtService.generateToken(authenticatedUser);
-System.out.println("toto"+loginUserDto);
         LoginResponse loginResponse = new LoginResponse()
                 .setToken(jwtToken)
                 .setExpiresIn(jwtService.getExpirationTime());

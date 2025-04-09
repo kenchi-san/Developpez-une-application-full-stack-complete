@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of,throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from "../../environments/environment";
 
@@ -34,25 +34,25 @@ export class AuthService {
     );
   }
 
-  // Méthode d'enregistrement
   register(userData: { fullName: string; email: string; password: string }): Observable<boolean> {
-    return this.http.post<{ message: string }>(`${this.apiUrl}/register`, userData).pipe(
+    return this.http.post<{ message: string }>(`${this.apiUrl}/signup`, userData).pipe(
       map(response => {
         if (response && response.message) {
           console.log('Inscription réussie:', response.message);
-          return true;  // Inscription réussie
+          return true;
         } else {
-          console.error('Réponse du serveur sans message', response);  // Débogage
-          return false;  // Pas de message de confirmation
+          console.error('Réponse du serveur sans message', response);
+          return false;
         }
       }),
       catchError(error => {
-        // Gérer les erreurs d'inscription
-        console.error('Erreur lors de l\'inscription:', error);  // Afficher l'erreur pour déboguer
-        return of(false);  // Retourner false en cas d'échec
+        console.error('Erreur lors de l\'inscription:', error);
+        return throwError(() => error);
       })
     );
   }
+
+
 
   // Méthode pour stocker le token dans un cookie sécurisé
   private setTokenInCookie(token: string): void {
