@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import {AuthGuard} from "./guard/AuthGuard";
+import { AuthGuard } from './guard/AuthGuard';  // Assurez-vous que ce fichier existe
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' }, // redirige vers home
+  { path: '', component: HomeComponent }, // Affiche directement la page d'accueil sans redirection
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   // { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }, // à réactiver quand prêt
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
   },
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' } // Si aucune route ne correspond, redirige vers la page d'accueil
 ];
 
 @NgModule({

@@ -1,27 +1,31 @@
-<!-- login.component.html -->
-<mat-card>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Nom d'utilisateur</mat-label>
-      <input matInput formControlName="email" />
-      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Nom d'utilisateur requis</mat-error>
-    </mat-form-field>
+<div class="login-container">
+  <mat-card class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2 class="login-title">Connexion</h2>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Mot de passe</mat-label>
-      <input matInput type="password" formControlName="password" />
-      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Mot de passe requis</mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>E-mail ou non d'utilisateur</mat-label>
+        <input matInput formControlName="email" type="email" />
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          Email requis
+        </mat-error>
+      </mat-form-field>
 
-    <div class="button-container">
-      <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" type="password" />
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Mot de passe requis
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="isLoading">
         Se connecter
       </button>
-    </div>
-  </form>
 
-  <!-- Affichage du message d'erreur -->
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
-</mat-card>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </mat-card>
+</div>

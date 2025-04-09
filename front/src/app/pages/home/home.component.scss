@@ -1,7 +1,91 @@
-.center {
-  height: 100vh;
+/* Container pour la page */
+.home-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  text-align: center;
+  background-color: #f4f4f4; /* Une couleur douce pour l'arrière-plan */
+}
+
+/* Conteneur du logo */
+.logo-container {
+  margin-bottom: 40px;
+  width: 100%; /* Prend toute la largeur disponible */
+}
+
+/* Logo : largeur dynamique en fonction de la taille de l'écran */
+.logo {
+  width: 100%; /* Le logo prend toute la largeur de son conteneur */
+  height: auto; /* Garder le ratio d'aspect du logo */
+  max-width: 400px; /* Limite la taille du logo pour les écrans plus larges */
+  margin: 0 auto; /* Centrer le logo */
+}
+
+/* Conteneur des boutons */
+.button-container {
+  display: flex;
+  flex-direction: column; /* Par défaut, les boutons sont empilés en colonne */
+  gap: 20px;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  width: 100%;
+  max-width: 400px; /* Limite la largeur des boutons pour les écrans larges */
+}
+
+/* Style des boutons */
+.home-button {
+  background-color: white;
+  color: #000;
+  width: 100%; /* Les boutons prennent la largeur totale de leur conteneur */
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  box-shadow: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 5px;
+}
+
+/* Effet au survol des boutons */
+.home-button:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design : adaptabilité sur les petits écrans */
+@media (max-width: 600px) {
+  .home-container {
+    padding: 10px;
+  }
+
+  .logo {
+    width: 100%; /* Le logo prend toute la largeur disponible sur mobile */
+    max-width: 300px; /* Limite la taille du logo sur mobile */
+  }
+
+  .button-container {
+    width: 100%;
+  }
+
+  .home-button {
+    font-size: 14px; /* Réduit la taille du texte sur les petits écrans */
+    padding: 12px; /* Réduit le padding sur les petits écrans */
+  }
+}
+
+/* En grand écran (ordinateur), les boutons s'affichent horizontalement */
+@media (min-width: 600px) {
+  .button-container {
+    flex-direction: row; /* Change la direction des boutons en ligne */
+    gap: 20px; /* Ajoute un espacement entre les boutons */
+  }
+
+  .home-button {
+    width: auto; /* Ajuste la largeur des boutons en fonction de leur contenu */
+    flex: 1; /* Les boutons se partagent la largeur disponible */
+    border-radius: 10px; /* Arrondir les coins des boutons */
+    border: black solid 1px; /* Bordure noire pour les boutons */
+  }
 }
