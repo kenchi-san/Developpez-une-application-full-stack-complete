@@ -54,11 +54,20 @@ export class AuthService {
 
 
 
-  // Méthode pour stocker le token dans un cookie sécurisé
   private setTokenInCookie(token: string): void {
     const expires = new Date();
-    expires.setHours(expires.getHours() + 1); // Token valide pendant 1 heure
-    document.cookie = `JWT_Token=${token}; Secure; HttpOnly; SameSite=Strict; path=/; expires=${expires.toUTCString()}`;
+    expires.setHours(expires.getHours() + 3);
+    const cookieAttributes = [
+      `JWT_Token=${token}`,
+      `Secure`,  // Le cookie est envoyé uniquement sur des connexions HTTPS
+      `HttpOnly`,  // Le cookie n'est pas accessible via JavaScript
+      `SameSite=Strict`,  // Le cookie n'est envoyé que si la requête provient du même site
+      `path=/`,  // Le cookie est disponible pour toutes les pages du site
+      `expires=${expires.toUTCString()}`  // Définir la date d'expiration du cookie
+    ].join('; ');
+
+    // Assure-toi que le cookie est ajouté correctement
+    document.cookie = cookieAttributes;
   }
 
   // Méthode de déconnexion

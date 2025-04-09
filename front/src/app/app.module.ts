@@ -14,12 +14,14 @@ import { JwtInterceptor } from './guard/JwtInterceptor';
 
 // Importation des composants standalone
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component'; // Importer ici, pas dans declarations
+import { RegisterComponent } from './pages/register/register.component';
+import { IntraPageComponent } from './pages/intra-page/intra-page.component'; // Importer ici, pas dans declarations
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    IntraPageComponent,
   ],
   imports: [
     BrowserModule,
