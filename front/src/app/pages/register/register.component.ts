@@ -51,9 +51,6 @@ export class RegisterComponent {
           this.isLoading = false;
           if (response) {
             this.router.navigate(['/login']);
-          } else {
-            this.errorMessage = 'Erreur lors de l\'inscription. Veuillez réessayer plus tard.';
-            this.snackBar.open(this.errorMessage || '', 'Fermer', { duration: 5000 });  // Corrigé ici
           }
         },
         error: (err) => {
