@@ -1,4 +1,9 @@
 <div class="login-container">
+  <!-- Bouton retour avec flèche -->
+  <button mat-icon-button class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon> <!-- Icône de flèche vers la gauche -->
+  </button>
+
   <mat-card class="login-card">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2 class="login-title">Connexion</h2>

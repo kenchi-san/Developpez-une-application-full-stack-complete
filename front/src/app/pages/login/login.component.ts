@@ -6,7 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {AuthService} from "../../service/AuthService";  // Importer MatSnackBar
+import { AuthService } from "../../service/AuthService";
+import { MatIconModule } from "@angular/material/icon";  // Importer MatSnackBar
+import { Location } from '@angular/common';  // Importer Location pour la navigation
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ import {AuthService} from "../../service/AuthService";  // Importer MatSnackBar
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -25,7 +28,8 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private snackBar = inject(MatSnackBar);  // Injection du service MatSnackBar
+  private snackBar = inject(MatSnackBar);
+  private location = inject(Location);  // Injection du service Location
 
   isLoading = false;
   errorMessage: string | null = null;
@@ -48,15 +52,20 @@ export class LoginComponent {
             this.router.navigate(['/home']);  // Redirige vers la page protégée après une connexion réussie
           } else {
             this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
-            this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });  // Afficher le message d'erreur avec MatSnackBar
+            this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });
           }
         },
         error: (err) => {
           this.isLoading = false;
           this.errorMessage = 'Erreur lors de la connexion. Veuillez réessayer plus tard.';
-          this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });  // Afficher le message d'erreur avec MatSnackBar
+          this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });
         }
       });
     }
+  }
+
+  // Méthode pour revenir à la page précédente
+  goBack(): void {
+    this.location.back();  // Utilise Location pour revenir à la page précédente
   }
 }

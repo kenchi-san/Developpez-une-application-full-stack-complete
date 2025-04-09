@@ -1,24 +1,42 @@
+/* Style pour la carte de connexion */
 .login-card {
   max-width: 400px;
   margin: 100px auto;
   padding: 20px;
+  position: relative;  /* Nécessaire pour positionner correctement la flèche */
 }
 
+/* Style pour le bouton retour */
+.back-button {
+  position: absolute;
+  top: 20px;  /* Ajuste la position de la flèche */
+  left: 20px; /* Distance du bord gauche */
+  z-index: 10;  /* S'assurer que le bouton est au-dessus de la carte */
+  color: #3f51b5; /* Couleur du bouton (peut être ajusté) */
+  font-size: 40px; /* Taille de l'icône (augmentée) */
+  background: none; /* Pas de fond pour le bouton */
+  border: none;  /* Pas de bordure */
+}
+
+/* Largeur 100% pour les éléments du formulaire */
 .full-width {
   width: 100%;
   margin-bottom: 16px;
 }
 
+/* Style du titre de la page */
 h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Style pour les actions de la page de connexion */
 .login-actions {
   text-align: center;
   margin-top: 20px;
 }
 
+/* Style des messages d'erreur */
 .error-message {
   color: red;
   font-size: 14px;

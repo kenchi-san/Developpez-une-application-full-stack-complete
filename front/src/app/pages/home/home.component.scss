@@ -10,6 +10,17 @@
   background-color: #f4f4f4; /* Une couleur douce pour l'arrière-plan */
 }
 
+/* Le cadre autour de la section logo et boutons */
+.home-card {
+  background-color: white;
+  padding: 40px;
+  border: 2px solid #ddd;  /* Bordure autour du cadre */
+  border-radius: 8px;  /* Coins arrondis du cadre */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Ombre douce autour du cadre */
+  width: 100%;  /* S'assure que le cadre prend toute la largeur */
+  max-width: 450px;  /* Limite la largeur du cadre pour les grands écrans */
+}
+
 /* Conteneur du logo */
 .logo-container {
   margin-bottom: 40px;
@@ -32,7 +43,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 400px; /* Limite la largeur des boutons pour les écrans larges */
 }
 
 /* Style des boutons */
