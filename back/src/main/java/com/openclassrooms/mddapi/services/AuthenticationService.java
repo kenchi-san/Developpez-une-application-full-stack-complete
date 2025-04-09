@@ -41,6 +41,11 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
+        // Vérifier si l'email existe déjà
+        if (userRepository.existsByEmail(input.getEmail())) {
+            throw new IllegalArgumentException("Un utilisateur avec cet email existe déjà.");
+        }
+
         // Affichage des données reçues pour le débogage
         System.out.println("Données reçues : " + input.toString());
 
@@ -61,7 +66,8 @@ public class AuthenticationService {
                 )
         );
 
+        // Récupérer l'utilisateur ou lancer une exception avec un message d'erreur
         return userRepository.findByEmail(input.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Email ou mot de passe incorrect"));
     }
 }
