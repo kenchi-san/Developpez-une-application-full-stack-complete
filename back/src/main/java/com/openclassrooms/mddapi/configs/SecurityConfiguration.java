@@ -32,29 +32,37 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)  // Désactiver la protection CSRF (utile pour les API stateless)
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Pas de gestion de session (utile pour les API REST)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated())
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        .requestMatchers("/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Permet l'accès aux routes publiques
+                        .anyRequest().authenticated())  // Autres routes nécessitent une authentification
+                .authenticationProvider(authenticationProvider)  // Ajout de votre provider d'authentification
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Ajout du filtre JWT avant l'authentification standard
 
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8081"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        // Autoriser l'origine du frontend Angular
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
 
+        // Autoriser certaines méthodes HTTP
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+
+        // Autoriser certains en-têtes
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+
+        // Permettre la gestion des cookies entre différentes origines (si nécessaire)
+        configuration.setAllowCredentials(true);
+
+        // Créez une instance de UrlBasedCorsConfigurationSource pour appliquer cette configuration
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);  // Applique CORS à toutes les routes
 
         return source;
     }

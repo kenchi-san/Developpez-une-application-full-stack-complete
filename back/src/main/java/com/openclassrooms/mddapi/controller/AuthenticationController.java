@@ -14,13 +14,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Authentification", description = "Endpoints liés à l'inscription et la connexion")
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:4200")  // Autoriser l'accès depuis Angular
 @RestController
 public class AuthenticationController {
     private final JwtService jwtService;
@@ -75,7 +73,7 @@ public class AuthenticationController {
 
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
         String jwtToken = jwtService.generateToken(authenticatedUser);
-
+System.out.println("toto"+loginUserDto);
         LoginResponse loginResponse = new LoginResponse()
                 .setToken(jwtToken)
                 .setExpiresIn(jwtService.getExpirationTime());
