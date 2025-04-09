@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import {AuthGuard} from "./guard/AuthGuard";
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
-const routes: Routes = [{ path: '', component: HomeComponent }];
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // redirige vers home
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  // { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }, // à réactiver quand prêt
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+  },
+  { path: '**', redirectTo: 'home' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
