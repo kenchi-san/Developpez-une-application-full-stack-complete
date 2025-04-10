@@ -10,4 +10,6 @@ public class ThemeDto {
     private long id;
     @Schema(description = "Nom du thème")
     private String name;
+    @Schema(description = "description")
+    private String description;
 }
