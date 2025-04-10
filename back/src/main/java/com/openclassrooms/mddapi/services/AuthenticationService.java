@@ -40,12 +40,10 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
-        if (userRepository.existsByEmail(input.getEmail())) {
-            throw new IllegalArgumentException("Un utilisateur avec cet email existe déjà.");
+        if (userRepository.existsByEmail(input.getEmail()) || userRepository.existsByFullName(input.getEmail())) {
+            throw new IllegalArgumentException("Un utilisateur avec cet email ou nom complet existe déjà.");
         }
 
-
-        // Création et enregistrement de l'utilisateur
         User user = new User()
                 .setFullName(input.getFullName())
                 .setEmail(input.getEmail())
