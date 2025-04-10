@@ -1,0 +1,88 @@
+/* Centrer la page */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Prend toute la hauteur de la page */
+  padding: 0 20px; /* Un peu d'espace à gauche et à droite pour éviter que le formulaire ne touche les bords */
+  background-color: #f4f4f4; /* Couleur de fond douce */
+  position: relative; /* Pour positionner la flèche */
+}
+
+/* Flèche de retour à gauche */
+.back-arrow-container {
+  position: absolute;
+  top: 20px; /* Positionner la flèche en haut */
+  left: 20px; /* Positionner la flèche à gauche */
+  z-index: 10; /* Assurez-vous que la flèche est toujours au-dessus du contenu */
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px; /* Limite la taille de la carte */
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte */
+  border-radius: 8px; /* Coins arrondis */
+  background-color: #ffffff; /* Fond blanc pour la carte */
+}
+
+/* Titre du formulaire */
+.register-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Formulaire (chaque champ dans une colonne) */
+.mat-form-field {
+  width: 100%; /* Chaque champ prend toute la largeur de la carte */
+  margin-bottom: 15px; /* Espace entre les champs */
+}
+
+/* Style du bouton "S'inscrire" */
+button.full-width {
+  width: 100%; /* Le bouton prend toute la largeur de la carte */
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 5px; /* Coins arrondis pour le bouton */
+}
+
+/* Message d'erreur */
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .register-container {
+    padding: 0 10px; /* Réduit l'espace de padding sur mobile */
+  }
+
+  .register-card {
+    padding: 15px;
+    max-width: 100%; /* Permet au formulaire de s'ajuster à l'écran */
+  }
+
+  .register-title {
+    font-size: 20px; /* Réduit la taille du titre sur mobile */
+  }
+
+  .mat-form-field {
+    margin-bottom: 10px; /* Réduit l'espace entre les champs */
+  }
+
+  button.full-width {
+    padding: 10px;
+    font-size: 14px; /* Réduit la taille du texte du bouton sur mobile */
+  }
+
+  .back-arrow-container {
+    top: 10px; /* Positionne la flèche plus haut sur mobile */
+    left: 10px; /* Positionne la flèche à gauche sur mobile */
+  }
+}
