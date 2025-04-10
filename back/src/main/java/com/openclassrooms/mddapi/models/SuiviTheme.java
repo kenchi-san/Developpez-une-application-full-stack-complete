@@ -19,5 +19,5 @@ public class SuiviTheme {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "theme", referencedColumnName = "id")  // Spécifie le nom de la colonne dans la DB
-    private NomenclatureTheme theme;  // Renamed from theme_id to theme
+    private Theme theme;  // Renamed from theme_id to theme
 }
