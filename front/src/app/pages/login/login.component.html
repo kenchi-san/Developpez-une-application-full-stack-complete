@@ -1,15 +1,25 @@
+<!-- Navbar visible uniquement en mode desktop -->
+<div class="navbar" *ngIf="isDesktop">
+  <div class="navbar-logo">
+    <img src="assets/logo_p6.png" alt="Logo" class="navbar-logo-img" />
+  </div>
+</div>
 <div class="login-container">
-  <!-- Bouton retour avec flèche -->
-  <button mat-icon-button class="back-button" (click)="goBack()">
-    <mat-icon>arrow_back</mat-icon> <!-- Icône de flèche vers la gauche -->
-  </button>
 
   <mat-card class="login-card">
+    <!-- Bouton retour avec flèche -->
+    <button mat-icon-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon> <!-- Icône de flèche vers la gauche -->
+    </button>
+    <!-- Logo visible uniquement en mode mobile -->
+    <img src="assets/logo_p6.png" alt="Logo" class="login-logo" />
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h2 class="login-title">Connexion</h2>
+      <h2 class="login-title">Se connecter</h2>
+
+
 
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>E-mail ou non d'utilisateur</mat-label>
+        <mat-label>E-mail ou nom d'utilisateur</mat-label>
         <input matInput formControlName="email" type="text" />
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
           Email requis

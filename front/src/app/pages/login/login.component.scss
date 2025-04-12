@@ -1,9 +1,25 @@
+/* Style global du conteneur de la page */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  height: 100vh; /* Utilise toute la hauteur de la fenêtre */
+  padding: 20px;
+  text-align: center;
+  background-color: #f4f4f4; /* Fond léger pour toute la page */
+}
+
 /* Style pour la carte de connexion */
 .login-card {
   max-width: 400px;
-  margin: 100px auto;
+  width: 100%; /* Assure que la carte prend toute la largeur possible sans dépasser 400px */
   padding: 20px;
   position: relative;  /* Nécessaire pour positionner correctement la flèche */
+  background-color: white; /* Fond blanc pour la carte */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte */
+  margin-top: 20px; /* Petit espace entre le logo et la carte */
 }
 
 /* Style pour le bouton retour */
@@ -30,6 +46,22 @@ h2 {
   margin-bottom: 20px;
 }
 
+/* Logo visible uniquement sur mobile */
+.login-logo {
+  display: none;  /* Masqué par défaut */
+  width: 100%;  /* Largeur du logo égale à la largeur de son parent */
+  max-width: 60%;  /* Limite la largeur du logo pour qu'il ne devienne pas trop grand */
+  margin: 0 auto 20px;  /* Centré et espacé au-dessus des champs */
+  height: auto; /* Assure que la hauteur s'ajuste automatiquement selon la largeur */
+}
+
+/* Affichage du logo seulement en mode mobile */
+@media screen and (max-width: 600px) {
+  .login-logo {
+    display: block;
+  }
+}
+
 /* Style pour les actions de la page de connexion */
 .login-actions {
   text-align: center;
@@ -42,4 +74,76 @@ h2 {
   font-size: 14px;
   text-align: center;
   margin-top: 10px;
+}
+/* Style global de la navbar */
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Aligne le contenu à gauche */
+  align-items: center;
+  padding: 15px 20px;
+  background-color: white; /* Couleur de fond de la navbar */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Logo dans la navbar */
+.navbar-logo {
+  margin-right: 20px; /* Espacement entre le logo et le titre */
+}
+
+.navbar-logo-img {
+  height: 7rem; /* Taille du logo */
+  width: auto;
+}
+
+
+/* Cacher la navbar en mode mobile */
+@media (max-width: 600px) {
+  .navbar {
+    display: none; /* Masque la navbar en mobile */
+  }
+}
+
+.login-container {
+  padding-top: 80px; /* Espacement en haut pour la navbar fixe */
+}
+
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 0 10px; /* Réduit l'espace de padding sur mobile */
+  }
+
+  /* Affiche le logo seulement sur mobile */
+  .logo-container {
+    display: block;
+    margin-bottom: 30px; /* Espacement supplémentaire sous le logo */
+  }
+
+  .login-logo {
+    width: 60%; /* Réduit la largeur du logo sur mobile */
+    max-width: 150px; /* Limite la taille du logo sur mobile */
+  }
+
+  .login-title {
+    font-size: 20px; /* Réduit la taille du titre sur mobile */
+  }
+
+  .mat-form-field {
+    margin-bottom: 10px; /* Réduit l'espace entre les champs */
+  }
+
+  button.full-width {
+    padding: 10px;
+    font-size: 14px; /* Réduit la taille du texte du bouton sur mobile */
+  }
+
+  .back-arrow-container {
+    top: 10px; /* Positionne la flèche plus haut sur mobile */
+    left: 10px; /* Positionne la flèche à gauche sur mobile */
+  }
 }

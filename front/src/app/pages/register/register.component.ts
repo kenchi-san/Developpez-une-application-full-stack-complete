@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,7 @@ import { Location } from '@angular/common';  // Importer Location pour la naviga
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -41,6 +41,27 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],  // Mot de passe valide
   });
 
+  // Variable pour gérer l'affichage du logo et de la navbar en mode desktop
+  isDesktop: boolean = true;
+
+  ngOnInit(): void {
+    this.checkScreenWidth();  // Vérifie la largeur de l'écran au chargement du composant
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenWidth();  // Vérifie la largeur de l'écran à chaque redimensionnement
+  }
+
+  // Méthode pour vérifier la largeur de l'écran et ajuster isDesktop
+  checkScreenWidth() {
+    if (window.innerWidth >= 600) {
+      this.isDesktop = true;  // Affiche la navbar si l'écran est assez large (desktop)
+    } else {
+      this.isDesktop = false;  // Cache la navbar si l'écran est trop petit (mobile)
+    }
+  }
+
   onSubmit() {
     if (this.registerForm.valid) {
       this.isLoading = true;
@@ -56,13 +77,11 @@ export class RegisterComponent {
         error: (err) => {
           this.isLoading = false;
           this.errorMessage = err?.error?.detail || 'Erreur lors de l\'inscription. Veuillez réessayer plus tard.';
-          this.snackBar.open(this.errorMessage || '', 'Fermer', { duration: 5000 });  // Corrigé ici
+          this.snackBar.open(this.errorMessage || '', 'Fermer', { duration: 5000 });
         }
       });
     }
   }
-
-
 
   // Méthode pour revenir à la page précédente
   goBack(): void {

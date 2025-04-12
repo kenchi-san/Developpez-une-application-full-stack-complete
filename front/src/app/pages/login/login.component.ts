@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,7 @@ import { Location } from '@angular/common';  // Importer Location pour la naviga
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -38,6 +38,27 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+
+  // Variable pour gérer l'affichage de la navbar en mode desktop
+  isDesktop: boolean = true;
+
+  ngOnInit(): void {
+    this.checkScreenWidth();  // Vérifie la largeur de l'écran au chargement du composant
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenWidth();  // Vérifie la largeur de l'écran à chaque redimensionnement
+  }
+
+  // Méthode pour vérifier la largeur de l'écran et ajuster isDesktop
+  checkScreenWidth() {
+    if (window.innerWidth >= 600) {
+      this.isDesktop = true;  // Affiche la navbar si l'écran est assez large (desktop)
+    } else {
+      this.isDesktop = false;  // Cache la navbar si l'écran est trop petit (mobile)
+    }
+  }
 
   onSubmit() {
     if (this.loginForm.valid) {

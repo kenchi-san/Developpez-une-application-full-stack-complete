@@ -1,10 +1,11 @@
 /* Centrer la page */
 .register-container {
   display: flex;
+  flex-direction: column; /* Empile le logo, le titre et le formulaire */
   justify-content: center;
   align-items: center;
   height: 100vh; /* Prend toute la hauteur de la page */
-  padding: 0 20px; /* Un peu d'espace à gauche et à droite pour éviter que le formulaire ne touche les bords */
+  padding: 0 20px; /* Un peu d'espace à gauche et à droite */
   background-color: #f4f4f4; /* Couleur de fond douce */
   position: relative; /* Pour positionner la flèche */
 }
@@ -17,13 +18,19 @@
   z-index: 10; /* Assurez-vous que la flèche est toujours au-dessus du contenu */
 }
 
-.register-card {
+/* Conteneur du logo */
+.logo-container {
+  display: none; /* Masqué par défaut */
   width: 100%;
-  max-width: 400px; /* Limite la taille de la carte */
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte */
-  border-radius: 8px; /* Coins arrondis */
-  background-color: #ffffff; /* Fond blanc pour la carte */
+  text-align: center;
+  margin-bottom: 20px; /* Espacement sous le logo */
+}
+
+/* Logo visible uniquement sur mobile */
+.register-logo {
+  width: 80%; /* Le logo occupe 80% de la largeur du conteneur */
+  max-width: 200px; /* Limite la largeur du logo sur les grands écrans */
+  height: auto; /* Maintien le ratio d'aspect du logo */
 }
 
 /* Titre du formulaire */
@@ -34,15 +41,25 @@
   color: #333;
 }
 
+/* Formulaire sans cadre */
+form {
+  width: 100%;
+  max-width: 400px; /* Limite la largeur du formulaire */
+  padding: 20px;
+  background-color: #ffffff; /* Fond blanc pour le formulaire */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce autour du formulaire */
+}
+
 /* Formulaire (chaque champ dans une colonne) */
 .mat-form-field {
-  width: 100%; /* Chaque champ prend toute la largeur de la carte */
+  width: 100%; /* Chaque champ prend toute la largeur du formulaire */
   margin-bottom: 15px; /* Espace entre les champs */
 }
 
 /* Style du bouton "S'inscrire" */
 button.full-width {
-  width: 100%; /* Le bouton prend toute la largeur de la carte */
+  width: 100%; /* Le bouton prend toute la largeur du formulaire */
   padding: 12px;
   font-size: 16px;
   margin-top: 20px;
@@ -56,16 +73,58 @@ button.full-width {
   text-align: center;
   margin-top: 10px;
 }
+/* Style global de la navbar */
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Aligne le contenu à gauche */
+  align-items: center;
+  padding: 15px 20px;
+  background-color: white; /* Couleur de fond de la navbar */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
+/* Logo dans la navbar */
+.navbar-logo {
+  margin-right: 20px; /* Espacement entre le logo et le titre */
+}
+
+.navbar-logo-img {
+  height: 7rem; /* Taille du logo */
+  width: auto;
+}
+
+
+
+/* Cacher la navbar en mode mobile */
+@media (max-width: 600px) {
+  .navbar {
+    display: none; /* Masque la navbar en mobile */
+  }
+}
+
+/* Style de la page de formulaire (Login/Register) */
+.register-container {
+  padding-top: 80px; /* Espacement en haut pour la navbar fixe */
+}
 /* Responsive design */
 @media (max-width: 600px) {
   .register-container {
     padding: 0 10px; /* Réduit l'espace de padding sur mobile */
   }
 
-  .register-card {
-    padding: 15px;
-    max-width: 100%; /* Permet au formulaire de s'ajuster à l'écran */
+  /* Affiche le logo seulement sur mobile */
+  .logo-container {
+    display: block;
+    margin-bottom: 30px; /* Espacement supplémentaire sous le logo */
+  }
+
+  .register-logo {
+    width: 60%; /* Réduit la largeur du logo sur mobile */
+    max-width: 150px; /* Limite la taille du logo sur mobile */
   }
 
   .register-title {
