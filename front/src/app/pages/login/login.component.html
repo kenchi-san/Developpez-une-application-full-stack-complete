@@ -10,7 +10,7 @@
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>E-mail ou non d'utilisateur</mat-label>
-        <input matInput formControlName="email" type="email" />
+        <input matInput formControlName="email" type="text" />
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
           Email requis
         </mat-error>

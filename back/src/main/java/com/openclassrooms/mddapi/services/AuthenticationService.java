@@ -9,6 +9,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
@@ -35,17 +38,23 @@ public class AuthenticationService {
                     "(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'`~<>.,?/\\\\|])" + // au moins un caractère spécial
                     "(?=\\S+$).{8,}$";                  // pas d'espaces, min 8 caractères
 
+
     public User signup(RegisterUserDto input) {
+        Pattern pattern = Pattern.compile("(?i)(<script|</script|\\bon\\w+=|alert\\(|<\\/?\\w+>|\\bSELECT\\b|\\bINSERT\\b|\\bDELETE\\b|\\bUPDATE\\b|\\bDROP\\b|\\bEXEC\\b)");
+        Matcher matcher = pattern.matcher(input.getEmail());
+        if (matcher.find()) {
+            throw new IllegalArgumentException("Entrée interdite : tentative de code détectée.");
+        }
         if (input.getPassword() == null || !input.getPassword().matches(PASSWORD_REGEX)) {
             throw new IllegalArgumentException("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
-        if (userRepository.existsByEmail(input.getEmail()) || userRepository.existsByFullName(input.getEmail())) {
+        if (userRepository.existsByEmail(input.getEmail()) || userRepository.existsByFullName(input.getEmail().replaceAll("\\s+", "_"))) {
             throw new IllegalArgumentException("Un utilisateur avec cet email ou nom complet existe déjà.");
         }
 
         User user = new User()
-                .setFullName(input.getFullName())
+                .setFullName(input.getFullName().replaceAll("\\s+", "_"))
                 .setEmail(input.getEmail())
                 .setPassword(passwordEncoder.encode(input.getPassword()));
 
@@ -53,18 +62,26 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDto input) {
-        String email = input.getEmail().trim();
+        String rawInput = input.getEmail().trim();
         String password = input.getPassword();
 
-        User user = userRepository.findByEmail(email)
-                .orElseGet(() -> userRepository.findByFullName(email)
-                        .orElseThrow(()->new IllegalArgumentException("Identifiant ou mot de passe incorrect")));
+        // Vérifie si c'est un email
+        boolean isEmail = rawInput.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
+        // Si ce n'est pas un email, on remplace les espaces par des "_"
+        String searchKey = isEmail ? rawInput : rawInput.replaceAll("\\s+", "_");
+
+        User user = isEmail
+                ? userRepository.findByEmail(searchKey)
+                .orElseThrow(() -> new IllegalArgumentException("Identifiant ou mot de passe incorrect"))
+                : userRepository.findByFullName(searchKey)
+                .orElseThrow(() -> new IllegalArgumentException("Identifiant ou mot de passe incorrect"));
+
+        // Authentification (toujours par l’email, car c’est ce que Spring Security attend)
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), password)
         );
 
         return user;
     }
-
 }
