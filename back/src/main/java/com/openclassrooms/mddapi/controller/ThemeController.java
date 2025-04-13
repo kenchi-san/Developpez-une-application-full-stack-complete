@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Theme", description = "Gestion des thèmes")
 @RestController
+@CrossOrigin(maxAge = 3600,origins = "http://localhost:4200")
 @RequestMapping("/themes")
 public class ThemeController {
 

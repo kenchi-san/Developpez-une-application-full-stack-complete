@@ -1,0 +1,147 @@
+/* Centrer la page */
+.register-container {
+  display: flex;
+  flex-direction: column; /* Empile le logo, le titre et le formulaire */
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Prend toute la hauteur de la page */
+  padding: 0 20px; /* Un peu d'espace à gauche et à droite */
+  background-color: #f4f4f4; /* Couleur de fond douce */
+  position: relative; /* Pour positionner la flèche */
+}
+
+/* Flèche de retour à gauche */
+.back-arrow-container {
+  position: absolute;
+  top: 20px; /* Positionner la flèche en haut */
+  left: 20px; /* Positionner la flèche à gauche */
+  z-index: 10; /* Assurez-vous que la flèche est toujours au-dessus du contenu */
+}
+
+/* Conteneur du logo */
+.logo-container {
+  display: none; /* Masqué par défaut */
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px; /* Espacement sous le logo */
+}
+
+/* Logo visible uniquement sur mobile */
+.register-logo {
+  width: 80%; /* Le logo occupe 80% de la largeur du conteneur */
+  max-width: 200px; /* Limite la largeur du logo sur les grands écrans */
+  height: auto; /* Maintien le ratio d'aspect du logo */
+}
+
+/* Titre du formulaire */
+.register-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Formulaire sans cadre */
+form {
+  width: 100%;
+  max-width: 400px; /* Limite la largeur du formulaire */
+  padding: 20px;
+  background-color: #ffffff; /* Fond blanc pour le formulaire */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce autour du formulaire */
+}
+
+/* Formulaire (chaque champ dans une colonne) */
+.mat-form-field {
+  width: 100%; /* Chaque champ prend toute la largeur du formulaire */
+  margin-bottom: 15px; /* Espace entre les champs */
+}
+
+/* Style du bouton "S'inscrire" */
+button.full-width {
+  width: 100%; /* Le bouton prend toute la largeur du formulaire */
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 5px; /* Coins arrondis pour le bouton */
+}
+
+/* Message d'erreur */
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+/* Style global de la navbar */
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Aligne le contenu à gauche */
+  align-items: center;
+  padding: 15px 20px;
+  background-color: white; /* Couleur de fond de la navbar */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Logo dans la navbar */
+.navbar-logo {
+  margin-right: 20px; /* Espacement entre le logo et le titre */
+}
+
+.navbar-logo-img {
+  height: 7rem; /* Taille du logo */
+  width: auto;
+}
+
+
+
+/* Cacher la navbar en mode mobile */
+@media (max-width: 600px) {
+  .navbar {
+    display: none; /* Masque la navbar en mobile */
+  }
+}
+
+/* Style de la page de formulaire (Login/Register) */
+.register-container {
+  padding-top: 80px; /* Espacement en haut pour la navbar fixe */
+}
+/* Responsive design */
+@media (max-width: 600px) {
+  .register-container {
+    padding: 0 10px; /* Réduit l'espace de padding sur mobile */
+  }
+
+  /* Affiche le logo seulement sur mobile */
+  .logo-container {
+    display: block;
+    margin-bottom: 30px; /* Espacement supplémentaire sous le logo */
+  }
+
+  .register-logo {
+    width: 60%; /* Réduit la largeur du logo sur mobile */
+    max-width: 150px; /* Limite la taille du logo sur mobile */
+  }
+
+  .register-title {
+    font-size: 20px; /* Réduit la taille du titre sur mobile */
+  }
+
+  .mat-form-field {
+    margin-bottom: 10px; /* Réduit l'espace entre les champs */
+  }
+
+  button.full-width {
+    padding: 10px;
+    font-size: 14px; /* Réduit la taille du texte du bouton sur mobile */
+  }
+
+  .back-arrow-container {
+    top: 10px; /* Positionne la flèche plus haut sur mobile */
+    left: 10px; /* Positionne la flèche à gauche sur mobile */
+  }
+}

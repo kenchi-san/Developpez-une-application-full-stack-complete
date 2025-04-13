@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @Tag(name = "User", description = "Endpoints liés à la gestion des utilisateurs")
 @RequestMapping("/users")
+@CrossOrigin(maxAge = 3600,origins = "http://localhost:4200")
 @RestController
 public class UserController {
     private final UserService userService;
