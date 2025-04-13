@@ -11,7 +11,7 @@
 
 .article-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);  // Par défaut, 2 articles par ligne
   gap: 16px;
 }
 
@@ -25,6 +25,7 @@ mat-card {
   flex-direction: column;
   padding: 16px;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 mat-card-title {
@@ -44,8 +45,57 @@ mat-card-content {
   font-size: 14px;
   color: gray;
   margin-bottom: 8px;
+  flex-wrap: wrap;  // Permet aux éléments de se déplacer sur plusieurs lignes si nécessaire
+  gap: 8px;  // Ajout d'espace entre les éléments
+
+  .author,
+  .date {
+    display: inline-block;
+    white-space: nowrap;  // Pour éviter que le texte se brise
+  }
 
   .author {
     font-weight: bold;
+  }
+
+  .date {
+    font-weight: bold;
+  }
+}
+
+// Médias queries pour une meilleure responsivité
+@media (max-width: 1200px) {
+  .article-list {
+    grid-template-columns: repeat(2, 1fr);  // Toujours 2 articles, mais mieux espacé sur les grands écrans
+  }
+}
+
+@media (max-width: 768px) {
+  .article-list {
+    grid-template-columns: 1fr;  // Sur les écrans plus petits (tablettes, mobiles), un seul article par ligne
+  }
+
+  .create-article-btn {
+    width: 100%;  // Le bouton prend toute la largeur de l'écran
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-meta {
+    justify-content: flex-start;  // Garde la date et l'auteur sur la même ligne
+    gap: 12px;  // Espacement entre les éléments
+  }
+
+  .article-card {
+    padding: 12px;
+  }
+
+  mat-card-title {
+    font-size: 16px;
+  }
+
+  mat-card-content {
+    font-size: 14px;
   }
 }
