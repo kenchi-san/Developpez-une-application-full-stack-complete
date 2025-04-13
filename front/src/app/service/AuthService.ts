@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -38,35 +38,30 @@ export class AuthService {
     return this.http.post<{ message: string }>(`${this.apiUrl}/signup`, userData).pipe(
       map(response => {
         if (response && response.message) {
-          console.log('Inscription réussie:', response.message);
           return true;
         } else {
-          console.error('Réponse du serveur sans message', response);
           return false;
         }
       }),
       catchError(error => {
-        console.error('Erreur lors de l\'inscription:', error);
-        return throwError(() => error);  // Renvoi d'une erreur au composant
+        return of(false);  // Retourner false en cas d'échec au lieu de throwError pour uniformiser la réponse
       })
     );
   }
 
   private setTokenInCookie(token: string, expiresIn: number): void {
     const expires = new Date();
-    expires.setMilliseconds(expires.getMilliseconds() + (expiresIn * 1000));  // Convertir expiresIn en millisecondes
+    expires.setMilliseconds(expires.getMilliseconds() + (expiresIn * 1000));
 
     const cookieAttributes = [
       `JWT_Token=${token}`,
-      `Secure`,  // Le cookie est envoyé uniquement sur des connexions HTTPS
-       // `HttpOnly`,  // Le cookie n'est pas accessible via JavaScript
-      `SameSite=Strict`,  // Le cookie n'est envoyé que si la requête provient du même site
+      // 'Secure',  // Le cookie est envoyé uniquement sur des connexions HTTPS
+      'SameSite=Strict',  // Le cookie n'est envoyé que si la requête provient du même site
       `path=/`,  // Le cookie est disponible pour toutes les pages du site
-      `expires=${expires.toUTCString()}`  // Définir la date d'expiration du cookie
+      `expires=${expires.toUTCString()}`,  // Définir la date d'expiration du cookie
+      // 'HttpOnly'  // Le cookie n'est pas accessible via JavaScript
     ].join('; ');
-    console.log(cookieAttributes);
 
-    // Assurer que le cookie est ajouté correctement
     document.cookie = cookieAttributes;
   }
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/article")
+@CrossOrigin(maxAge = 3600,origins = "http://localhost:4200")
 @Tag(name = "Article", description = "Endpoints liés à la gestion des articles")
 public class ArticleController {
 

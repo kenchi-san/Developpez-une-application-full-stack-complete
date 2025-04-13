@@ -10,12 +10,12 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './guard/JwtInterceptor';
 
 // Importation des composants standalone
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { IntraPageComponent } from './pages/intra-page/intra-page.component'; // Importer ici, pas dans declarations
+import { IntraPageComponent } from './pages/intra-page/intra-page.component';
+import {JwtInterceptor} from "./interceptor/JwtInterceptor"; // Importer ici, pas dans declarations
 
 @NgModule({
   declarations: [
@@ -39,8 +39,11 @@ import { IntraPageComponent } from './pages/intra-page/intra-page.component'; //
     RegisterComponent  // Importer RegisterComponent ici (pas dans declarations)
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-  ],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,  // Utiliser l'intercepteur JWT
+      multi: true,  // Permet de chaîner plusieurs intercepteurs
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/commentaire")
+@CrossOrigin(maxAge = 3600,origins = "http://localhost:4200")
 @Tag(name = "Commentaire", description = "Gestion des commentaires")
 public class CommentaireController {
 
