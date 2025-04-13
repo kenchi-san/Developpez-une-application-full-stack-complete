@@ -14,14 +14,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Importation des composants standalone
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { IntraPageComponent } from './pages/intra-page/intra-page.component';
-import {JwtInterceptor} from "./interceptor/JwtInterceptor"; // Importer ici, pas dans declarations
+import {JwtInterceptor} from "./interceptor/JwtInterceptor";
+import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
+import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans declarations
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    IntraPageComponent,
+    ArticleListComponent,
+    ArticleDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +37,9 @@ import {JwtInterceptor} from "./interceptor/JwtInterceptor"; // Importer ici, pa
     MatInputModule,
     AppRoutingModule,
 
-    // Importer les composants standalone ici
-    LoginComponent,  // Importer LoginComponent ici
-    RegisterComponent  // Importer RegisterComponent ici (pas dans declarations)
+    LoginComponent,
+    RegisterComponent,
+    MatIconModule,
   ],
   providers: [
     {

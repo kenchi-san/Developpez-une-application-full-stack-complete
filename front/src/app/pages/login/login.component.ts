@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           this.isLoading = false;
           if (response) {
-            this.router.navigate(['/test']);  // Redirige vers la page protégée après une connexion réussie
+            this.router.navigate(['/listArticle']);  // Redirige vers la page protégée après une connexion réussie
           } else {
             this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
             this.snackBar.open(this.errorMessage, 'Fermer', { duration: 5000 });

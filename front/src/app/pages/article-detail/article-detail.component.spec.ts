@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntraPageComponent } from './intra-page.component';
+import { ArticleDetailComponent } from './article-detail.component';
 
-describe('IntraPageComponent', () => {
-  let component: IntraPageComponent;
-  let fixture: ComponentFixture<IntraPageComponent>;
+describe('ArticleDetailComponent', () => {
+  let component: ArticleDetailComponent;
+  let fixture: ComponentFixture<ArticleDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntraPageComponent ]
+      declarations: [ ArticleDetailComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IntraPageComponent);
+    fixture = TestBed.createComponent(ArticleDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

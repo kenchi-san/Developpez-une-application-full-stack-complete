@@ -8,13 +8,13 @@ import {Article} from "../interfaces";
   providedIn: 'root'
 })
 export class ArticleService {
-  private apiUrl = `${environment.apiUrl}/article/`; // exemple : http://localhost:3000/articles
+  private apiUrl = `${environment.apiUrl}/article`;
 
   constructor(private http: HttpClient) {}
 
   // 🔹 GET : Récupérer tous les articles
   getAllArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.apiUrl, { withCredentials: true });
+    return this.http.get<Article[]>(this.apiUrl+'/', { withCredentials: true });
   }
 
   // 🔹 GET : Récupérer un article par ID

@@ -3,20 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
-import { IntraPageComponent } from './pages/intra-page/intra-page.component';
 import {AuthRedirectGuard} from "./guard/AuthRedirectGuard";
-import {AuthGuard} from "./guard/AuthGuard";  // Assurez-vous que ce fichier existe
+import {AuthGuard} from "./guard/AuthGuard";
+import {ArticleListComponent} from "./pages/article-list/article-list.component";
+import {ArticleDetailComponent} from "./pages/article-detail/article-detail.component";
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthRedirectGuard] },  // Page d'accueil
+  { path: '', component: HomeComponent, canActivate: [AuthRedirectGuard] },
   { path: 'home', component: HomeComponent, canActivate: [AuthRedirectGuard] },
 
   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectGuard] },
   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
 
-  { path: 'test', component: IntraPageComponent, canActivate: [AuthGuard] },
-
+  { path: 'listArticle', component: ArticleListComponent, canActivate: [AuthGuard] },
+  { path:'article/detail/:articleId', component: ArticleDetailComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];
 

@@ -1,0 +1,22 @@
+<div class="article-container">
+  <!-- Bouton "Créer un article" -->
+  <button mat-raised-button color="primary" class="create-article-btn">Créer un article</button>
+
+  <!-- Liste des articles -->
+  <div class="article-list">
+    <div *ngFor="let article of articles" class="article-card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ article.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="article-meta">
+            <span class="date">{{ article.created | date: 'dd/MM/yyyy à HH:mm' }}</span>
+            <span class="author">Auteur: {{ article.author.fullName }}</span>
+          </div>
+          <p>{{ article.content }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="article-detail-container" *ngIf="article">
+
+  <!-- Ligne retour + Titre -->
+  <div class="header">
+    <button mat-icon-button (click)="goBack()" aria-label="Retour">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="title">{{ article.title }}</h1>
+  </div>
+
+  <!-- Infos : date, auteur, thème -->
+  <div class="article-meta">
+    <span class="meta-item">
+      <mat-icon>calendar_today</mat-icon>
+      {{ article.created | date: 'dd/MM/yyyy à HH:mm' }}
+    </span>
+    <span class="meta-item">
+      <mat-icon>person</mat-icon>
+      {{ article.author.fullName }}
+    </span>
+    <span class="meta-item">
+      <mat-icon>label</mat-icon>
+      {{ article.theme.name }}
+    </span>
+  </div>
+
+  <!-- Contenu -->
+  <p class="content">{{ article.content }}</p>
+
+  <!-- Séparateur -->
+  <hr class="divider">
+
+  <!-- Commentaires -->
+<!--  <div class="comments-section">-->
+<!--    <h2>Commentaires</h2>-->
+
+<!--    <div *ngFor="let comment of article.comment" class="comment">-->
+<!--      <span class="comment-author">{{ comment.user.fullName }} :</span>-->
+<!--      <span class="comment-content">{{ comment.content }}</span>-->
+<!--    </div>-->
+
+<!--    <form (ngSubmit)="submitComment()" class="comment-form">-->
+<!--      <mat-form-field appearance="outline" class="comment-input">-->
+<!--        <input matInput placeholder="Ajouter un commentaire..." [(ngModel)]="newComment" name="comment">-->
+<!--      </mat-form-field>-->
+<!--      <button mat-raised-button color="primary" type="submit">Envoyer</button>-->
+<!--    </form>-->
+<!--  </div>-->
+</div>

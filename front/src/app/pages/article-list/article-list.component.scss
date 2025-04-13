@@ -1,0 +1,51 @@
+.article-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.create-article-btn {
+  align-self: flex-start;
+  margin-bottom: 16px;
+}
+
+.article-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 8px;
+
+  .author {
+    font-weight: bold;
+  }
+}
