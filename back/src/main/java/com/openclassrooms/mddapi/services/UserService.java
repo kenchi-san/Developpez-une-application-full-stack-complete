@@ -32,7 +32,7 @@ public class UserService {
         return users.stream().map(user -> {
             MeDto dto = new MeDto();
             dto.setEmail(user.getEmail());
-            dto.setFullName(user.getFullName());
+            dto.setFullName(user.getFullName().replaceAll("_"," "));
             return dto;
         }).collect(Collectors.toList());
     }
@@ -40,8 +40,8 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        if (StringUtils.hasText(updateUserDto.getFullName())) {
-            user.setFullName(updateUserDto.getFullName());
+        if (StringUtils.hasText(updateUserDto.getFullName().replaceAll("_"," "))) {
+            user.setFullName(updateUserDto.getFullName().replaceAll("_"," "));
         }
 
         if (StringUtils.hasText(updateUserDto.getPassword())) {
