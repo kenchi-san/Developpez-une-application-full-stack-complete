@@ -29,21 +29,5 @@
 
   <!-- Séparateur -->
   <hr class="divider">
-
-  <!-- Commentaires -->
-<!--  <div class="comments-section">-->
-<!--    <h2>Commentaires</h2>-->
-
-<!--    <div *ngFor="let comment of article.comment" class="comment">-->
-<!--      <span class="comment-author">{{ comment.user.fullName }} :</span>-->
-<!--      <span class="comment-content">{{ comment.content }}</span>-->
-<!--    </div>-->
-
-<!--    <form (ngSubmit)="submitComment()" class="comment-form">-->
-<!--      <mat-form-field appearance="outline" class="comment-input">-->
-<!--        <input matInput placeholder="Ajouter un commentaire..." [(ngModel)]="newComment" name="comment">-->
-<!--      </mat-form-field>-->
-<!--      <button mat-raised-button color="primary" type="submit">Envoyer</button>-->
-<!--    </form>-->
-<!--  </div>-->
+  <app-commentaire [articleId]="article.id" [commentaires]="commentaires"></app-commentaire>
 </div>

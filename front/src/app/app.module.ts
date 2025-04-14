@@ -17,7 +17,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import {JwtInterceptor} from "./interceptor/JwtInterceptor";
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
-import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans declarations
+import {MatIconModule} from "@angular/material/icon";
+import { CommentaireComponent } from './pages/commentaire/commentaire.component'; // Importer ici, pas dans declarations
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans 
     HomeComponent,
     ArticleListComponent,
     ArticleDetailComponent,
+    CommentaireComponent,
   ],
   imports: [
     BrowserModule,

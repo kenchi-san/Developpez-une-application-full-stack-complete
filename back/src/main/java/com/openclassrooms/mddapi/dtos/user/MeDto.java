@@ -10,6 +10,4 @@ public class MeDto {
 
     @Schema(description = "Nouveau nom complet de l'utilisateur", example = "Jean Dupont")
     private String fullName;
-
-//    TODO mettre les abonnements plus tard
 }

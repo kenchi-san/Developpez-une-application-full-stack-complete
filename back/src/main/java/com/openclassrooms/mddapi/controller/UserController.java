@@ -71,7 +71,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
         MeDto MeDto = new MeDto();
-        MeDto.setFullName(currentUser.getFullName());
+        MeDto.setFullName(currentUser.getFullName().replaceAll("_"," "));
         MeDto.setEmail(currentUser.getEmail());
 
         return ResponseEntity.ok(MeDto);

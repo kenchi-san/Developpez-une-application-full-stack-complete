@@ -40,13 +40,12 @@ public class ArticleService {
 
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName());
+            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
             dto.setAuthor(authorDto);
 
             ThemeDto themeDto = new ThemeDto();
             themeDto.setId(article.getTheme().getId());
             themeDto.setName(article.getTheme().getName());
-            themeDto.setDescription(article.getTheme().getDescription());
             dto.setTheme(themeDto);
 
             result.add(dto);
@@ -74,16 +73,14 @@ public class ArticleService {
         dto.setCreated(article.getCreatedAt());
         dto.setUpdated(article.getUpdatedAt());
 
-        // Convertir l'auteur en DTO (si tu veux utiliser un DTO pour l'auteur)
         AuthorDto authorDto = new AuthorDto();
         authorDto.setId(article.getAuthor().getId());
-        authorDto.setFullName(article.getAuthor().getFullName());
+        authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
         dto.setAuthor(authorDto);
 
         ThemeDto themeDto = new ThemeDto();
         themeDto.setId(article.getTheme().getId());
         themeDto.setName(article.getTheme().getName());
-        themeDto.setDescription(article.getTheme().getDescription());
         dto.setTheme(themeDto);
 
         return dto;
@@ -126,7 +123,7 @@ public class ArticleService {
         if (article.getAuthor() != null) {
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName());
+            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
             dto.setAuthor(authorDto);
         }
 
@@ -135,7 +132,6 @@ public class ArticleService {
             ThemeDto themeDto = new ThemeDto();
             themeDto.setId(article.getTheme().getId());
             themeDto.setName(article.getTheme().getName());
-            themeDto.setDescription(article.getTheme().getDescription());
             dto.setTheme(themeDto);
         }
 
@@ -169,7 +165,7 @@ public class ArticleService {
             if (article.getAuthor() != null) {
                 AuthorDto authorDto = new AuthorDto();
                 authorDto.setId(article.getAuthor().getId());
-                authorDto.setFullName(article.getAuthor().getFullName());
+                authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
                 dto.setAuthor(authorDto);
             }
 
@@ -177,7 +173,6 @@ public class ArticleService {
                 ThemeDto themeDto = new ThemeDto();
                 themeDto.setId(article.getTheme().getId());
                 themeDto.setName(article.getTheme().getName());
-                themeDto.setDescription(article.getTheme().getDescription());
                 dto.setTheme(themeDto);
             }
             return dto;
