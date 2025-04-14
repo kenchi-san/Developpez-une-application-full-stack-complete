@@ -1,11 +1,23 @@
 <div class="article-container">
-  <!-- Bouton "Créer un article" -->
-  <button mat-raised-button color="primary" class="create-article-btn">Créer un article</button>
-
+  <div class="top-bar">
+    <!-- Bouton "Créer un article" -->
+    <button mat-raised-button color="primary" class="create-article-btn">
+      Créer un article
+    </button>
+    <button mat-button class="sort-button" (click)="toggleSortOrder()">
+      Trier par
+      <mat-icon>{{ sortAscending ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+  </div>
   <!-- Liste des articles -->
   <div class="article-list">
-    <div *ngFor="let article of articles" class="article-card">
-      <mat-card>
+    <div
+      *ngFor="let article of articles"
+      class="article-card"
+      (click)="goToDetail(article.id)"
+      tabindex="0"
+    >
+      <mat-card class="clickable-card">
         <mat-card-header>
           <mat-card-title>{{ article.title }}</mat-card-title>
         </mat-card-header>
