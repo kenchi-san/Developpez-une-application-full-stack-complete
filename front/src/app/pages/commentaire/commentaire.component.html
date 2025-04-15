@@ -1,7 +1,6 @@
 <div class="comments-section">
   <h2>Commentaires</h2>
 
-  <!-- Affichage des commentaires existants -->
   <div *ngFor="let comment of commentaires" class="comment">
     <span class="comment-author">{{ comment.author.fullName }} :</span>
     <span class="comment-content">{{ comment.comment }}</span>
