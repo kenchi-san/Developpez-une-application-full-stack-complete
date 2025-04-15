@@ -11,21 +11,21 @@
 
   .comment {
     display: flex;
-    flex-direction: column; /* Par défaut, l'auteur est au-dessus du commentaire */
-    gap: 4px;
+    flex-direction: row; /* L'auteur et le commentaire sont sur la même ligne */
+    gap: 8px; /* Espacement entre l'auteur et le commentaire */
     padding: 8px 0;
-    align-items: flex-start; /* Par défaut, l'auteur à gauche, commentaire sous l'auteur */
+    align-items: flex-start; /* L'alignement des éléments reste en haut de la ligne */
     margin-bottom: 12px;
     font-size: 14px;
+    flex-wrap: nowrap; /* Assure que l'auteur et le commentaire ne passent pas à la ligne */
   }
 
   .comment-author {
     font-weight: bold;
     margin-right: 6px;
     color: #333;
-    align-self: flex-start; /* Aligne l'auteur à gauche */
-    margin-bottom: 4px; /* Espace entre l'auteur et le commentaire */
-    text-align: left;
+    text-align: left; /* L'auteur est aligné à gauche */
+    white-space: nowrap; /* Empêche l'auteur de passer à la ligne */
   }
 
   .comment-content {
@@ -55,11 +55,10 @@
   }
 }
 
-/* Responsive : en mobile, l'auteur est au-dessus du commentaire et aligné à droite */
 @media (max-width: 768px) {
   .comments-section {
     .comment {
-      flex-direction: column; /* On passe en colonne pour mobile */
+      flex-direction: column; /* En mobile, on empile l'auteur et le commentaire */
       align-items: flex-start;
     }
 
@@ -68,11 +67,12 @@
       align-self: flex-end; /* L'auteur s'aligne à droite */
       font-size: 14px;
       margin-bottom: 4px; /* Sépare l'auteur du commentaire */
+      white-space: nowrap; /* Empêche l'auteur de passer à la ligne */
     }
 
     .comment-content {
       font-size: 15px;
-      text-align: left; /* Commentaire aligné à gauche */
+      text-align: left; /* Le commentaire reste aligné à gauche */
     }
   }
 }
