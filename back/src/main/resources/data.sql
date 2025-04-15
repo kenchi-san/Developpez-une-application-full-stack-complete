@@ -154,11 +154,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Listage des données de la table mddapi.users : ~6 rows (environ)
 INSERT INTO `users` (`id`, `created_at`, `email`, `full_name`, `password`, `updated_at`) VALUES
-	(1, '2025-04-15 02:23:50.000000', 'alice@example.com', 'Alice_Dupont', 'Valid123!', NULL),
-	(2, '2025-04-15 02:23:51.000000', 'bob@example.com', 'Bob_Martin', 'Valid123!', NULL),
-	(3, '2025-04-15 02:23:51.000000', 'carol@example.com', 'Carol_Denis', 'Valid123!', NULL),
-	(4, '2025-04-15 02:23:52.000000', 'david@example.com', 'David_Lemoine', 'Valid123!', NULL),
-	(5, '2025-04-15 02:23:53.000000', 'eve@example.com', 'Eve_Caron', 'Valid123!', NULL),
+	(1, '2025-04-15 02:23:50.000000', 'alice@example.com', 'Alice_Dupont', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', NULL),
+	(2, '2025-04-15 02:23:51.000000', 'bob@example.com', 'Bob_Martin', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', NULL),
+	(3, '2025-04-15 02:23:51.000000', 'carol@example.com', 'Carol_Denis', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', NULL),
+	(4, '2025-04-15 02:23:52.000000', 'david@example.com', 'David_Lemoine', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', NULL),
+	(5, '2025-04-15 02:23:53.000000', 'eve@example.com', 'Eve_Caron', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', NULL),
 	(6, '2025-04-15 00:25:41.321487', 'test@test.com', 'jean_toto', '$2a$10$bwu3o4FnPG8r.W7FdXCtv.0ZDDMCDWN2ta9HaN93U74JdUGS6QA4.', '2025-04-15 00:25:41.321487');
 
 -- Listage de la structure de table mddapi. users_seq
