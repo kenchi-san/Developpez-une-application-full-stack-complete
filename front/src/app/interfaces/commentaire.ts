@@ -4,4 +4,6 @@ export interface Commentaire {
   author: {
     id: number;
     fullName: string;
-  };}
+  };
+  article: { id: number };
+}

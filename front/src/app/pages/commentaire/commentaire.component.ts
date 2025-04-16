@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Commentaire } from "../../interfaces/commentaire";
-import { CommentaireService } from "../../service/CommentService";
+import {Component, Input, OnInit} from '@angular/core';
+import {Commentaire} from "../../interfaces/commentaire";
+import {CommentaireService} from "../../service/CommentService";
+import {AuthService} from "../../service/AuthService";
 
 @Component({
   selector: 'app-commentaire',
@@ -9,10 +10,14 @@ import { CommentaireService } from "../../service/CommentService";
 })
 export class CommentaireComponent implements OnInit {
   @Input() articleId!: number;
-  @Input() commentaires!: Commentaire[];
-  // newComment: string = '';
+  @Input() commentaires: Commentaire[] = [];
+  newComment: string = '';
 
-  constructor(private commentaireService: CommentaireService) { }
+  constructor(
+    private commentaireService: CommentaireService,
+    private authService: AuthService
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.articleId) {
@@ -27,22 +32,18 @@ export class CommentaireComponent implements OnInit {
     });
   }
 
-  // submitComment(): void {
-  //   if (this.newComment.trim()) {
-  //     const commentaire: Partial<Commentaire> = {
-  //       comment: this.newComment,
-  //       article: { id: this.articleId },
-  //       // ajouter d'autres champs nécessaires comme l'auteur si requis
-  //     };
-  //
-  //     this.commentaireService.ajouterCommentaire(commentaire).subscribe({
-  //       next: (newCommentaire) => {
-  //         // Ajouter le nouveau commentaire dans la liste
-  //         this.commentaires.push(newCommentaire);
-  //         this.newComment = '';  // Réinitialiser l'entrée
-  //       },
-  //       error: (err) => console.error('Erreur lors de l\'ajout du commentaire', err)
-  //     });
-  //   }
-  // }
+  submitComment(): void {
+    const trimmedComment = this.newComment.trim();
+    if (!trimmedComment) return;
+
+    this.commentaireService.createCommentaire(this.articleId, trimmedComment).subscribe({
+      next: (created) => {
+        this.commentaires.push(created);
+        this.newComment = '';
+      },
+      error: (err) => {
+        console.error('Erreur lors de l\'ajout du commentaire :', err);
+      }
+    });
+  }
 }

@@ -20,9 +20,15 @@ export class CommentaireService {
     return this.http.get<Commentaire>(`${this.apiUrl}/${id}`, { withCredentials: true });
   }
 
-  createCommentaire(commentaire: Commentaire): Observable<Commentaire> {
-    return this.http.post<Commentaire>(this.apiUrl, commentaire, { withCredentials: true });
+  createCommentaire(articleId: number, comment: string): Observable<Commentaire> {
+    return this.http.post<Commentaire>(
+      `${this.apiUrl}/create/${articleId}`,
+      { comment },
+      { withCredentials: true }
+    );
   }
+
+
 
   updateCommentaire(id: number, commentaire: Commentaire): Observable<Commentaire> {
     return this.http.put<Commentaire>(`${this.apiUrl}/${id}`, commentaire, { withCredentials: true });

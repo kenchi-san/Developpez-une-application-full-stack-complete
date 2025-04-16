@@ -2,15 +2,23 @@
   <h2>Commentaires</h2>
 
   <div *ngFor="let comment of commentaires" class="comment">
-    <span class="comment-author">{{ comment.author.fullName }} :</span>
+    <span class="comment-author">{{ comment.author?.fullName }} :</span>
     <span class="comment-content">{{ comment.comment }}</span>
   </div>
 
-  <!-- Formulaire pour ajouter un commentaire -->
-<!--  <form (ngSubmit)="submitComment()" class="comment-form">-->
-<!--    <mat-form-field appearance="outline" class="comment-input">-->
-<!--      <input matInput placeholder="Ajouter un commentaire..." [(ngModel)]="newComment" name="comment">-->
-<!--    </mat-form-field>-->
-<!--    <button mat-raised-button color="primary" type="submit">Envoyer</button>-->
-<!--  </form>-->
+  <form (ngSubmit)="submitComment()" class="comment-form">
+    <mat-form-field appearance="outline" class="comment-input">
+      <input
+        matInput
+        placeholder="Ajouter un commentaire..."
+        [(ngModel)]="newComment"
+        name="comment"
+      />
+    </mat-form-field>
+    <button mat-icon-button class="send-button" type="submit" aria-label="Envoyer">
+      <mat-icon>send</mat-icon>
+    </button>
+  </form>
+
+
 </div>

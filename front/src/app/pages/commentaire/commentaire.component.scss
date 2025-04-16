@@ -11,21 +11,20 @@
 
   .comment {
     display: flex;
-    flex-direction: row; /* L'auteur et le commentaire sont sur la même ligne */
-    gap: 8px; /* Espacement entre l'auteur et le commentaire */
+    flex-direction: row;
+    gap: 8px;
     padding: 8px 0;
-    align-items: flex-start; /* L'alignement des éléments reste en haut de la ligne */
+    align-items: flex-start;
     margin-bottom: 12px;
     font-size: 14px;
-    flex-wrap: nowrap; /* Assure que l'auteur et le commentaire ne passent pas à la ligne */
+    flex-wrap: nowrap;
   }
 
   .comment-author {
     font-weight: bold;
     margin-right: 6px;
     color: #333;
-    text-align: left; /* L'auteur est aligné à gauche */
-    white-space: nowrap; /* Empêche l'auteur de passer à la ligne */
+    white-space: nowrap;
   }
 
   .comment-content {
@@ -34,45 +33,75 @@
     border-radius: 12px;
     max-width: 100%;
     word-break: break-word;
-    text-align: left;
     width: 100%;
   }
 
-  /* Formulaire pour ajouter un commentaire */
   .comment-form {
+    position: relative;
+    width: 100%;
     margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
 
-    .comment-input {
+    mat-form-field.comment-input {
       width: 100%;
     }
 
-    button {
-      align-self: flex-end;
+    .send-button {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background-color: #1976d2;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      mat-icon {
+        font-size: 20px;
+        transform: rotate(-45deg); // vers le haut à droite
+      }
+
+      &:hover {
+        background-color: #125ea2;
+      }
     }
   }
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .comments-section {
     .comment {
-      flex-direction: column; /* En mobile, on empile l'auteur et le commentaire */
+      flex-direction: column;
       align-items: flex-start;
     }
 
     .comment-author {
-      text-align: right; /* Auteur à droite sur mobile */
-      align-self: flex-end; /* L'auteur s'aligne à droite */
+      align-self: flex-end;
       font-size: 14px;
-      margin-bottom: 4px; /* Sépare l'auteur du commentaire */
-      white-space: nowrap; /* Empêche l'auteur de passer à la ligne */
+      margin-bottom: 4px;
     }
 
     .comment-content {
       font-size: 15px;
-      text-align: left; /* Le commentaire reste aligné à gauche */
+    }
+
+    .comment-form {
+      .send-button {
+        top: -10px;
+        right: -8px;
+        width: 36px;
+        height: 36px;
+
+        mat-icon {
+          font-size: 18px;
+        }
+      }
     }
   }
 }

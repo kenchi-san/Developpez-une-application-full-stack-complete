@@ -7,7 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -42,6 +42,7 @@ import { CommentaireComponent } from './pages/commentaire/commentaire.component'
     LoginComponent,
     RegisterComponent,
     MatIconModule,
+    FormsModule
   ],
   providers: [
     {
