@@ -25,16 +25,25 @@ public class CommentaireService {
         this.articleRepository = articleRepository;
     }
     public CommentaireDto createCommentaire(long articleId, CommentaireDto dto, User user) {
+        // Récupérer l'article
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("Article not found with id " + articleId));
 
+        // Créer un nouveau commentaire
         Commentaire commentaire = new Commentaire();
-        commentaire.setComment(dto.getComment());
-        commentaire.setAuthor(user);
-        commentaire.setArticle(article);
+        commentaire.setComment(dto.getComment()); // Le contenu du commentaire
+        commentaire.setAuthor(user); // L'auteur est l'utilisateur connecté
+        commentaire.setArticle(article); // L'article auquel le commentaire appartient
+
+        // Sauvegarder le commentaire
         commentaireRepository.save(commentaire);
+
+        // Créer un DTO à retourner
         CommentaireDto commentaireDto = new CommentaireDto();
+        commentaireDto.setId(commentaire.getId()); // Ajout de l'ID généré du commentaire
         commentaireDto.setComment(commentaire.getComment());
+        commentaireDto.setAuthor(new UserDto(user.getId(), user.getFullName().replaceAll("_"," "))); // Assurez-vous que UserDto contient l'ID et le nom de l'utilisateur
+
         return commentaireDto;
     }
     public List<CommentaireDto> getCommentaireByIdArticle(long articleId) {

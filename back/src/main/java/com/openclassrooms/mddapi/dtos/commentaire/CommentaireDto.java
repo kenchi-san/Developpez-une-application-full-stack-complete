@@ -4,11 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommentaireDto {
-
-    private Long id;
-
-    private UserDto author;
-
-    private String comment;
-
+    private Long id; // ID du commentaire
+    private UserDto author; // L'auteur
+    private String comment; // Le texte du commentaire
 }

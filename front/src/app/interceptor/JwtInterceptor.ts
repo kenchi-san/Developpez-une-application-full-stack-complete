@@ -1,27 +1,46 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import {
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpEvent,
+  HttpErrorResponse
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AuthService } from "../service/AuthService"; // Le service AuthService pour récupérer le token
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { AuthService } from "../service/AuthService"; // Ton service auth
+import { Router } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
 
-  public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    // Vérifier si l'utilisateur est connecté et si le token existe
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
 
     if (token) {
-      // Cloner la requête et ajouter l'en-tête Authorization avec le token
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': "application/json",
-          credentials: 'include',
+          'Content-Type': 'application/json'
         },
-
+        withCredentials: true
       });
     }
-    // Passer la requête au prochain handler
-    return next.handle(request);
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Token expiré ou invalide → on déconnecte
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }

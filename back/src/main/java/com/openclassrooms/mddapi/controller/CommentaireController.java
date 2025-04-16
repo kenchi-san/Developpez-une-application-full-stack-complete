@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -56,25 +57,45 @@ public class CommentaireController {
         return ResponseEntity.ok(listCommentaire);
     }
 
+    @PostMapping("/create/{id}")
     @Operation(
             summary = "Ajouter un commentaire à un article",
-            description = "Permet à un utilisateur connecté de créer un commentaire sur un article spécifique"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Commentaire ajouté avec succès",
-                    content = @Content(schema = @Schema(implementation = Commentaire.class))),
-            @ApiResponse(responseCode = "404", description = "Article non trouvé",
-                    content = @Content)
-    })
-    @PostMapping("/create/{id}")
-    public ResponseEntity<?> addCommentaireToArticle(
-            @PathVariable(name = "id") Long articleId,
-            @org.springframework.web.bind.annotation.RequestBody
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Permet à un utilisateur authentifié d'ajouter un commentaire à un article spécifié par son ID.",
+            parameters = {
+                    @Parameter(
+                            name = "id",
+                            description = "ID de l'article auquel ajouter le commentaire",
+                            required = true,
+                            example = "1"
+                    )
+            },
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
-                    description = "Contenu du commentaire",
-                    content = @Content(schema = @Schema(implementation = CommentaireDto.class))
-            ) CommentaireDto dto,
+                    description = "Contenu du commentaire à ajouter",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{ \"comment\": \"C'est un excellent article !\" }"
+                            )
+                    )
+            ),
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Commentaire ajouté avec succès",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = CommentaireDto.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "401", description = "Utilisateur non authentifié"),
+                    @ApiResponse(responseCode = "404", description = "Article non trouvé"),
+                    @ApiResponse(responseCode = "500", description = "Erreur interne")
+            }
+    )
+    public ResponseEntity<CommentaireDto> addCommentaireToArticle(
+            @PathVariable(name = "id") Long articleId,
+            @RequestBody CommentaireDto dto,
             @AuthenticationPrincipal User currentUser
     ) {
         try {
