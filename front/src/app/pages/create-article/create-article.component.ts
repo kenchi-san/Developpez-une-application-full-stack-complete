@@ -43,12 +43,10 @@ export class CreateArticleComponent implements OnInit {
   }
 
    onSubmit(): void {
-    console.log('Article à créer:', this.createArticle);
 
     // Appel au service pour créer l'article
     this.articleService.createArticle(this.createArticle).subscribe({
-      next: (createdArticle) => {
-        console.log('Article créé avec succès:', createdArticle);
+      next: () => {
         this.router.navigate(['/']);  // Naviguer vers la page d'accueil ou la liste des articles
       },
       error: (err: any) => {

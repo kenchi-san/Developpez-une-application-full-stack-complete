@@ -125,7 +125,7 @@ public class ArticleService {
         if (article.getAuthor() != null) {
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName());  // Optionnel : remplacement des underscores par des espaces
+            authorDto.setFullName(article.getAuthor().getFullName());
             dto.setAuthor(authorDto);
         }
 
