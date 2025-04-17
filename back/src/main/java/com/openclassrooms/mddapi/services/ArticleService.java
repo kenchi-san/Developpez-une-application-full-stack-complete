@@ -7,6 +7,8 @@ import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class ArticleService {
 
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
+            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
             dto.setAuthor(authorDto);
 
             ThemeDto themeDto = new ThemeDto();
@@ -75,7 +77,7 @@ public class ArticleService {
 
         AuthorDto authorDto = new AuthorDto();
         authorDto.setId(article.getAuthor().getId());
-        authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
+        authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
         dto.setAuthor(authorDto);
 
         ThemeDto themeDto = new ThemeDto();
@@ -92,16 +94,17 @@ public class ArticleService {
         article.setTitle(input.getTitle());
         article.setContent(input.getContent());
 
-        Optional<User> infoUser = userRepository.findById(input.getAuthor().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
         Optional<Theme> infoTheme = themeRepository.findById(input.getTheme().getId());
+        Optional<User> infoUser = userRepository.findByEmail(currentUser);
 
         if (infoUser.isPresent()) {
             User user = infoUser.get();
-            article.setAuthor(user);
+            article.setAuthor(user);  // Assignation de l'utilisateur comme auteur
         } else {
             throw new RuntimeException("Utilisateur introuvable !");
         }
-
         if (infoTheme.isPresent()) {
             Theme theme = infoTheme.get();
             article.setTheme(theme);
@@ -119,11 +122,10 @@ public class ArticleService {
         dto.setCreated(article.getCreatedAt());
         dto.setUpdated(article.getUpdatedAt());
 
-        // Convertir l'auteur en DTO
         if (article.getAuthor() != null) {
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
+            authorDto.setFullName(article.getAuthor().getFullName());  // Optionnel : remplacement des underscores par des espaces
             dto.setAuthor(authorDto);
         }
 
@@ -154,7 +156,7 @@ public class ArticleService {
                 Theme theme = themeRepository.findById(input.getTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
                 article.setTheme(theme);
             }
-             article = articleRepository.save(article);
+            article = articleRepository.save(article);
             ArticleDto dto = new ArticleDto();
             dto.setId(article.getId());
             dto.setTitle(article.getTitle());
@@ -165,7 +167,7 @@ public class ArticleService {
             if (article.getAuthor() != null) {
                 AuthorDto authorDto = new AuthorDto();
                 authorDto.setId(article.getAuthor().getId());
-                authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_"," "));
+                authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
                 dto.setAuthor(authorDto);
             }
 

@@ -8,7 +8,7 @@ import {
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { AuthService } from "../service/AuthService"; // Ton service auth
+import { AuthService } from "../service/AuthService";
 import { Router } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
@@ -34,8 +34,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          // Token expiré ou invalide → on déconnecte
+        console.error('Erreur HTTP interceptée :', error); // pour debug
+
+        if (error.status === 403 && !request.url.includes('/login')) {
+          // Token expiré ou invalide
           this.authService.logout();
           this.router.navigate(['/login']);
         }

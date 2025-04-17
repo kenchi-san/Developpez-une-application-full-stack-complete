@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.dtos.article.ThemeDto;
 import com.openclassrooms.mddapi.services.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Theme", description = "Gestion des thèmes")
 @RestController
@@ -69,6 +72,11 @@ public class ThemeController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Une erreur est survenue.");
         }
+    }
+    @GetMapping("/list")
+    public ResponseEntity<List<ThemeDto>> getAllThemes() {
+        List<ThemeDto> themeList = this.themeService.getAllThemes();
+        return ResponseEntity.ok(themeList);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import com.openclassrooms.mddapi.dtos.article.ThemeDto;
 import com.openclassrooms.mddapi.models.SuiviTheme;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
@@ -8,6 +9,9 @@ import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ThemeService {
@@ -52,6 +56,20 @@ public class ThemeService {
                 .orElseThrow(() -> new IllegalStateException("Vous ne suivez pas ce thème."));
 
         suiviThemeRepository.delete(suivi);
+    }
+
+    public List<ThemeDto> getAllThemes() {
+        List<Theme> themes = (List<Theme>) themeRepository.findAll();
+
+        List<ThemeDto> themeDtos = new ArrayList<>();
+        for (Theme theme : themes) {
+            ThemeDto themeDto = new ThemeDto();
+            themeDto.setId(theme.getId());
+            themeDto.setName(theme.getName());
+            themeDtos.add(themeDto);
+        }
+
+        return themeDtos;
     }
 
 }

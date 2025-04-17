@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {Article} from "../interfaces";
+import {CreateArticle} from "../interfaces/createArticle";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class ArticleService {
   }
 
   // 🔹 POST : Créer un nouvel article
-  createArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(this.apiUrl, article, { withCredentials: true });
+  createArticle(article: CreateArticle): Observable<CreateArticle> {
+    return this.http.post<CreateArticle>(`${this.apiUrl}/create`, article, { withCredentials: true });
   }
 
   // 🔹 PUT : Modifier un article existant

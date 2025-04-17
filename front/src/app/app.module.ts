@@ -18,7 +18,9 @@ import {JwtInterceptor} from "./interceptor/JwtInterceptor";
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
 import {MatIconModule} from "@angular/material/icon";
-import { CommentaireComponent } from './pages/commentaire/commentaire.component'; // Importer ici, pas dans declarations
+import { CommentaireComponent } from './pages/commentaire/commentaire.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { CommentaireComponent } from './pages/commentaire/commentaire.component'
     ArticleListComponent,
     ArticleDetailComponent,
     CommentaireComponent,
+    CreateArticleComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,13 +45,14 @@ import { CommentaireComponent } from './pages/commentaire/commentaire.component'
     LoginComponent,
     RegisterComponent,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,  // Utiliser l'intercepteur JWT
-      multi: true,  // Permet de chaîner plusieurs intercepteurs
+      useClass: JwtInterceptor,
+      multi: true,
     }],
   bootstrap: [AppComponent]
 })

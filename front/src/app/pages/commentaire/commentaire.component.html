@@ -2,7 +2,7 @@
   <h2>Commentaires</h2>
 
   <div *ngFor="let comment of commentaires" class="comment">
-    <span class="comment-author">{{ comment.author?.fullName }} :</span>
+    <span class="comment-author">{{ comment.author.fullName }} :</span>
     <span class="comment-content">{{ comment.comment }}</span>
   </div>
 

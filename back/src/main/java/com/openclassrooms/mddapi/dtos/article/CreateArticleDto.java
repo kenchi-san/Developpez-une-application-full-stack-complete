@@ -1,11 +1,15 @@
 package com.openclassrooms.mddapi.dtos.article;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateArticleDto {
 
     @Schema(description = "Titre de l'article", example = "Introduction à Spring Boot")

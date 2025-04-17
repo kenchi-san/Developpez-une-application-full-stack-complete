@@ -1,0 +1,42 @@
+<div class="create-article-container">
+  <div class="header">
+    <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Retour">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2>Créer un nouvel article</h2>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #articleForm="ngForm">
+    <!-- Sélection du thème -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Sélectionnez un thème</mat-label>
+      <mat-select [(ngModel)]="createArticle.theme" name="theme" required>
+        <mat-option *ngFor="let theme of themes" [value]="theme">
+          {{ theme.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Titre de l'article -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Titre de l'article</mat-label>
+      <input matInput [(ngModel)]="createArticle.title" name="title" required />
+    </mat-form-field>
+
+    <!-- Contenu de l'article -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contenu de l'article</mat-label>
+      <textarea matInput [(ngModel)]="createArticle.content" name="content" rows="5" required></textarea>
+    </mat-form-field>
+
+    <!-- Bouton de soumission -->
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="!articleForm.form.valid"
+      class="create-article-btn submit-button"
+    >
+      Créer
+    </button>
+  </form>
+</div>
