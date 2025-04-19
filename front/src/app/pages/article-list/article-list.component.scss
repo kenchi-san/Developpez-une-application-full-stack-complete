@@ -11,7 +11,7 @@
 
 .article-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);  // Par défaut, 2 articles par ligne
+  grid-template-columns: repeat(2, 1fr); /* Par défaut, 2 articles par ligne */
   gap: 16px;
 }
 
@@ -51,7 +51,7 @@ mat-card-content {
   .author,
   .date {
     display: inline-block;
-    white-space: nowrap;  // Pour éviter que le texte se brise
+    white-space: nowrap; /* Pour éviter que le texte se brise */
   }
 
   .author {
@@ -62,6 +62,17 @@ mat-card-content {
     font-weight: bold;
   }
 }
+
+/* Troncature et gestion de la hauteur du contenu */
+.truncated-content {
+  max-height: 80px; /* Limite la hauteur visible du texte */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Nombre de lignes max */
+  -webkit-box-orient: vertical;
+}
+
 .clickable-card {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -72,12 +83,11 @@ mat-card-content {
   }
 }
 
-
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; // permet de passer à la ligne en mobile
+  flex-wrap: wrap; /* Permet de passer à la ligne en mobile */
   gap: 8px;
   margin-bottom: 16px;
 
@@ -94,49 +104,28 @@ mat-card-content {
   }
 }
 
-@media (max-width: 768px) {
-  .top-bar {
-    flex-direction: column;
-    align-items: center;
-
-    .create-article-btn,
-    .sort-button {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .sort-button {
-      align-self: center;
-    }
-  }
-}
-
-
-
-
-
-// Médias queries pour une meilleure responsivité
+/* Médias queries pour une meilleure responsivité */
 @media (max-width: 1200px) {
   .article-list {
-    grid-template-columns: repeat(2, 1fr);  // Toujours 2 articles, mais mieux espacé sur les grands écrans
+    grid-template-columns: repeat(2, 1fr); /* Toujours 2 articles, mais mieux espacé sur les grands écrans */
   }
 }
 
 @media (max-width: 768px) {
   .article-list {
-    grid-template-columns: 1fr;  // Sur les écrans plus petits (tablettes, mobiles), un seul article par ligne
+    grid-template-columns: 1fr; /* Sur les écrans plus petits (tablettes, mobiles), un seul article par ligne */
   }
 
   .create-article-btn {
-    width: 100%;  // Le bouton prend toute la largeur de l'écran
+    width: 100%; /* Le bouton prend toute la largeur de l'écran */
     margin-bottom: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .article-meta {
-    justify-content: flex-start;  // Garde la date et l'auteur sur la même ligne
-    gap: 12px;  // Espacement entre les éléments
+    justify-content: flex-start; /* Garde la date et l'auteur sur la même ligne */
+    gap: 12px; /* Espacement entre les éléments */
   }
 
   .article-card {
