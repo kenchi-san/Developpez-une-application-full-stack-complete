@@ -1,0 +1,35 @@
+<!-- Liste des thèmes -->
+<div class="theme-list">
+  <div
+    *ngFor="let theme of themes"
+    class="theme-card"
+    tabindex="0"
+  >
+    <mat-card class="clickable-card">
+      <!-- Titre cliquable uniquement -->
+      <mat-card-header (click)="goToDetail(theme.id)">
+        <mat-card-title>{{ theme.name }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content (click)="goToDetail(theme.id)">
+        <div class="theme-meta">
+          <!-- Infos supplémentaires désactivées pour l’instant -->
+          <!-- <span class="date">{{ theme.created | date: 'dd/MM/yyyy' }}</span>
+          <span class="author">{{ theme.author.fullName }}</span> -->
+        </div>
+        <p>{{ theme.description }}</p>
+      </mat-card-content>
+
+      <!-- ✅ Bouton S'abonner, hors des clics de navigation -->
+      <div class="subscribe-btn-wrapper">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="subscribeToTheme(theme.id); $event.stopPropagation()"
+        >
+          S'abonner
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>

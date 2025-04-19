@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dtos.article.ThemeDto;
+import com.openclassrooms.mddapi.dtos.article.ThemeListDto;
 import com.openclassrooms.mddapi.models.SuiviTheme;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
@@ -70,6 +71,20 @@ public class ThemeService {
         }
 
         return themeDtos;
+    }
+    public List<ThemeListDto> getListThemes() {
+        List<Theme> themes = (List<Theme>) themeRepository.findAll();
+
+        List<ThemeListDto> themeListDtos = new ArrayList<>();
+        for (Theme theme : themes) {
+            ThemeListDto themeListDto = new ThemeListDto();
+            themeListDto.setId(theme.getId());
+            themeListDto.setName(theme.getName());
+            themeListDto.setDescription(theme.getDescription());
+            themeListDtos.add(themeListDto);
+        }
+
+        return themeListDtos;
     }
 
 }

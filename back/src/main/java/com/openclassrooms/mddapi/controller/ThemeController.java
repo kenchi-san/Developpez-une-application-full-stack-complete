@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dtos.article.ThemeDto;
+import com.openclassrooms.mddapi.dtos.article.ThemeListDto;
 import com.openclassrooms.mddapi.services.ThemeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -76,6 +77,11 @@ public class ThemeController {
     @GetMapping("/list")
     public ResponseEntity<List<ThemeDto>> getAllThemes() {
         List<ThemeDto> themeList = this.themeService.getAllThemes();
+        return ResponseEntity.ok(themeList);
+    }
+    @GetMapping("/theme-list")
+    public ResponseEntity<List<ThemeListDto>> getListThemes() {
+        List<ThemeListDto> themeList = this.themeService.getListThemes();
         return ResponseEntity.ok(themeList);
     }
 

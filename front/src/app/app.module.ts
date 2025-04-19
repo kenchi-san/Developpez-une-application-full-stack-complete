@@ -21,6 +21,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { CommentaireComponent } from './pages/commentaire/commentaire.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
 import {MatSelectModule} from "@angular/material/select";
+import { ThemeListComponent } from './pages/theme-list/theme-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {MatSelectModule} from "@angular/material/select";
     ArticleDetailComponent,
     CommentaireComponent,
     CreateArticleComponent,
+    ThemeListComponent,
   ],
   imports: [
     BrowserModule,
