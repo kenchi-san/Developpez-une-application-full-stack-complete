@@ -32,7 +32,10 @@ export class ThemeListComponent implements OnInit {
     this.router.navigate(['/theme/detail/', id]);
   }
   subscribeToTheme(themeId: number): void {
-    console.log('Abonnement au thème ID :', themeId);
-    // Tu peux ajouter ici un appel HTTP pour s’abonner réellement
+    this.themeListService.followTeme(themeId).subscribe({
+      next: () => console.log('✅ Abonné au thème', themeId),
+      error: (err) => console.error('❌ Erreur abonnement :', err)
+    });
   }
+
 }

@@ -20,13 +20,11 @@
         <p class="theme-description">{{ theme.description }}</p>
       </mat-card-content>
 
-      <!-- ✅ Bouton S'abonner, hors des clics de navigation -->
       <div class="subscribe-btn-wrapper">
         <button
           mat-stroked-button
           color="primary"
-          (click)="subscribeToTheme(theme.id); $event.stopPropagation()"
-        >
+          (click)="subscribeToTheme(theme.id); $event.stopPropagation()">
           S'abonner
         </button>
       </div>

@@ -34,7 +34,6 @@ public class ThemeService {
         Theme theme = themeRepository.findById(themeId)
                 .orElseThrow(() -> new RuntimeException("Thème non trouvé"));
 
-        // Vérifier si le suivi existe déjà
         boolean alreadyFollowed = suiviThemeRepository.findByUserAndTheme(user, theme).isPresent();
         if (alreadyFollowed) {
             throw new IllegalStateException("Vous suivez déjà ce thème.");
