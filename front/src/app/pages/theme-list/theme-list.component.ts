@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Theme} from "../../interfaces";
-import {ArticleService} from "../../service/ArticleService";
 import {Router} from "@angular/router";
 import {ThemeListService} from "../../service/ThemeListService";
 

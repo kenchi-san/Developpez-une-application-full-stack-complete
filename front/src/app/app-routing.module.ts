@@ -13,7 +13,6 @@ import {ThemeListComponent} from "./pages/theme-list/theme-list.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthRedirectGuard] },
-  { path: 'home', component: HomeComponent, canActivate: [AuthRedirectGuard] },
 
   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectGuard] },
   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
@@ -22,7 +21,7 @@ const routes: Routes = [
   { path: 'listTheme', component: ThemeListComponent, canActivate: [AuthGuard] },
   { path:'article/detail/:articleId', component: ArticleDetailComponent, canActivate: [AuthGuard] },
   { path:'article/creation', component: CreateArticleComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'listArticle' }
 ];
 
 @NgModule({

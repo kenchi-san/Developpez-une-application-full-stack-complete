@@ -14,10 +14,10 @@ public class SuiviTheme {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user", referencedColumnName = "id")  // Spécifie le nom de la colonne dans la DB
-    private User user;  // Renamed from user_id to user
+    @JoinColumn(name = "user", referencedColumnName = "id")
+    private User user;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "theme", referencedColumnName = "id")  // Spécifie le nom de la colonne dans la DB
-    private Theme theme;  // Renamed from theme_id to theme
+    @JoinColumn(name = "theme", referencedColumnName = "id")
+    private Theme theme;
 }
