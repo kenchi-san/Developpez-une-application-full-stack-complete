@@ -28,21 +28,20 @@ public class ThemeController {
     }
 
     @Operation(
-            summary = "Suivre un thème",
-            description = "Permet à un utilisateur connecté de suivre un thème en fournissant son ID."
+            summary = "Suivre un thème ou non",
+            description = "Permet à un utilisateur connecté de suivre un thème ou d'arrêter en fournissant son ID."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Thème suivi avec succès"),
-            @ApiResponse(responseCode = "400", description = "L'utilisateur suit déjà ce thème ou la requête est invalide"),
+            @ApiResponse(responseCode = "200", description = "Thème suivi avec succès/ arrêt du suivi"),
             @ApiResponse(responseCode = "500", description = "Erreur interne")
     })
-    @PostMapping("/follow/{id}")
-    public ResponseEntity<String> suiviArticle(@Parameter(description = "ID du thème à suivre", example = "3")
+    @PostMapping("/manage-subscribe/{id}")
+    public ResponseEntity<String> suiviArticle(@Parameter(description = "ID du thème à suivre ou non", example = "3")
                                                @PathVariable("id") Long id) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         try {
-            themeService.followTheme(id, userDetails);
+            themeService.manageSubscribe(id, userDetails);
             return ResponseEntity.ok("Thème suivi avec succès !");
         } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -51,29 +50,6 @@ public class ThemeController {
         }
     }
 
-    @Operation(
-            summary = "Ne plus suivre un thème",
-            description = "Permet à un utilisateur connecté d'arrêter de suivre un thème en fournissant son ID."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Désabonnement du thème réussi"),
-            @ApiResponse(responseCode = "400", description = "L'utilisateur ne suit pas ce thème ou la requête est invalide"),
-            @ApiResponse(responseCode = "500", description = "Erreur interne")
-    })
-    @DeleteMapping("/unfollow/{id}")
-    public ResponseEntity<String> unfollowTheme(@Parameter(description = "ID du thème à ne plus suivre", example = "3")
-                                                @PathVariable("id") Long id) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        try {
-            themeService.unFollowTheme(id, userDetails);
-            return ResponseEntity.ok("Vous ne suivez plus ce thème.");
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Une erreur est survenue.");
-        }
-    }
     @GetMapping("/list")
     public ResponseEntity<List<ThemeDto>> getAllThemes() {
         List<ThemeDto> themeList = this.themeService.getAllThemes();

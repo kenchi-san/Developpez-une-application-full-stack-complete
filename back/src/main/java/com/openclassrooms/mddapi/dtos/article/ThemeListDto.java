@@ -11,4 +11,5 @@ public class ThemeListDto {
     private long id;
     private String name;
     private String description;
+    private boolean isSubscribed;
 }

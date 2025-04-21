@@ -30,10 +30,15 @@ export class ThemeListComponent implements OnInit {
   goToDetail(id: number): void {
     this.router.navigate(['/theme/detail/', id]);
   }
-  subscribeToTheme(themeId: number): void {
-    this.themeListService.followTeme(themeId).subscribe({
-      next: () => console.log('✅ Abonné au thème', themeId),
-      error: (err) => console.error('❌ Erreur abonnement :', err)
+  subscribeToTheme(theme: Theme): void {
+    this.themeListService.manageSubscribe(theme.id).subscribe({
+      next: () => {
+        theme.subscribed = !theme.subscribed;
+        console.log(` ${theme.subscribed ? 'Abonné' : 'Désabonné'} au thème`, theme.id);
+      },
+      error: (err) => {
+        console.error(' Erreur abonnement :', err);
+      }
     });
   }
 
