@@ -24,10 +24,12 @@
         <button
           mat-stroked-button
           color="primary"
-          (click)="subscribeToTheme(theme.id); $event.stopPropagation()">
-          S'abonner
+          (click)="subscribeToTheme(theme); $event.stopPropagation()"
+          [ngClass]="{ 'abonne': theme.subscribed, 'non-abonne': !theme.subscribed }">
+          {{ theme.subscribed ? 'Se désabonner' : 'S\'abonner' }}
         </button>
       </div>
+
     </mat-card>
   </div>
 </div>
