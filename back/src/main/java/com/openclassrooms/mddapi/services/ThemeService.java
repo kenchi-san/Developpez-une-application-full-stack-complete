@@ -74,6 +74,7 @@ public class ThemeService {
 
         return themeDtos;
     }
+
     public List<ThemeListDto> getListThemes() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -95,7 +96,7 @@ public class ThemeService {
             dto.setId(theme.getId());
             dto.setName(theme.getName());
             dto.setDescription(theme.getDescription());
-            followedThemeIds.contains(theme.getId());
+            dto.setSubscribed(followedThemeIds.contains(theme.getId()));
             themeListDtos.add(dto);
         }
 
