@@ -14,13 +14,12 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     if (this.authService.isAuthenticated()) {
-      return true;  // L'utilisateur peut accéder à la route
+      return true;
     } else {
-      // Redirige l'utilisateur vers la page de connexion avec l'URL d'origine comme paramètre de requête
       this.router.navigate([''], {
-        queryParams: { returnUrl: state.url }  // Passe l'URL d'origine pour rediriger après authentification
+        queryParams: { returnUrl: state.url }
       });
-      return false;  // L'accès à la route est refusé
+      return false;
     }
   }
 

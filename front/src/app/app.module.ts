@@ -22,6 +22,8 @@ import { CommentaireComponent } from './pages/commentaire/commentaire.component'
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
 import {MatSelectModule} from "@angular/material/select";
 import { ThemeListComponent } from './pages/theme-list/theme-list.component';
+import { AccountComponent } from './pages/account/account.component';
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { ThemeListComponent } from './pages/theme-list/theme-list.component';
     CommentaireComponent,
     CreateArticleComponent,
     ThemeListComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,7 @@ import { ThemeListComponent } from './pages/theme-list/theme-list.component';
     FormsModule,
     MatSelectModule
   ],
-  providers: [
+  providers: [CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

@@ -22,27 +22,35 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
 
+    // Ajouter le token au header si présent
     if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
-        },
-        withCredentials: true
+        }
       });
     }
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Erreur HTTP interceptée :', error); // pour debug
+        console.error('Erreur HTTP interceptée :', error);
 
-        if (error.status === 403 && !request.url.includes('/login')) {
-          // Token expiré ou invalide
-          this.authService.logout();
-          this.router.navigate(['/login']);
+        // Si erreur 403 => accès interdit (token invalide ou expiré)
+        if (error.status === 403) {
+          const currentRoute = this.router.url;
+
+          // Éviter boucle infinie si déjà sur la page de login
+          if (currentRoute !== '/login' && currentRoute !== '/') {
+            this.authService.logout(); // Supprime les tokens
+            this.router.navigate(['/']); // Redirige vers la page d'accueil ou login
+          }
         }
+
+        // Propager l’erreur pour gestion dans les composants
         return throwError(() => error);
       })
     );
   }
+
 }

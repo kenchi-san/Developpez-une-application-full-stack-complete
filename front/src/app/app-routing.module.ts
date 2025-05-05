@@ -9,6 +9,7 @@ import {ArticleListComponent} from "./pages/article-list/article-list.component"
 import {ArticleDetailComponent} from "./pages/article-detail/article-detail.component";
 import {CreateArticleComponent} from "./pages/create-article/create-article.component";
 import {ThemeListComponent} from "./pages/theme-list/theme-list.component";
+import {AccountComponent} from "./pages/account/account.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
 
   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectGuard] },
   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
+  { path: 'me', component: AccountComponent, canActivate: [AuthGuard]  },
 
   { path: 'listArticle', component: ArticleListComponent, canActivate: [AuthGuard] },
   { path: 'listTheme', component: ThemeListComponent, canActivate: [AuthGuard] },

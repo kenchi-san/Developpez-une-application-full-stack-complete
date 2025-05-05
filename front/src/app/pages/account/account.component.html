@@ -1,0 +1,26 @@
+<div class="container">
+  <mat-card class="profile-card">
+    <h2 class="title">Profil utilisateur</h2>
+
+    <form *ngIf="profileForm" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom complet</mat-label>
+        <input matInput formControlName="fullname" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" type="text" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width">Sauvegarder</button>
+    </form>
+  </mat-card>
+
+  <hr class="divider" />
+</div>
