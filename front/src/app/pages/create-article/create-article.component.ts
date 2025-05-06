@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { ThemeListService } from "../../service/ThemeListService";
-import { ListTheme } from '../../interfaces/listTheme';  // Interface pour Theme
-import { ArticleService } from "../../service/ArticleService";
-import { CreateArticle } from "../../interfaces/createArticle";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {ThemeListService} from "../../service/ThemeListService";
+import {ListTheme} from '../../interfaces/listTheme';  // Interface pour Theme
+import {ArticleService} from "../../service/ArticleService";
+import {CreateArticle} from "../../interfaces/createArticle";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-article',
@@ -16,25 +17,27 @@ export class CreateArticleComponent implements OnInit {
   createArticle: CreateArticle = {
     title: '',
     content: '',
-    theme: { id: 0, name: '' }
+    theme: {id: 0, name: ''}
   };
 
   constructor(
     private router: Router,
     private location: Location,
-    private articleService: ArticleService,   // Injection du service pour créer un article
-    private themeService: ThemeListService    // Injection du service pour récupérer les thèmes
-  ) {}
+    private articleService: ArticleService,
+    private themeService: ThemeListService,
+    private snackBar: MatSnackBar
+  ) {
+  }
 
   ngOnInit(): void {
-    this.loadThemes();  // Charger les thèmes au démarrage
+    this.loadThemes();
   }
 
   // Méthode pour charger les thèmes
   loadThemes(): void {
     this.themeService.getAllThemes().subscribe({
       next: (data: ListTheme[]) => {
-        this.themes = data;  // Remplir la liste des thèmes
+        this.themes = data;
       },
       error: (err: any) => {
         console.error('Erreur lors de la récupération des thèmes', err);
@@ -42,15 +45,21 @@ export class CreateArticleComponent implements OnInit {
     });
   }
 
-   onSubmit(): void {
-
-    // Appel au service pour créer l'article
+  onSubmit(): void {
     this.articleService.createArticle(this.createArticle).subscribe({
       next: () => {
-        this.router.navigate(['/']);  // Naviguer vers la page d'accueil ou la liste des articles
+        this.snackBar.open('✅ Article créé avec succès !', 'Fermer', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.router.navigate(['/']);
       },
       error: (err: any) => {
         console.error('Erreur lors de la création de l\'article', err);
+        this.snackBar.open('❌ Erreur lors de la création de l\'article.', 'Fermer', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
       }
     });
   }
