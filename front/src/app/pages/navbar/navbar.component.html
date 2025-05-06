@@ -1,0 +1,33 @@
+<mat-toolbar color="primary" class="navbar">
+  <!-- Logo -->
+  <div class="navbar-logo">
+    <img src="assets/logo_p6.png" alt="Logo" class="navbar-logo-img" />
+  </div>
+
+  <!-- Desktop links -->
+  <nav class="navbar-links" *ngIf="isDesktop">
+    <a class="logout-link" (click)="logout()">Se déconnecter</a>
+    <a [routerLink]="'/listArticle'" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Article</a>
+    <a [routerLink]="'/listTheme'" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Thème</a>
+    <a routerLink="/me" routerLinkActive="active-link">
+      <mat-icon class="account-icon">account_circle</mat-icon>
+    </a>
+  </nav>
+
+  <!-- Mobile hamburger -->
+  <button mat-icon-button class="menu-button" *ngIf="!isDesktop" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- Sidenav (mobile menu) -->
+<mat-sidenav-container class="sidenav-container" *ngIf="!isDesktop">
+  <mat-sidenav #sidenav mode="over" position="end">
+    <a (click)="sidenav.close()" routerLink="/listArticle" routerLinkActive="active-link">Article</a>
+    <a (click)="sidenav.close()" routerLink="/listTheme" routerLinkActive="active-link">Thème</a>
+    <a (click)="sidenav.close()" routerLink="/me" routerLinkActive="active-link">
+      <mat-icon class="account-icon">account_circle</mat-icon>
+    </a>
+    <a class="logout-link" (click)="logout(); sidenav.close()">Se déconnecter</a>
+  </mat-sidenav>
+</mat-sidenav-container>
