@@ -24,6 +24,9 @@ import {MatSelectModule} from "@angular/material/select";
 import { ThemeListComponent } from './pages/theme-list/theme-list.component';
 import { AccountComponent } from './pages/account/account.component';
 import {CookieService} from "ngx-cookie-service";
+import { NavbarComponent } from './pages/navbar/navbar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import {CookieService} from "ngx-cookie-service";
     CreateArticleComponent,
     ThemeListComponent,
     AccountComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ import {CookieService} from "ngx-cookie-service";
     RegisterComponent,
     MatIconModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatToolbarModule,
+    MatSidenavModule
   ],
   providers: [CookieService,
     {

@@ -3,15 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly TOKEN_KEY = 'JWT_Token';  // Clé pour stocker le token dans le cookie
   private readonly apiUrl = `${environment.apiUrl}/auth`;  // URL de l'API
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) { }
 
   // Méthode de connexion
   login(userDetails: { username: string; password: string }): Observable<boolean> {
@@ -49,7 +49,7 @@ export class AuthService {
     );
   }
 
-  private setTokenInCookie(token: string, expiresIn: number): void {
+  public setTokenInCookie(token: string, expiresIn: number): void {
     const expires = new Date();
     expires.setMilliseconds(expires.getMilliseconds() + (expiresIn * 1000));
 
@@ -65,10 +65,9 @@ export class AuthService {
     document.cookie = cookieAttributes;
   }
 
-  // Méthode de déconnexion
   logout(): void {
-    // Supprimer le cookie en le réinitialisant avec une date d'expiration dans le passé
-    document.cookie = 'JWT_Token=; Secure; HttpOnly; SameSite=Strict; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+   this.setTokenInCookie('',0)
+    this.router.navigate(['/']);
   }
 
   // Récupérer le token depuis le cookie
