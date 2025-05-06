@@ -43,7 +43,7 @@ public class UserService {
             return dto;
         }).collect(Collectors.toList());
     }
-    public User updateUser(String email, UpdateUserDto updateUserDto) {
+    public UpdateUserDto updateUser(String email, UpdateUserDto updateUserDto) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         if (StringUtils.hasText(updateUserDto.getFullName().replaceAll(" ","_"))) {
@@ -56,7 +56,7 @@ public class UserService {
         if (StringUtils.hasText(updateUserDto.getEmail())) {
             user.setEmail(updateUserDto.getEmail());
         }
-
-        return userRepository.save(user);
+         userRepository.save(user);
+        return updateUserDto;
     }
 }
