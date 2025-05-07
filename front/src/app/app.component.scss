@@ -1,15 +1,26 @@
-/* Style global de la sidenav */
+/* Container principal sans scroll */
+.sidenav-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Empêche tous les scrolls */
+  position: relative;
+}
+
+/* Sidebar à droite */
 .sidenav-container mat-sidenav {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;  /* Aligner les éléments en haut */
-  height: 100%;  /* Remplir toute la hauteur du conteneur */
-  width: 250px;  /* Largeur de la sidenav */
-  overflow-x: hidden;  /* Empêcher le scroll horizontal */
-  overflow-y: auto;  /* Permettre le scroll vertical si nécessaire */
+  justify-content: flex-start;
+  width: 250px;
+  height: 100vh;
+  overflow: hidden; /* Aucune barre de scroll */
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
-/* Centrer verticalement les liens et aligner à droite */
+/* Liens alignés à droite */
 .sidenav-container mat-sidenav a {
   text-decoration: none;
   color: black;
@@ -17,14 +28,14 @@
   padding: 0.5rem;
   margin: 0.5rem 0;
   display: flex;
-  justify-content: flex-end;  /* Aligner les liens à droite */
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
-  padding-right: 1rem;  /* Ajouter un padding à droite pour que les liens ne soient pas collés au bord */
-  box-sizing: border-box;  /* Assure que le padding ne dépasse pas la largeur de l'élément */
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
-/* Styling pour le lien "Se déconnecter" */
+/* Lien de déconnexion */
 .sidenav-container mat-sidenav .logout-link {
   color: red !important;
   font-weight: bold;
@@ -34,23 +45,25 @@
   }
 }
 
-/* Classe active pour les liens */
+/* Lien actif */
 .sidenav-container mat-sidenav .active-link {
   color: #3f51b5 !important;
 }
 
-/* Footer pour l'icône "account_circle" */
+/* Footer icône fixé en bas à droite de l'écran */
 .sidenav-footer {
-  position: absolute;  /* Permet de positionner en bas */
-  bottom: 0;  /* Fixe la position en bas de la sidebar */
-  width: 100%;  /* Assure que l'élément prend toute la largeur */
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
   display: flex;
-  justify-content: flex-end;  /* Aligne l'icône à droite */
-  padding: 1rem;  /* Ajoute une marge autour de l'icône */
-  box-sizing: border-box;  /* Evite que le padding dépasse la largeur */
+  justify-content: flex-end;
+  width: 250px; /* Même largeur que la sidebar */
+  box-sizing: border-box;
+  padding: 0;
+  background: transparent;
 }
 
-/* Icône "account_circle" */
+/* Icône */
 .account-icon {
   font-size: 36px;
   height: 36px;
@@ -59,9 +72,8 @@
   cursor: pointer;
 }
 
-/* Lien "account_circle" avec l'icône */
+/* Lien contenant l'icône */
 .sidenav-container mat-sidenav .account-link {
   display: flex;
-  justify-content: flex-end;  /* Aligne à droite */
-  padding-bottom: 1rem;  /* Ajoute une marge en bas */
+  justify-content: flex-end;
 }

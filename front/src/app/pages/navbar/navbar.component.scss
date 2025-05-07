@@ -13,10 +13,12 @@
   height: 64px;
 }
 
+/* Logo */
 .navbar-logo-img {
   height: 40px;
 }
 
+/* Liens de la navbar */
 .navbar-links {
   display: flex;
   align-items: center;
@@ -42,11 +44,13 @@
     color: #3f51b5 !important;
   }
 
+  /* Cache les liens pour les écrans plus petits */
   @media (max-width: 768px) {
     display: none;
   }
 }
 
+/* Icône de compte */
 .account-icon {
   font-size: 36px;
   height: 36px;
@@ -55,6 +59,7 @@
   cursor: pointer;
 }
 
+/* Bouton du menu burger (mobile) */
 .menu-button {
   display: none;
   margin-left: auto;
@@ -70,5 +75,42 @@
   mat-icon {
     font-size: 28px;
     color: black;
+  }
+}
+
+/* Améliorations possibles pour la navbar mobile */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px; /* Réduire le padding sur les petits écrans */
+  }
+
+  .navbar-logo-img {
+    height: 30px; /* Logo plus petit sur mobile */
+  }
+
+  /* Afficher les liens de la navbar dans le menu burger */
+  .navbar-links {
+    display: none; /* Les liens sont cachés par défaut */
+  }
+
+  .menu-button {
+    display: block; /* Afficher le bouton du menu burger */
+  }
+
+  .navbar-links.show {
+    display: flex; /* Afficher les liens quand le menu est ouvert */
+    flex-direction: column; /* Mettre les liens sur une colonne */
+    position: absolute;
+    top: 64px; /* Sous la navbar */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-links a {
+    padding: 10px 20px;
+    width: 100%; /* Prenez toute la largeur pour les liens */
+    text-align: left; /* Aligner les liens à gauche sur mobile */
   }
 }
