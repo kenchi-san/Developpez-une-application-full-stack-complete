@@ -19,15 +19,3 @@
     <mat-icon>menu</mat-icon>
   </button>
 </mat-toolbar>
-
-<!-- Sidenav (mobile menu) -->
-<mat-sidenav-container class="sidenav-container" *ngIf="!isDesktop">
-  <mat-sidenav #sidenav mode="over" position="end">
-    <a (click)="sidenav.close()" routerLink="/listArticle" routerLinkActive="active-link">Article</a>
-    <a (click)="sidenav.close()" routerLink="/listTheme" routerLinkActive="active-link">Thème</a>
-    <a (click)="sidenav.close()" routerLink="/me" routerLinkActive="active-link">
-      <mat-icon class="account-icon">account_circle</mat-icon>
-    </a>
-    <a class="logout-link" (click)="logout(); sidenav.close()">Se déconnecter</a>
-  </mat-sidenav>
-</mat-sidenav-container>

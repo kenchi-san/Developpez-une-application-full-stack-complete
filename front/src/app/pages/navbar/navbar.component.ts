@@ -1,7 +1,7 @@
 import {
   Component,
   HostListener,
-  ViewChild,
+  Input,
   AfterViewInit
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -13,8 +13,8 @@ import { AuthService } from '../../service/AuthService';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements AfterViewInit {
+  @Input() sidenav!: MatSidenav;
   isDesktop: boolean = window.innerWidth >= 768;
-  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(private authService: AuthService) {}
 
