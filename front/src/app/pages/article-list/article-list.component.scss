@@ -1,12 +1,7 @@
 .article-container {
   display: flex;
   flex-direction: column;
-  padding: 16px;
-}
-
-.create-article-btn {
-  align-self: flex-start;
-  margin-bottom: 16px;
+  padding: 80px 16px 16px;
 }
 
 .article-list {
@@ -51,25 +46,18 @@ mat-card-content {
   .author,
   .date {
     display: inline-block;
-    white-space: nowrap; /* Pour éviter que le texte se brise */
-  }
-
-  .author {
-    font-weight: bold;
-  }
-
-  .date {
+    white-space: nowrap;
     font-weight: bold;
   }
 }
 
 /* Troncature et gestion de la hauteur du contenu */
 .truncated-content {
-  max-height: 80px; /* Limite la hauteur visible du texte */
+  max-height: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Nombre de lignes max */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
@@ -87,12 +75,13 @@ mat-card-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Permet de passer à la ligne en mobile */
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
 
   .create-article-btn {
     flex-shrink: 0;
+    margin: 0;
   }
 
   .sort-button {
@@ -104,28 +93,32 @@ mat-card-content {
   }
 }
 
-/* Médias queries pour une meilleure responsivité */
+/* Media queries pour une meilleure responsivité */
 @media (max-width: 1200px) {
   .article-list {
-    grid-template-columns: repeat(2, 1fr); /* Toujours 2 articles, mais mieux espacé sur les grands écrans */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .article-list {
-    grid-template-columns: 1fr; /* Sur les écrans plus petits (tablettes, mobiles), un seul article par ligne */
+    grid-template-columns: 1fr;
   }
 
-  .create-article-btn {
-    width: 100%; /* Le bouton prend toute la largeur de l'écran */
+  .top-bar .create-article-btn {
+    width: 100%;
     margin-bottom: 16px;
+  }
+
+  .top-bar .sort-button {
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .article-meta {
-    justify-content: flex-start; /* Garde la date et l'auteur sur la même ligne */
-    gap: 12px; /* Espacement entre les éléments */
+    justify-content: flex-start;
+    gap: 12px;
   }
 
   .article-card {

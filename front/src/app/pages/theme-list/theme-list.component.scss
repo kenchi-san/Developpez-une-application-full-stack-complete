@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr); // Par défaut : 2 colonnes
   gap: 16px;
-  padding: 0 16px; // ✅ Espacement latéral
+  padding: 112px 25px 16px; // ✅ Ajout de padding-top pour compenser la navbar fixe
 }
 
 .theme-card {
@@ -126,14 +126,14 @@ mat-card-content {
 @media (max-width: 1200px) {
   .theme-list {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 12px;
+    padding: 112px 25px 16px; // ✅ Ajout de padding-top pour compenser la navbar fixe
   }
 }
 
 @media (max-width: 768px) {
   .theme-list {
     grid-template-columns: 1fr;
-    padding: 0 8px;
+    padding: 112px 25px 16px;
   }
 
   .create-theme-btn {
