@@ -1,4 +1,3 @@
-/* SCSS spécifique pour ton composant dans le fichier style du composant */
 .create-article-container {
   max-width: 800px;
   margin: 0 auto;
@@ -41,6 +40,18 @@
   }
 
   // Formulaire
+  .create-article-form {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
   mat-form-field {
     width: 100%;
     margin-bottom: 16px;
@@ -51,23 +62,50 @@
     }
 
     .mat-input-element,
-    .mat-select-trigger {
+    .mat-select-trigger,
+    textarea {
       border-radius: 12px !important;
     }
 
-    .mat-form-field-appearance-fill .mat-form-field-outline {
-      border: 2px solid #8e24aa;
-      border-radius: 12px;
+    // Cibler l'élément de bordure spécifique pour le rendre violet
+    .mat-form-field-outline {
+      border-radius: 12px !important;
+      border: 2px solid #7e57c2 !important; /* Violet permanent */
     }
 
-    .mat-form-field-appearance-fill.mat-focused .mat-form-field-outline {
-      border: 2px solid #8e24aa;
-      box-shadow: 0 0 5px rgba(142, 36, 170, 0.6);
+    // Appliquer la couleur violette aux autres parties de la bordure
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      background-color: #7e57c2 !important; /* Violet pour la ligne */
     }
 
-    .mat-form-field-appearance-fill:hover .mat-form-field-outline {
-      border: 2px solid #8e24aa;
-      box-shadow: 0 0 3px rgba(142, 36, 170, 0.3);
+    // Quand le champ est en focus, la bordure reste violette avec une ombre
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+      border: 2px solid #7e57c2 !important;
+      box-shadow: 0 0 5px rgba(126, 87, 194, 0.6); /* Ombre violette au focus */
+    }
+
+    // Effet de survol
+    .mat-form-field-appearance-outline:hover .mat-form-field-outline {
+      border: 2px solid #7e57c2;
+      box-shadow: 0 0 3px rgba(126, 87, 194, 0.3);
+    }
+
+    // Label et placeholder violets
+    .mat-form-field-label,
+    .mat-input-element::placeholder {
+      color: #7e57c2; /* Violet pour le placeholder et label */
+      opacity: 1;
+    }
+
+    .mat-input-element {
+      color: #333; /* Texte de l'input en gris foncé */
+      padding: 10px;
+    }
+
+    .mat-form-field-ripple {
+      background-color: rgba(126, 87, 194, 0.3); /* Légère teinte violette au focus */
     }
   }
 
@@ -111,6 +149,23 @@
     width: fit-content;
   }
 
+  .divider {
+    margin: 2rem 0;
+    width: 100%;
+  }
+
+  .abonnement-title {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
   // Responsive
   @media (max-width: 768px) {
     padding: 10px;
@@ -135,6 +190,10 @@
       mat-icon {
         font-size: 20px;
       }
+    }
+
+    .create-article-form {
+      padding: 0 12px;
     }
   }
 }

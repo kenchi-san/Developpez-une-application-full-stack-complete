@@ -22,7 +22,7 @@
 
       <div class="subscribe-btn-wrapper">
         <button
-          mat-stroked-button
+          mat-raised-button
           color="primary"
           (click)="subscribeToTheme(theme); $event.stopPropagation()"
           [ngClass]="{ 'abonne': theme.subscribed, 'non-abonne': !theme.subscribed }">

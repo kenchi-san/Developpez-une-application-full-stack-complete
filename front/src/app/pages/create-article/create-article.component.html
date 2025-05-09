@@ -8,7 +8,7 @@
 
   <form (ngSubmit)="onSubmit()" #articleForm="ngForm">
     <!-- Sélection du thème -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Sélectionnez un thème</mat-label>
       <mat-select [(ngModel)]="createArticle.theme" name="theme" required>
         <mat-option *ngFor="let theme of themes" [value]="theme">
@@ -18,13 +18,13 @@
     </mat-form-field>
 
     <!-- Titre de l'article -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Titre de l'article</mat-label>
       <input matInput [(ngModel)]="createArticle.title" name="title" required />
     </mat-form-field>
 
     <!-- Contenu de l'article -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Contenu de l'article</mat-label>
       <textarea matInput [(ngModel)]="createArticle.content" name="content" rows="5" required></textarea>
     </mat-form-field>
