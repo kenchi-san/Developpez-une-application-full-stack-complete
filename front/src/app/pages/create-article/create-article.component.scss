@@ -46,6 +46,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding: 0; // Retrait du padding haut déplacé dans le container
   }
 
   .full-width {
@@ -67,45 +68,40 @@
       border-radius: 12px !important;
     }
 
-    // Cibler l'élément de bordure spécifique pour le rendre violet
     .mat-form-field-outline {
       border-radius: 12px !important;
-      border: 2px solid #7e57c2 !important; /* Violet permanent */
+      border: 2px solid #7e57c2 !important; // Violet permanent
     }
 
-    // Appliquer la couleur violette aux autres parties de la bordure
     .mat-form-field-outline-start,
     .mat-form-field-outline-gap,
     .mat-form-field-outline-end {
-      background-color: #7e57c2 !important; /* Violet pour la ligne */
+      background-color: #7e57c2 !important; // Ligne violette
     }
 
-    // Quand le champ est en focus, la bordure reste violette avec une ombre
     .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
       border: 2px solid #7e57c2 !important;
-      box-shadow: 0 0 5px rgba(126, 87, 194, 0.6); /* Ombre violette au focus */
+      box-shadow: 0 0 5px rgba(126, 87, 194, 0.6);
     }
 
-    // Effet de survol
     .mat-form-field-appearance-outline:hover .mat-form-field-outline {
       border: 2px solid #7e57c2;
       box-shadow: 0 0 3px rgba(126, 87, 194, 0.3);
     }
 
-    // Label et placeholder violets
     .mat-form-field-label,
     .mat-input-element::placeholder {
-      color: #7e57c2; /* Violet pour le placeholder et label */
+      color: #7e57c2;
       opacity: 1;
     }
 
     .mat-input-element {
-      color: #333; /* Texte de l'input en gris foncé */
+      color: #333;
       padding: 10px;
     }
 
     .mat-form-field-ripple {
-      background-color: rgba(126, 87, 194, 0.3); /* Légère teinte violette au focus */
+      background-color: rgba(126, 87, 194, 0.3);
     }
   }
 
@@ -168,7 +164,7 @@
 
   // Responsive
   @media (max-width: 768px) {
-    padding: 10px;
+    padding: 120px 10px 10px; // Décalage depuis le haut pour éviter que le header soit caché
 
     h2 {
       font-size: 24px;
@@ -193,7 +189,7 @@
     }
 
     .create-article-form {
-      padding: 0 12px;
+      padding: 0 12px; // Padding horizontal seulement
     }
   }
 }
