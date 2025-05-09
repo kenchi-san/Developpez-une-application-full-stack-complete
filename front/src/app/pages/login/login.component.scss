@@ -1,149 +1,199 @@
-/* Style global du conteneur de la page */
+/* Visibilité conditionnelle */
+.mobile-only {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+.desktop-only {
+  display: flex;
+
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+/* Conteneur principal */
 .login-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centrer verticalement */
-  align-items: center; /* Centrer horizontalement */
-  height: 100vh; /* Utilise toute la hauteur de la fenêtre */
-  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px 16px 16px;
   text-align: center;
-  background-color: #f4f4f4; /* Fond léger pour toute la page */
+  background-color: #f4f4f4;
+
+  @media (max-width: 768px) {
+    padding: 120px 12px 16px;
+  }
 }
 
-/* Style pour la carte de connexion */
+/* Carte login */
 .login-card {
   max-width: 400px;
-  width: 100%; /* Assure que la carte prend toute la largeur possible sans dépasser 400px */
-  padding: 20px;
-  position: relative;  /* Nécessaire pour positionner correctement la flèche */
-  background-color: white; /* Fond blanc pour la carte */
-  border-radius: 8px; /* Coins arrondis */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte */
-  margin-top: 20px; /* Petit espace entre le logo et la carte */
+  width: 100%;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  margin-top: 20px;
 }
 
-/* Style pour le bouton retour */
+/* Conteneur titre + flèche en desktop */
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+/* Flèche retour */
 .back-button {
-  position: absolute;
-  top: 20px;  /* Ajuste la position de la flèche */
-  left: 20px; /* Distance du bord gauche */
-  z-index: 10;  /* S'assurer que le bouton est au-dessus de la carte */
-  color: #3f51b5; /* Couleur du bouton (peut être ajusté) */
-  font-size: 40px; /* Taille de l'icône (augmentée) */
-  background: none; /* Pas de fond pour le bouton */
-  border: none;  /* Pas de bordure */
+  color: #7e57c2;
+  background: none;
+  border: none;
+
+  mat-icon {
+    font-size: 28px;
+  }
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
-/* Largeur 100% pour les éléments du formulaire */
+/* Titre connexion */
+.login-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0 10px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+/* Logo visible seulement sur mobile */
+.login-logo {
+  display: none;
+  width: 100%;
+  max-width: 60%;
+  margin: 0 auto 20px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    display: block;
+    max-width: 150px;
+  }
+}
+
+/* Champs */
 .full-width {
   width: 100%;
   margin-bottom: 16px;
 }
 
-/* Style du titre de la page */
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+/* Style des champs Material */
+mat-form-field.appearance-outline,
+.mat-form-field-appearance-outline {
+  width: 100%;
 
-/* Logo visible uniquement sur mobile */
-.login-logo {
-  display: none;  /* Masqué par défaut */
-  width: 100%;  /* Largeur du logo égale à la largeur de son parent */
-  max-width: 60%;  /* Limite la largeur du logo pour qu'il ne devienne pas trop grand */
-  margin: 0 auto 20px;  /* Centré et espacé au-dessus des champs */
-  height: auto; /* Assure que la hauteur s'ajuste automatiquement selon la largeur */
-}
+  .mat-form-field-outline {
+    border-color: #7e57c2 !important;
+  }
 
-/* Affichage du logo seulement en mode mobile */
-@media screen and (max-width: 600px) {
-  .login-logo {
-    display: block;
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-color: #7e57c2 !important;
+  }
+
+  .mat-form-field-label {
+    color: #7e57c2 !important;
+  }
+
+  .mat-input-element {
+    color: #333;
+  }
+
+  .mat-form-field-ripple {
+    background-color: rgba(126, 87, 194, 0.3);
+  }
+
+  &:hover .mat-form-field-outline {
+    border-color: #7e57c2;
+    box-shadow: 0 0 3px rgba(126, 87, 194, 0.3);
+  }
+
+  &.mat-focused .mat-form-field-outline {
+    border: 2px solid #7e57c2 !important;
+    box-shadow: 0 0 5px rgba(126, 87, 194, 0.6);
   }
 }
 
-/* Style pour les actions de la page de connexion */
-.login-actions {
-  text-align: center;
-  margin-top: 20px;
+/* Bouton de connexion */
+button.full-width {
+  background-color: #663ab6;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #582ba2;
+  }
+
+  &:disabled {
+    background-color: #d1c4e9;
+    color: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
 
-/* Style des messages d'erreur */
+/* Message d'erreur */
 .error-message {
   color: red;
   font-size: 14px;
-  text-align: center;
   margin-top: 10px;
 }
-/* Style global de la navbar */
+
+/* Navbar desktop */
 .navbar {
   display: flex;
-  justify-content: flex-start; /* Aligne le contenu à gauche */
+  justify-content: flex-start;
   align-items: center;
   padding: 15px 20px;
-  background-color: white; /* Couleur de fond de la navbar */
+  background-color: white;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-}
 
-/* Logo dans la navbar */
-.navbar-logo {
-  margin-right: 20px; /* Espacement entre le logo et le titre */
-}
-
-.navbar-logo-img {
-  height: 7rem; /* Taille du logo */
-  width: auto;
-}
-
-
-/* Cacher la navbar en mode mobile */
-@media (max-width: 600px) {
-  .navbar {
-    display: none; /* Masque la navbar en mobile */
-  }
-}
-
-.login-container {
-  padding-top: 80px; /* Espacement en haut pour la navbar fixe */
-}
-
-
-/* Responsive design */
-@media (max-width: 600px) {
-  .login-container {
-    padding: 0 10px; /* Réduit l'espace de padding sur mobile */
+  @media (max-width: 600px) {
+    display: none;
   }
 
-  /* Affiche le logo seulement sur mobile */
-  .logo-container {
-    display: block;
-    margin-bottom: 30px; /* Espacement supplémentaire sous le logo */
-  }
+  .navbar-logo {
+    margin-right: 20px;
 
-  .login-logo {
-    width: 60%; /* Réduit la largeur du logo sur mobile */
-    max-width: 150px; /* Limite la taille du logo sur mobile */
-  }
-
-  .login-title {
-    font-size: 20px; /* Réduit la taille du titre sur mobile */
-  }
-
-  .mat-form-field {
-    margin-bottom: 10px; /* Réduit l'espace entre les champs */
-  }
-
-  button.full-width {
-    padding: 10px;
-    font-size: 14px; /* Réduit la taille du texte du bouton sur mobile */
-  }
-
-  .back-arrow-container {
-    top: 10px; /* Positionne la flèche plus haut sur mobile */
-    left: 10px; /* Positionne la flèche à gauche sur mobile */
+    .navbar-logo-img {
+      height: 7rem;
+      width: auto;
+    }
   }
 }
