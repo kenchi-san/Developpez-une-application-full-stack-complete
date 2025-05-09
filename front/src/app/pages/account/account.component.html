@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="title">Profil utilisateur</h1>
+
+  <form *ngIf="profileForm" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+    <mat-form-field appearance="outline" class="full-width violet-outline">
+      <input matInput formControlName="fullname" placeholder="Nom complet" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width violet-outline">
+      <input matInput formControlName="email" type="email" placeholder="Email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width violet-outline">
+      <input matInput formControlName="password" type="text" placeholder="Mot de passe" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="full-width">Sauvegarder</button>
+  </form>
+
+  <hr class="divider" />
+
+  <div class="abonnement-title">
+    <h1>Abonnement</h1>
+  </div>
+
+  <app-theme-list class="abonnement-view" [onlySubscribed]="true"></app-theme-list>
+</div>

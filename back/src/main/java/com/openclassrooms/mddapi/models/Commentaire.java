@@ -16,9 +16,6 @@ public class Commentaire {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 60, nullable = false)
-    private String subject;
-
     @Column(nullable = false, columnDefinition = "TEXT")
     private String comment;
 

@@ -71,7 +71,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
         MeDto MeDto = new MeDto();
-        MeDto.setFullName(currentUser.getFullName());
+        MeDto.setFullName(currentUser.getFullName().replaceAll("_"," "));
         MeDto.setEmail(currentUser.getEmail());
 
         return ResponseEntity.ok(MeDto);
@@ -107,7 +107,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Requête invalide", content = @Content)
     })
     @PutMapping("/update")
-    public ResponseEntity<User> editUser(
+    public ResponseEntity<UpdateUserDto> editUser(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Données à modifier (laisser vide un champ pour ne pas le modifier)",
                     required = true,
@@ -123,7 +123,7 @@ public class UserController {
 
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        User updatedUser = userService.updateUser(userDetails.getUsername(), updateUserDto);
+        UpdateUserDto updatedUser = userService.updateUser(userDetails.getUsername(), updateUserDto);
         return ResponseEntity.ok(updatedUser);
     }
 }

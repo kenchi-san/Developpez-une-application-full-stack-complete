@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 80px 16px 16px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.profile-form {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.divider {
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.abonnement-title {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+}
+
+/* Appliquer un contour violet permanent aux champs en outline */
+.mat-form-field-appearance-outline {
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-color: #7e57c2 !important; /* Violet normal */
+  }
+
+  .mat-form-field-outline-thick {
+    border-color: #7e57c2 !important; /* Violet permanent */
+  }
+
+  .mat-form-field-label {
+    color: #7e57c2 !important; /* Label violet */
+  }
+
+  .mat-input-element {
+    color: #333; /* Texte de l'input en noir */
+  }
+}
+
+/* Styles personnalisés pour un état normal (bordure violette tout le temps) */
+.mat-form-field .mat-form-field-outline {
+  border-color: #7e57c2 !important; /* Bordure violette permanente */
+}
+
+.mat-form-field .mat-form-field-ripple {
+  background-color: rgba(126, 87, 194, 0.3); /* Légère teinte violette au focus */
+}
+
+/* Pour les thèmes listés (composant app-theme-list) */
+:host-context(.abonnement-view) .theme-list {
+  padding: 0 50px 24px;
+}
+
+@media (max-width: 768px) {
+  :host-context(.abonnement-view) .theme-list {
+    grid-template-columns: 1fr;
+    padding: 0 25px 16px;
+  }
+
+  .profile-form {
+    padding: 0 12px;
+  }
+}

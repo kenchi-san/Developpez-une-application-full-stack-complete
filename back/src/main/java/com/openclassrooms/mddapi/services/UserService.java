@@ -4,6 +4,12 @@ import com.openclassrooms.mddapi.dtos.user.MeDto;
 import com.openclassrooms.mddapi.dtos.user.UpdateUserDto;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,16 +39,15 @@ public class UserService {
         return users.stream().map(user -> {
             MeDto dto = new MeDto();
             dto.setEmail(user.getEmail());
-            dto.setFullName(user.getFullName());
+            dto.setFullName(user.getFullName().replaceAll("_"," "));
             return dto;
         }).collect(Collectors.toList());
     }
-    public User updateUser(String email, UpdateUserDto updateUserDto) {
+    public UpdateUserDto updateUser(String email, UpdateUserDto updateUserDto) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-
-        if (StringUtils.hasText(updateUserDto.getFullName())) {
-            user.setFullName(updateUserDto.getFullName());
+        if (StringUtils.hasText(updateUserDto.getFullName().replaceAll(" ","_"))) {
+            user.setFullName(updateUserDto.getFullName().replaceAll(" ","_"));
         }
 
         if (StringUtils.hasText(updateUserDto.getPassword())) {
@@ -50,7 +56,7 @@ public class UserService {
         if (StringUtils.hasText(updateUserDto.getEmail())) {
             user.setEmail(updateUserDto.getEmail());
         }
-
-        return userRepository.save(user);
+         userRepository.save(user);
+        return updateUserDto;
     }
 }

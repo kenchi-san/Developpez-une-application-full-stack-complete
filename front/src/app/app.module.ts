@@ -7,7 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -17,7 +17,16 @@ import { RegisterComponent } from './pages/register/register.component';
 import {JwtInterceptor} from "./interceptor/JwtInterceptor";
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
-import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans declarations
+import {MatIconModule} from "@angular/material/icon";
+import { CommentaireComponent } from './pages/commentaire/commentaire.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import {MatSelectModule} from "@angular/material/select";
+import { ThemeListComponent } from './pages/theme-list/theme-list.component';
+import { AccountComponent } from './pages/account/account.component';
+import {CookieService} from "ngx-cookie-service";
+import { NavbarComponent } from './pages/navbar/navbar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [
@@ -25,6 +34,11 @@ import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans 
     HomeComponent,
     ArticleListComponent,
     ArticleDetailComponent,
+    CommentaireComponent,
+    CreateArticleComponent,
+    ThemeListComponent,
+    AccountComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,12 +54,16 @@ import {MatIconModule} from "@angular/material/icon"; // Importer ici, pas dans 
     LoginComponent,
     RegisterComponent,
     MatIconModule,
+    FormsModule,
+    MatSelectModule,
+    MatToolbarModule,
+    MatSidenavModule
   ],
-  providers: [
+  providers: [CookieService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,  // Utiliser l'intercepteur JWT
-      multi: true,  // Permet de chaîner plusieurs intercepteurs
+      useClass: JwtInterceptor,
+      multi: true,
     }],
   bootstrap: [AppComponent]
 })

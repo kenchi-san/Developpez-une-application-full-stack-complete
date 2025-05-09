@@ -5,11 +5,10 @@ import lombok.Data;
 
 @Data
 public class MeDto {
-    @Schema(description = "email de l'utilisateur", example = "test@exemple.com")
+    @Schema(description = "email de l'utilisateur", example = "test@test.com")
     private String email;
 
     @Schema(description = "Nouveau nom complet de l'utilisateur", example = "Jean Dupont")
     private String fullName;
-
-//    TODO mettre les abonnements plus tard
+    private String password;
 }

@@ -4,19 +4,31 @@
     <img src="assets/logo_p6.png" alt="Logo" class="navbar-logo-img" />
   </div>
 </div>
+
 <div class="login-container">
-
   <mat-card class="login-card">
-    <!-- Bouton retour avec flèche -->
-    <button mat-icon-button class="back-button" (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon> <!-- Icône de flèche vers la gauche -->
-    </button>
-    <!-- Logo visible uniquement en mode mobile -->
-    <img src="assets/logo_p6.png" alt="Logo" class="login-logo" />
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h2 class="login-title">Se connecter</h2>
 
-      <mat-form-field appearance="fill" class="full-width">
+    <!-- Flèche retour en haut pour mobile -->
+    <button mat-icon-button class="back-button mobile-only" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <!-- Logo visible uniquement en mobile -->
+    <img src="assets/logo_p6.png" alt="Logo" class="login-logo" *ngIf="!isDesktop" />
+
+    <!-- Titre uniquement en mobile (sous le logo) -->
+    <h2 class="login-title mobile-only">Se connecter</h2>
+
+    <!-- Conteneur flèche + titre en ligne pour desktop -->
+    <div class="header-container desktop-only">
+      <button mat-icon-button class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2 class="login-title">Se connecter</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>E-mail ou nom d'utilisateur</mat-label>
         <input matInput formControlName="email" type="text" />
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
@@ -24,7 +36,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="full-width">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Mot de passe</mat-label>
         <input matInput formControlName="password" type="password" />
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">

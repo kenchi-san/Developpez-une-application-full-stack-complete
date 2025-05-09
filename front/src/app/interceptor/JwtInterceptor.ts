@@ -1,27 +1,56 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import {
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpEvent,
+  HttpErrorResponse
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AuthService } from "../service/AuthService"; // Le service AuthService pour récupérer le token
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { AuthService } from "../service/AuthService";
+import { Router } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
 
-  public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    // Vérifier si l'utilisateur est connecté et si le token existe
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
 
+    // Ajouter le token au header si présent
     if (token) {
-      // Cloner la requête et ajouter l'en-tête Authorization avec le token
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': "application/json",
-          credentials: 'include',
-        },
-
+          'Content-Type': 'application/json'
+        }
       });
     }
-    // Passer la requête au prochain handler
-    return next.handle(request);
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erreur HTTP interceptée :', error);
+
+        // Si erreur 403 => accès interdit (token invalide ou expiré)
+        if (error.status === 403) {
+          const currentRoute = this.router.url;
+
+          // Éviter boucle infinie si déjà sur la page de login
+          if (currentRoute !== '/login' && currentRoute !== '/') {
+            this.authService.logout(); // Supprime les tokens
+            this.router.navigate(['/']); // Redirige vers la page d'accueil ou login
+          }
+        }
+
+        // Propager l’erreur pour gestion dans les composants
+        return throwError(() => error);
+      })
+    );
   }
+
 }

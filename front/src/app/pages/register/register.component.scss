@@ -1,147 +1,197 @@
-/* Centrer la page */
+/* Visibilité conditionnelle */
+.mobile-only {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+.desktop-only {
+  display: flex;
+
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+/* Conteneur principal */
 .register-container {
   display: flex;
-  flex-direction: column; /* Empile le logo, le titre et le formulaire */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Prend toute la hauteur de la page */
-  padding: 0 20px; /* Un peu d'espace à gauche et à droite */
-  background-color: #f4f4f4; /* Couleur de fond douce */
-  position: relative; /* Pour positionner la flèche */
+  min-height: 100vh;
+  padding: 80px 16px 16px;
+  text-align: center;
+  background-color: #f4f4f4;
+
+  @media (max-width: 768px) {
+    padding: 120px 12px 16px;
+  }
 }
 
-/* Flèche de retour à gauche */
-.back-arrow-container {
-  position: absolute;
-  top: 20px; /* Positionner la flèche en haut */
-  left: 20px; /* Positionner la flèche à gauche */
-  z-index: 10; /* Assurez-vous que la flèche est toujours au-dessus du contenu */
-}
-
-/* Conteneur du logo */
-.logo-container {
-  display: none; /* Masqué par défaut */
+/* Carte formulaire */
+.register-card {
+  max-width: 500px;
   width: 100%;
-  text-align: center;
-  margin-bottom: 20px; /* Espacement sous le logo */
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
 }
 
-/* Logo visible uniquement sur mobile */
-.register-logo {
-  width: 80%; /* Le logo occupe 80% de la largeur du conteneur */
-  max-width: 200px; /* Limite la largeur du logo sur les grands écrans */
-  height: auto; /* Maintien le ratio d'aspect du logo */
-}
-
-/* Titre du formulaire */
-.register-title {
-  text-align: center;
+/* Header desktop avec flèche + titre */
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-start;
   margin-bottom: 20px;
+}
+
+/* Flèche de retour */
+.back-button {
+  color: #7e57c2;
+  background: none;
+  border: none;
+
+  mat-icon {
+    font-size: 28px;
+  }
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+/* Titre */
+.register-title {
   font-size: 24px;
+  font-weight: bold;
   color: #333;
+  margin: 20px 0 10px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }
 
-/* Formulaire sans cadre */
-form {
+/* Logo mobile uniquement */
+.register-logo {
+  display: none;
   width: 100%;
-  max-width: 400px; /* Limite la largeur du formulaire */
-  padding: 20px;
-  background-color: #ffffff; /* Fond blanc pour le formulaire */
-  border-radius: 8px; /* Coins arrondis */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce autour du formulaire */
+  max-width: 60%;
+  margin: 0 auto 20px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    display: block;
+    max-width: 150px;
+  }
 }
 
-/* Formulaire (chaque champ dans une colonne) */
-.mat-form-field {
-  width: 100%; /* Chaque champ prend toute la largeur du formulaire */
-  margin-bottom: 15px; /* Espace entre les champs */
+/* Champs Material */
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
 }
 
-/* Style du bouton "S'inscrire" */
+mat-form-field.appearance-outline,
+.mat-form-field-appearance-outline {
+  width: 100%;
+
+  .mat-form-field-outline {
+    border-color: #7e57c2 !important;
+  }
+
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-color: #7e57c2 !important;
+  }
+
+  .mat-form-field-label {
+    color: #7e57c2 !important;
+  }
+
+  .mat-input-element {
+    color: #333;
+  }
+
+  .mat-form-field-ripple {
+    background-color: rgba(126, 87, 194, 0.3);
+  }
+
+  &:hover .mat-form-field-outline {
+    border-color: #7e57c2;
+    box-shadow: 0 0 3px rgba(126, 87, 194, 0.3);
+  }
+
+  &.mat-focused .mat-form-field-outline {
+    border: 2px solid #7e57c2 !important;
+    box-shadow: 0 0 5px rgba(126, 87, 194, 0.6);
+  }
+}
+
+/* Bouton inscription */
 button.full-width {
-  width: 100%; /* Le bouton prend toute la largeur du formulaire */
+  background-color: #663ab6;
+  color: white;
   padding: 12px;
   font-size: 16px;
-  margin-top: 20px;
-  border-radius: 5px; /* Coins arrondis pour le bouton */
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #582ba2;
+  }
+
+  &:disabled {
+    background-color: #d1c4e9;
+    color: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
 
 /* Message d'erreur */
 .error-message {
   color: red;
   font-size: 14px;
-  text-align: center;
   margin-top: 10px;
 }
-/* Style global de la navbar */
+
+/* Navbar desktop */
 .navbar {
   display: flex;
-  justify-content: flex-start; /* Aligne le contenu à gauche */
+  justify-content: flex-start;
   align-items: center;
   padding: 15px 20px;
-  background-color: white; /* Couleur de fond de la navbar */
+  background-color: white;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-}
 
-/* Logo dans la navbar */
-.navbar-logo {
-  margin-right: 20px; /* Espacement entre le logo et le titre */
-}
-
-.navbar-logo-img {
-  height: 7rem; /* Taille du logo */
-  width: auto;
-}
-
-
-
-/* Cacher la navbar en mode mobile */
-@media (max-width: 600px) {
-  .navbar {
-    display: none; /* Masque la navbar en mobile */
-  }
-}
-
-/* Style de la page de formulaire (Login/Register) */
-.register-container {
-  padding-top: 80px; /* Espacement en haut pour la navbar fixe */
-}
-/* Responsive design */
-@media (max-width: 600px) {
-  .register-container {
-    padding: 0 10px; /* Réduit l'espace de padding sur mobile */
+  @media (max-width: 600px) {
+    display: none;
   }
 
-  /* Affiche le logo seulement sur mobile */
-  .logo-container {
-    display: block;
-    margin-bottom: 30px; /* Espacement supplémentaire sous le logo */
-  }
+  .navbar-logo {
+    margin-right: 20px;
 
-  .register-logo {
-    width: 60%; /* Réduit la largeur du logo sur mobile */
-    max-width: 150px; /* Limite la taille du logo sur mobile */
-  }
-
-  .register-title {
-    font-size: 20px; /* Réduit la taille du titre sur mobile */
-  }
-
-  .mat-form-field {
-    margin-bottom: 10px; /* Réduit l'espace entre les champs */
-  }
-
-  button.full-width {
-    padding: 10px;
-    font-size: 14px; /* Réduit la taille du texte du bouton sur mobile */
-  }
-
-  .back-arrow-container {
-    top: 10px; /* Positionne la flèche plus haut sur mobile */
-    left: 10px; /* Positionne la flèche à gauche sur mobile */
+    .navbar-logo-img {
+      height: 7rem;
+      width: auto;
+    }
   }
 }

@@ -1,0 +1,79 @@
+/* Container principal sans scroll */
+.sidenav-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Empêche tous les scrolls */
+  position: relative;
+}
+
+/* Sidebar à droite */
+.sidenav-container mat-sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 250px;
+  height: 100vh;
+  overflow: hidden; /* Aucune barre de scroll */
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/* Liens alignés à droite */
+.sidenav-container mat-sidenav a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+/* Lien de déconnexion */
+.sidenav-container mat-sidenav .logout-link {
+  color: red !important;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Lien actif */
+.sidenav-container mat-sidenav .active-link {
+  color: #3f51b5 !important;
+}
+
+/* Footer icône fixé en bas à droite de l'écran */
+.sidenav-footer {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  width: 250px; /* Même largeur que la sidebar */
+  box-sizing: border-box;
+  padding: 0;
+  background: transparent;
+}
+
+/* Icône */
+.account-icon {
+  font-size: 36px;
+  height: 36px;
+  width: 36px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* Lien contenant l'icône */
+.sidenav-container mat-sidenav .account-link {
+  display: flex;
+  justify-content: flex-end;
+}

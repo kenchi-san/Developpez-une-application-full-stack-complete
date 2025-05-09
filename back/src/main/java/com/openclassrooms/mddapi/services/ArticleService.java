@@ -2,11 +2,15 @@ package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dtos.article.*;
 import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.models.SuiviTheme;
 import com.openclassrooms.mddapi.models.Theme;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
+import com.openclassrooms.mddapi.repository.SuiviThemeRepository;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,19 +23,30 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final ThemeRepository themeRepository;
     private final UserRepository userRepository;
+    private final SuiviThemeRepository suiviThemeRepository;
 
-    public ArticleService(ArticleRepository articleRepository, ThemeRepository themeRepository, UserRepository userRepository) {
+    public ArticleService(ArticleRepository articleRepository, ThemeRepository themeRepository, UserRepository userRepository, SuiviThemeRepository suiviThemeRepository) {
         this.articleRepository = articleRepository;
         this.themeRepository = themeRepository;
         this.userRepository = userRepository;
+        this.suiviThemeRepository = suiviThemeRepository;
     }
 
     public List<ArticleDto> allArticle() {
-        List<ArticleDto> result = new ArrayList<>();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        articleRepository.findAll().forEach(article -> {
+        List<Theme> followedThemes = suiviThemeRepository.findByUser(user)
+                .stream()
+                .map(SuiviTheme::getTheme)
+                .toList();
+
+        List<Article> filteredArticles = articleRepository.findByThemeIn(followedThemes);
+
+        // Mapper en DTO
+        return filteredArticles.stream().map(article -> {
             ArticleDto dto = new ArticleDto();
-
             dto.setId(article.getId());
             dto.setTitle(article.getTitle());
             dto.setContent(article.getContent());
@@ -40,19 +55,16 @@ public class ArticleService {
 
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
-            authorDto.setFullName(article.getAuthor().getFullName());
+            authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
             dto.setAuthor(authorDto);
 
             ThemeDto themeDto = new ThemeDto();
             themeDto.setId(article.getTheme().getId());
             themeDto.setName(article.getTheme().getName());
-            themeDto.setDescription(article.getTheme().getDescription());
             dto.setTheme(themeDto);
 
-            result.add(dto);
-        });
-
-        return result;
+            return dto;
+        }).toList();
     }
 
     public ArticleDto getArticleById(long id) {
@@ -74,16 +86,14 @@ public class ArticleService {
         dto.setCreated(article.getCreatedAt());
         dto.setUpdated(article.getUpdatedAt());
 
-        // Convertir l'auteur en DTO (si tu veux utiliser un DTO pour l'auteur)
         AuthorDto authorDto = new AuthorDto();
         authorDto.setId(article.getAuthor().getId());
-        authorDto.setFullName(article.getAuthor().getFullName());
+        authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
         dto.setAuthor(authorDto);
 
         ThemeDto themeDto = new ThemeDto();
         themeDto.setId(article.getTheme().getId());
         themeDto.setName(article.getTheme().getName());
-        themeDto.setDescription(article.getTheme().getDescription());
         dto.setTheme(themeDto);
 
         return dto;
@@ -95,16 +105,17 @@ public class ArticleService {
         article.setTitle(input.getTitle());
         article.setContent(input.getContent());
 
-        Optional<User> infoUser = userRepository.findById(input.getAuthor().getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
         Optional<Theme> infoTheme = themeRepository.findById(input.getTheme().getId());
+        Optional<User> infoUser = userRepository.findByEmail(currentUser);
 
         if (infoUser.isPresent()) {
             User user = infoUser.get();
-            article.setAuthor(user);
+            article.setAuthor(user);  // Assignation de l'utilisateur comme auteur
         } else {
             throw new RuntimeException("Utilisateur introuvable !");
         }
-
         if (infoTheme.isPresent()) {
             Theme theme = infoTheme.get();
             article.setTheme(theme);
@@ -122,7 +133,6 @@ public class ArticleService {
         dto.setCreated(article.getCreatedAt());
         dto.setUpdated(article.getUpdatedAt());
 
-        // Convertir l'auteur en DTO
         if (article.getAuthor() != null) {
             AuthorDto authorDto = new AuthorDto();
             authorDto.setId(article.getAuthor().getId());
@@ -135,7 +145,6 @@ public class ArticleService {
             ThemeDto themeDto = new ThemeDto();
             themeDto.setId(article.getTheme().getId());
             themeDto.setName(article.getTheme().getName());
-            themeDto.setDescription(article.getTheme().getDescription());
             dto.setTheme(themeDto);
         }
 
@@ -158,7 +167,7 @@ public class ArticleService {
                 Theme theme = themeRepository.findById(input.getTheme().getId()).orElseThrow(() -> new RuntimeException("Thème introuvable"));
                 article.setTheme(theme);
             }
-             article = articleRepository.save(article);
+            article = articleRepository.save(article);
             ArticleDto dto = new ArticleDto();
             dto.setId(article.getId());
             dto.setTitle(article.getTitle());
@@ -169,7 +178,7 @@ public class ArticleService {
             if (article.getAuthor() != null) {
                 AuthorDto authorDto = new AuthorDto();
                 authorDto.setId(article.getAuthor().getId());
-                authorDto.setFullName(article.getAuthor().getFullName());
+                authorDto.setFullName(article.getAuthor().getFullName().replaceAll("_", " "));
                 dto.setAuthor(authorDto);
             }
 
@@ -177,7 +186,6 @@ public class ArticleService {
                 ThemeDto themeDto = new ThemeDto();
                 themeDto.setId(article.getTheme().getId());
                 themeDto.setName(article.getTheme().getName());
-                themeDto.setDescription(article.getTheme().getDescription());
                 dto.setTheme(themeDto);
             }
             return dto;

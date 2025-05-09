@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav mobile menu -->
+  <mat-sidenav #sidenav mode="over" position="end">
+
+    <a class="logout-link" (click)="logout(); sidenav.close()">Se déconnecter</a>
+    <a (click)="sidenav.close()" routerLink="/listArticle" routerLinkActive="active-link">Article</a>
+    <a (click)="sidenav.close()" routerLink="/listTheme" routerLinkActive="active-link">Thème</a>
+
+    <!-- Footer de la sidebar -->
+    <div class="sidenav-footer">
+      <a (click)="sidenav.close()" routerLink="/me" routerLinkActive="active-link" class="account-link">
+        <mat-icon class="account-icon">account_circle</mat-icon>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <!-- Navbar & main content -->
+  <app-navbar [sidenav]="sidenav" *ngIf="shouldShowNavbar()"></app-navbar>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>

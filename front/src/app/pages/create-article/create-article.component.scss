@@ -1,0 +1,195 @@
+.create-article-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 16px 16px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+    position: relative;
+
+    h2 {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .back-button {
+      position: absolute;
+      left: 0;
+      background-color: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: none;
+
+      mat-icon {
+        font-size: 24px;
+        color: #1976d2;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Formulaire
+  .create-article-form {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0; // Retrait du padding haut déplacé dans le container
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+
+    .mat-form-field-flex {
+      border-radius: 12px !important;
+      overflow: hidden;
+    }
+
+    .mat-input-element,
+    .mat-select-trigger,
+    textarea {
+      border-radius: 12px !important;
+    }
+
+    .mat-form-field-outline {
+      border-radius: 12px !important;
+      border: 2px solid #7e57c2 !important; // Violet permanent
+    }
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      background-color: #7e57c2 !important; // Ligne violette
+    }
+
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+      border: 2px solid #7e57c2 !important;
+      box-shadow: 0 0 5px rgba(126, 87, 194, 0.6);
+    }
+
+    .mat-form-field-appearance-outline:hover .mat-form-field-outline {
+      border: 2px solid #7e57c2;
+      box-shadow: 0 0 3px rgba(126, 87, 194, 0.3);
+    }
+
+    .mat-form-field-label,
+    .mat-input-element::placeholder {
+      color: #7e57c2;
+      opacity: 1;
+    }
+
+    .mat-input-element {
+      color: #333;
+      padding: 10px;
+    }
+
+    .mat-form-field-ripple {
+      background-color: rgba(126, 87, 194, 0.3);
+    }
+  }
+
+  button {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #125ea2;
+    }
+  }
+
+  .create-article-btn {
+    background-color: #663ab6;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #582ba2;
+    }
+
+    &:disabled {
+      background-color: #d1c4e9;
+      color: #f5f5f5;
+      cursor: not-allowed;
+    }
+  }
+
+  .submit-button {
+    display: block;
+    margin: 24px auto 0;
+    width: fit-content;
+  }
+
+  .divider {
+    margin: 2rem 0;
+    width: 100%;
+  }
+
+  .abonnement-title {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    padding: 120px 10px 10px; // Décalage depuis le haut pour éviter que le header soit caché
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    mat-form-field {
+      margin-bottom: 12px;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .back-button {
+      padding: 6px;
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+
+    .create-article-form {
+      padding: 0 12px; // Padding horizontal seulement
+    }
+  }
+}
