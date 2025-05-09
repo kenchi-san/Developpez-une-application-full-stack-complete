@@ -1,25 +1,189 @@
-# P6-Full-Stack-reseau-dev
 
-## Front
+# 🧩 Full Stack Project – Angular + Spring Boot
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project is a full-stack application consisting of:
 
-Don't forget to install your node_modules before starting (`npm install`).
+- **Backend**: Spring Boot (Java 21, Spring Security, JPA, JWT, MySQL)
+- **Frontend**: Angular (Node.js, TypeScript)
 
-### Development server
+It provides user authentication, a secure REST API, and a modern Angular frontend.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-### Build
+## 📁 Project Structure
+```
+project-root/
+├── back/                    # Spring Boot API (mddapi)
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── openclassrooms/
+│       │           └── mddapi/
+│       │               ├── MddApiApplication.java
+│       │               ├── configs/
+│       │               │   ├── ApplicationConfiguration.java
+│       │               │   ├── JwtAuthenticationFilter.java
+│       │               │   ├── OpenApiConfig.java
+│       │               │   └── SecurityConfiguration.java
+│       │               ├── controller/
+│       │               │   ├── ArticleController.java
+│       │               │   ├── AuthenticationController.java
+│       │               │   ├── CommentaireController.java
+│       │               │   ├── ThemeController.java
+│       │               │   └── UserController.java
+│       │               ├── dtos/
+│       │               │   ├── article/
+│       │               │   │   ├── ArticleDto.java
+│       │               │   │   ├── AuthorDto.java
+│       │               │   │   ├── CreateArticleDto.java
+│       │               │   │   ├── ThemeDto.java
+│       │               │   │   ├── ThemeListDto.java
+│       │               │   │   └── UpdateArticleDto.java
+│       │               │   ├── commentaire/
+│       │               │   │   └── CommentaireDto.java
+│       │               │   └── user/
+│       │               │       ├── LoginUserDto.java
+│       │               │       ├── MeDto.java
+│       │               │       ├── RegisterUserDto.java
+│       │               │       ├── UpdateUserDto.java
+│       │               │       └── UserDto.java
+│       │               ├── exceptions/
+│       │               │   └── GlobalExceptionHandler.java
+│       │               ├── models/
+│       │               │   ├── Article.java
+│       │               │   ├── Commentaire.java
+│       │               │   ├── SuiviTheme.java
+│       │               │   ├── Theme.java
+│       │               │   └── User.java
+│       │               ├── repository/
+│       │               │   ├── ArticleRepository.java
+│       │               │   ├── CommentaireRepository.java
+│       │               │   ├── SuiviThemeRepository.java
+│       │               │   ├── ThemeRepository.java
+│       │               │   └── UserRepository.java
+│       │               ├── responses/
+│       │               │   └── LoginResponse.java
+│       │               └── services/
+│       │                   ├── ArticleService.java
+│       │                   ├── AuthenticationService.java
+│       │                   ├── CommentaireService.java
+│       │                   ├── JwtService.java
+│       │                   ├── ThemeService.java
+│       │                   └── UserService.java
+│       └── resources/
+│           ├── application.properties
+│           └── data.sql
+└── test/
+└── java/
+└── com/
+└── openclassrooms/
+└── mddapi/
+└── MddApiApplicationTests.java
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+├── front/                    # Angular client
+│   └── src/
+│       ├── app/
+│       │   ├── guards/
+│       │   │   ├── auth.guard.ts
+│       │   │   └── auth-redirect.guard.ts
+│       │   ├── interceptors/
+│       │   │   └── jwt.interceptor.ts
+│       │   ├── interfaces/
+│       │   │   ├── article.ts
+│       │   │   ├── author.ts
+│       │   │   ├── commentaire.ts
+│       │   │   ├── create-article.ts
+│       │   │   ├── index.ts
+│       │   │   ├── list-theme.ts
+│       │   │   ├── me.ts
+│       │   │   └── theme.ts
+│       │   ├── pages/
+│       │   │   ├── account/
+│       │   │   ├── article-detail/
+│       │   │   ├── article-list/
+│       │   │   ├── commentaire/
+│       │   │   ├── create-article/
+│       │   │   ├── home/
+│       │   │   ├── login/
+│       │   │   ├── navbar/
+│       │   │   ├── register/
+│       │   │   └── theme-list/
+│       │   └── services/
+│       ├── assets/
+│       ├── environments/
+│       └── styles/
+└── README.md
+```
+# ⚙️ Prerequisites #
+✅ Backend (Spring Boot):
+Java 21+</br>
+Maven 3.6+</br>
+MySQL</br>
+✅ Frontend (Angular):
+Node.js 16+</br>
+Angular CLI:</br>
+npm install -g @angular/cli</br>
+# 🚀 Clone the Project #
+```bash
+git clone https://github.com/kenchi-san/Developpez-une-application-full-stack-complete.git
+```
+```bash
+cd ~/Developpez-une-application-full-stack-complete
+```
+# 🔙 Backend Setup #
+Create MySQL Database
+```bash
+mysql -u root -p mdd < back/src/main/resources/data.sql
+```
+```
+Configure application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/mddapi?allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
 
-### Where to start
+# update the follow line in false in prod
+spring.jpa.properties.hibernate.format_sql=true
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+logging.level.org.springframework=DEBUG
+logging.level.com.openclassrooms.starterjwt=DEBUG
+server.port=8081
+security.jwt.secret-key=
+security.jwt.expiration-time=3600000
+```
+Install and Run Backend
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+cd back</br>
+```bash
+mvn clean install
+mvn spring-boot:run
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
+```
+Backend is running at: http://localhost:8081</br>
+# 🖥️ Frontend Setup #
+## Install dependencies ##
+```bash
+cd ../front
+npm install
+Run Angular app
+ng serve
+```
+Frontend is running at: http://localhost:4200
 
-Good luck!
+---
+
+## 📄 API Documentation (Swagger)
+
+Once the backend is running, you can access the Swagger UI for API documentation here:
+
+🔗 [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
+
+This interface allows you to explore and test the available endpoints interactively.
+
+✅ Done
+You now have the full stack app up and running!
+---
+
